@@ -1,0 +1,73 @@
+/* 
+    17. Breadcrumb css 
+*/
+.breadcrumb__bg{
+    background: url(../img/banner/breadcrumb-bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    @media only screen and (min-width: 768px) {
+        height: 200px;
+    }
+    @media only screen and (min-width: 992px) {
+        height: 230px;
+    }
+    @media only screen and (min-width: 1200px) {
+        height: 280px;
+    }
+    @media only screen and (min-width: 1366px) {
+        height: 320px;
+    }
+}
+
+.breadcrumb__content{
+    position: relative;
+    &--title{
+        &.mb-25{
+            margin-bottom: 12px;
+            @media only screen and (min-width: 768px) {
+                margin-bottom: 15px;
+            }
+            @media only screen and (min-width: 992px) {
+                margin-bottom: 20px;
+            }
+            @media only screen and (min-width: 1200px) {
+                margin-bottom: 25px;
+            }
+        }
+    }
+    &--menu{
+        &__items{
+            position: relative;
+            margin-right: 20px;
+            padding-right: 22px;
+            font-size: 16px;
+            line-height: 24px;
+            @media only screen and (min-width: 768px) {
+                font-size: 18px;
+            }
+            &:last-child{
+                margin-right: 0;
+                padding-right: 0;
+                &::before{
+                    display: none;
+                }
+            }
+            &::before{
+                position: absolute;
+                content: "";
+                width: 3px;
+                height: 20px;
+                background: var(--theme-color);
+                right: 0;
+                top: 4px;
+                border-radius: 5px;
+                transform: rotate(30deg);
+            }
+        }
+    }
+}

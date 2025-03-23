@@ -1,0 +1,158 @@
+/* 
+    8. Testimonial css 
+*/
+
+.testimonial__bg{
+    background: url(../img/banner/bg-full2.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+.testimonial__section{
+    &--inner{
+        padding: 0 15px;
+        @media only screen and (min-width: 992px) {
+            padding: 0 90px;
+        }
+        @media only screen and (min-width: 1200px) {
+            padding: 0 130px;
+        }
+        @media only screen and (min-width: 1400px) {
+            padding: 0 100px;
+        }
+        @media only screen and (min-width: 1600px) {
+            padding: 0 130px;
+        }
+        
+    }
+
+}
+.testimonial__items{
+    padding: 22px 18px;
+    background: var(--white-color);
+    border-radius: 1rem;
+    @media only screen and (max-width: 991px) {
+        flex-direction: column;
+    }
+    @media only screen and (min-width: 1200px) {
+        padding: 25px 24px;
+    }
+    @media only screen and (min-width: 1400px) and (max-width: 1600px){
+        padding: 25px 18px;
+    }
+    &--thumbnail{
+        width: 120px;
+        line-height: 1;
+        margin-bottom: 15px;
+        @media only screen and (min-width: 768px) {
+            width: 105px;
+        }
+        @media only screen and (min-width: 992px) {
+            width: 115px;
+            margin-bottom: 0;
+        }
+        @media only screen and (min-width: 1366px) {
+            width: 124px;
+        }
+    }
+    &--content{
+        position: relative;
+        width: 100%;
+        padding-left: 20px;
+        @media only screen and (max-width: 991px) {
+            text-align: center;
+            padding-left: 0;
+        }
+        @media only screen and (min-width: 992px) {
+            width: calc(100% - 115px);
+        }
+        @media only screen and (min-width: 1366px) {
+            width: calc(100% - 124px);
+        }
+        @media only screen and (min-width: 1200px) {
+            padding-left: 28px;
+        }
+        @media only screen and (min-width: 1400px) and (max-width: 1600px){
+            padding-left: 18px;
+        }
+    }
+    &--title{
+        margin-bottom: 5px;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 2rem;
+        }
+    }
+    &--subtitle{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        font-weight: 300;
+        color: var(--light-color);
+        margin-bottom: 10px;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            margin-bottom: 1rem;
+        }
+    }
+    &--desc{
+        line-height: 2.2rem;
+        margin-bottom: 14px;
+        @media only screen and (min-width: 768px) {
+            line-height: 2.5rem;
+            margin-bottom: 18px;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 25px;
+        }
+        @media only screen and (min-width: 1366px) {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.testimonial__chat--icon{
+    position: absolute;
+    bottom: -18px;
+    right: 0;
+    color: var(--theme-color);
+    @media only screen and (max-width: 991px) {
+        display: none;
+    }
+    & svg{
+        @media only screen and (min-width: 992px) {
+            width: 38px;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 40px;
+        }
+    }
+}
+.testimonial__ratting{
+    &--inner{
+        @media only screen and (max-width: 991px) {
+            justify-content: center;
+        }
+    }
+    &--list{
+        margin-right: 5px;
+        &:last-child{
+            margin-right: 0;
+        }
+        @media only screen and (min-width: 1200px) {
+            margin-right: 7px;
+        }
+    }
+    &--icon{
+        color: var(--yellow-color);
+        & svg{
+            width: 17px;
+            @media only screen and (min-width: 992px) {
+                width: 20px;
+            }
+        }
+    }
+}

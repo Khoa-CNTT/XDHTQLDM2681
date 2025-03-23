@@ -1,0 +1,654 @@
+/* 
+    4. Banner css 
+*/
+.banner__items{
+    &:hover{
+        & .banner__items--thumbnail__img{
+            transform: scale(1.03);
+        }
+    }
+    &--thumbnail{
+        overflow: hidden;
+        @media only screen and (max-width: 575px) {
+            width: 100%;
+        }
+        &__img{
+            @media only screen and (max-width: 575px) {
+                width: 100%;
+            }
+        }
+    }
+    &--content{
+        position: absolute;
+        top: 50%;
+        width: 80%;
+        left: 25px;
+        transform: translatey(-50%);
+        cursor: pointer;
+        @media only screen and (max-width: 767px) {
+            left: 20px;
+        }
+        @media only screen and (min-width: 768px) {
+            width: 60%;
+        }
+        @media only screen and (min-width: 992px) {
+            width: 59%;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 48%;
+            left: 34px;
+        }
+        &__title{
+            margin-bottom: 20px;
+            @media only screen and (min-width: 992px) {
+                margin-bottom: 11px;
+            }
+        }
+        &__desc{
+            @media only screen and (max-width: 991px) {
+                display: none;
+            }
+            @media only screen and (min-width: 992px) {
+                margin-bottom: 20px;
+            }
+            @media only screen and (min-width: 1200px) {
+                margin-bottom: 23px;
+            }
+            @media only screen and (min-width: 1366px) {
+                margin-bottom: 28px;
+            }
+        }
+    }  
+    
+}
+.banner__bg{
+    background: url(../img/banner/bg-full1.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+.deals__banner--section{
+    padding: 56px 0 30px;
+    @media only screen and (min-width: 768px) {
+        padding: 40px 0;
+    }
+}
+.deals__banner--content{
+    @media only screen and (max-width: 767px) {
+        text-align: center;
+        margin-bottom: 23px;
+    }
+    &__subtitle{
+        font-weight: 600;
+        margin-bottom: 12px;
+        @media only screen and (min-width: 992px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+            margin-bottom: 15px;
+        }
+    }
+    &__maintitle{
+        font-size: 2rem;
+        line-height: 2.7rem;
+        margin-bottom: 15px;
+        @media only screen and (min-width: 480px) {
+            font-size: 2.2rem;
+            line-height: 3rem;
+        }
+        @media only screen and (min-width: 576px) {
+            font-size: 2.5rem;
+        }
+        @media only screen and (min-width: 768px) {
+            font-size: 2.6rem;
+            line-height: 3.4rem;
+            margin-bottom: 14px;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 2.8rem;
+            line-height: 3.8rem;
+            margin-bottom: 15px;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 3rem;
+            line-height: 4rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 3.2rem;
+            line-height: 4.2rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 3.6rem;
+            line-height: 4.8rem;
+        }
+    }
+    &__desc{
+        @media only screen and (max-width: 991px) {
+            display: none;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+            line-height: 2.7rem;
+            margin-bottom: 20px;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.7rem;
+            line-height: 2.3rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            line-height: 2.8rem;
+        }
+    }
+}
+.col-lg-5.deals__baner--col{
+    @media only screen and (min-width: 992px) {
+        width: 39%;
+    }
+}
+.col-lg-7.deals__baner--col{
+    @media only screen and (min-width: 992px) {
+        width: 61%;
+    }
+}
+.deals__banner--countdown{
+    margin-bottom: 18px;
+    @media only screen and (max-width: 767px) {
+        justify-content: center;
+        margin-bottom: 16px;
+    }
+    @media only screen and (min-width: 992px) {
+        margin-bottom: 20px;
+    }
+    @media only screen and (min-width: 1366px) {
+        margin-bottom: 22px;
+    }
+    @media only screen and (min-width: 1200px) {
+        margin-bottom: 25px;
+    }
+    & .countdown__item{
+        @media only screen and (max-width: 991px) {
+            padding-right: 6px;
+            margin-right: 6px;
+            &:last-child{
+                margin-right: 0;
+                padding-right: 0;
+            }
+        }
+        &::before{
+            display: none;
+        }
+    }
+    & .countdown__number{
+        background: var(--theme-color);
+        color: var(--white-color);
+        font-weight: 700;
+        border-radius: 50%;
+        width: 4rem;
+        height: 4rem;
+        line-height: 4rem;
+        font-size: 1.6rem;
+        @media only screen and (min-width: 768px) {
+            width: 4.2rem;
+            height: 4.2rem;
+            line-height: 4.2rem;
+            font-size: 1.6rem;
+        }
+        @media only screen and (min-width: 992px) {
+            width: 5rem;
+            height: 5rem;
+            line-height: 5rem;
+            font-size: 1.7rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            width: 5.2rem;
+            height: 5.2rem;
+            line-height: 5.2rem;
+            font-size: 1.8rem;
+        }
+    }
+    & .countdown__text{
+        text-align: center;
+        font-family: var(--font-lora);
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-top: 5px;
+        font-size: 1.3rem;
+        line-height: 2rem;
+        @media only screen and (min-width: 992px) {
+            font-size: 1.5rem;
+            line-height: 2.2rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+
+// home two css here
+.banner__two--content{
+    position: absolute;
+    top: 50%;
+    left: 22px;
+    @media only screen and (max-width: 767px) {
+        left: 20px;
+        transform: translatey(-50%);
+    }
+    @media only screen and (min-width: 768px) {
+        top: 12%;
+    }
+    @media only screen and (min-width: 992px) {
+        top: 16%;
+        left: 25px;
+    }
+    &__desc{
+        margin-bottom: 4px;
+        @media only screen and (max-width: 1199px) {
+            font-size: 1.4rem;
+        }
+    }
+    &__title{
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        @media only screen and (max-width: 767px) {
+            font-size: 2rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            line-height: 2.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            line-height: 2.8rem;
+        }
+    }
+    &__btn{
+        &--arrow__icon{
+            margin-left: 5px;
+        }
+        &:hover{
+            color: var(--secondary-color);
+        }
+    }
+}
+.banner__bg2{
+    background: url(../img/banner/counterup-bg.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+.counterup__banner--inner{
+    padding: 60px 0;
+    @media only screen and (max-width: 575px) {
+        flex-wrap: wrap;
+        padding: 60px 0 38px;
+    }
+    @media only screen and (min-width: 768px) {
+        padding: 70px 0;
+    }
+    @media only screen and (min-width: 992px) {
+        padding: 80px 0;
+    }
+    @media only screen and (min-width: 1200px) {
+        padding: 120px 0;
+    }
+}
+.counterup__banner--items{
+    @media only screen and (max-width: 575px) {
+        width: 50%;
+        margin-bottom: 22px;
+    }
+    &__text{
+        font-size: 1.4rem;
+        line-height: 2.2rem;
+        margin-bottom: 10px;
+        font-family: var(--font-poppins);
+        font-weight: 400;
+        @media only screen and (min-width: 768px) {
+            font-size: 1.5rem;
+            line-height: 2.4rem;
+            margin-bottom: 9px;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.6rem;
+            line-height: 2.5rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.7rem;
+            line-height: 2.6rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 1.8rem;
+            line-height: 2.8rem;
+        }
+    }
+    &__number{
+        font-family: var(--font-lora);
+        font-weight: 700;
+        font-size: 2.5rem;
+        line-height: 3rem;
+        @media only screen and (min-width: 480px) {
+            font-size: 3rem;
+            line-height: 4rem;
+        }
+        @media only screen and (min-width: 768px) {
+            font-size: 3.2rem;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 3.5rem;
+            line-height: 4rem;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 4rem;
+            line-height: 4.5rem;
+        }
+        @media only screen and (min-width: 1366px) {
+            font-size: 4.2rem;
+            line-height: 5rem;
+        }
+    }
+}
+
+
+// home three banner css here
+.slider__sidebar--banner{
+    @media only screen and (max-width: 767px) {
+        text-align: center;
+    }
+    overflow: hidden;
+    &:hover{
+        & .sidebar__banner--thumbnail__img{
+            transform: scale(1.03);
+        }
+    }
+}
+.sidebar__banner--thumbnail__img{
+    @media only screen and (max-width: 767px) {
+        margin: 0 auto;
+        width: 100%;
+    }
+}
+.banner__img--max__height {
+    @media only screen and (max-width: 575px) {
+        height: 200px;
+        -o-object-fit: cover;
+        object-fit: cover;
+    }
+    
+}
+.sidebar__banner--content{
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 20px;
+    @media only screen and (min-width: 768px) {
+        top: 25px;
+    }
+    @media only screen and (min-width: 992px) {
+        top: 38px;
+    }
+    @media only screen and (max-width: 575px) {
+        top: 30%;
+        text-align: left;
+    }
+    &__title{
+        font-size: 1.8rem;
+        line-height: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        @media only screen and (min-width: 768px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+            margin-bottom: 11px;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 2.2rem;
+            line-height: 2.5rem;
+        }
+    }
+    &__desc{
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin-bottom: 10px;
+        @media only screen and (min-width: 768px) {
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            margin-bottom: 12px;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 1.7rem;
+            margin-bottom: 13px;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.8rem;
+            margin-bottom: 17px;
+        }
+    }
+    &__btn{
+        font-size: 1.5rem;
+        &:hover{
+            color: var(--secondary-color);
+        }
+    }
+}
+.banner__items--content3{
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translatey(-50%);
+    @media only screen and (min-width: 768px) {
+        left: 30px;
+    }
+    @media only screen and (min-width: 1200px) {
+        left: 35px;
+    }
+    &__title{
+        font-size: 1.7rem;
+        line-height: 2.4rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        @media only screen and (min-width: 768px) {
+            font-size: 1.8rem;
+            line-height: 2.6rem;
+            margin-bottom: 12px;
+        }
+        @media only screen and (min-width: 992px) {
+            font-size: 2rem;
+            line-height: 2.8rem;
+            margin-bottom: 14px;
+        }
+        @media only screen and (min-width: 1200px) {
+            font-size: 2.2rem;
+            line-height: 3rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 2.5rem;
+            line-height: 3.2rem;
+            margin-bottom: 15px;
+        }
+    }
+    &__btn{
+        font-size: 1.5rem;
+        &:hover{
+            color: var(--secondary-color);
+        }
+    }
+}
+
+.banner__bg3{
+    background: url(../img/banner/bg-full4.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+.banner__bideo--play{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translatey(-50%) translatex(-50%);
+    border: 2px solid var(--secondary-color);
+    padding: 3px;
+    border-radius: 50%;
+    &__icon{
+        width: 6rem;
+        height: 6rem;
+        background: var(--white-color);
+        color: var(--secondary-color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: animate 2s linear infinite;
+        @media only screen and (min-width: 768px) {
+            width: 8rem;
+            height: 8rem;
+        }
+        &:hover{
+            background: var(--black-color);
+            color: var(--white-color);
+            transform: scale(1.08);
+        }
+        & svg{
+            width: 28px;
+            @media only screen and (max-width: 767px) {
+                width: 20px;
+            }
+        }
+    }
+}
+@keyframes animate {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    40% {
+      box-shadow: 0 0 0 50px rgba(255, 193, 7, 0);
+    }
+    80% {
+      box-shadow: 0 0 0 50px rgba(255, 193, 7, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 rgba(255, 193, 7, 0);
+    }
+}
+
+// home four css here
+.banner4__items{
+    &--content{
+        position: absolute;
+        top: 10%;
+        @media only screen and (min-width: 992px) {
+            top: 12%;
+        }
+        &.content__style1{
+            left: 15px;
+            right: 15px;
+            top: 8%;
+            
+        }
+        &.content__style2{
+            left: 25px;
+            @media only screen and (min-width: 992px) {
+                left: 30px;
+            }
+            @media only screen and (max-width: 575px) {
+                top: 50%;
+                transform: translatey(-50%);
+            }
+        }
+        &__title{
+            font-weight: 700;
+            font-size: 1.8rem;
+            line-height: 2.5rem;
+            margin-bottom: 8px;
+            @media only screen and (min-width: 992px) {
+                font-size: 2rem;
+                line-height: 3rem;
+                margin-bottom: 13px;
+            }
+            @media only screen and (min-width: 1200px) {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+            @media only screen and (min-width: 1600px) {
+                font-size: 2.4rem;
+                line-height: 3.2rem;
+                margin-bottom: 18px;
+            }
+            &.style2 {
+                font-weight: 500;
+                @media only screen and (min-width: 768px) {
+                    font-size: 1.7rem;
+                    line-height: 2.3rem;
+                }
+                @media only screen and (min-width: 992px) {
+                    font-size: 1.8rem;
+                    line-height: 2.5rem;
+                }
+                @media only screen and (min-width: 1200px) {
+                    font-size: 2rem;
+                    line-height: 2.8rem;
+                }
+            }
+        }
+        &__btn{
+            font-size: 1.5rem;
+            &:hover{
+                color: var(--theme-color);
+            }
+        }
+    }
+    &--col{
+        &.col-lg-3{
+            width: 100%;
+            @media only screen and (min-width: 480px) {
+                width: 50%;
+            }
+            @media only screen and (min-width: 768px) {
+                width: 27.78%;
+            }
+            @media only screen and (min-width: 992px) {
+                width: 27.2%;
+            }
+        }
+        &.col-lg-6{
+            width: 100%;
+            @media only screen and (max-width: 767px) {
+                order: 1;
+            }
+            @media only screen and (min-width: 768px) {
+                width: 44.3%;
+            }
+            @media only screen and (min-width: 992px) {
+                width: 45.5%;
+            }
+        }
+    }
+}
+
+
+.counterup__banner__bg2{
+    background: url(../img/banner/counterup-bg2.png);
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    &::before{
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background: var(--black-color);
+        left: 0;
+        top: 0;
+        opacity: 0.8;
+    }
+}
+// End banner css here

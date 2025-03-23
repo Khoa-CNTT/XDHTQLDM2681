@@ -1,0 +1,204 @@
+/* 
+    7. Shipping css 
+*/
+
+.shipping__section {
+    &.section--padding{
+        @media only screen and (max-width: 767px) {
+            padding-bottom: 32px;
+        }
+        @media only screen and (min-width: 768px) and (max-width: 991px){
+            padding-bottom: 53px;
+        }
+    }
+    &--inner{
+        @media only screen and (max-width: 991px) {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+.shipping__items{
+    padding: 0 20px;
+    position: relative;
+    @media only screen and (max-width: 991px) {
+        display: flex;
+        padding: 0 15px;
+        margin-bottom: 27px;
+    }
+    @media only screen and (max-width: 575px) {
+        justify-content: center;
+    }
+    width: 100%;
+    @media only screen and (min-width: 576px) {
+        width: 50%;
+    }
+    @media only screen and (min-width: 992px) {
+        width: 25%;
+        &::before{
+            position: absolute;
+            content: "";
+            width: 1px;
+            height: 100%;
+            background: #AEAEBF;
+            right: 0;
+            top: 0;
+            opacity: 0.25;
+        }
+       
+    }
+    
+    &:last-child{
+        &::before{
+            display: none;
+        }
+    }
+    &:hover{
+        & .shipping__items--icon{
+            background: var(--secondary-color);
+            opacity: 0.67;
+            color: var(--white-color);
+            border-color: var(--secondary-color);
+        }
+    }
+    &--icon{
+        width: 4.5rem;
+        height: 4.5rem;
+        text-align: center;
+        border: 1px solid rgba(174, 174, 191, 0.2);
+        background: var(--white-color);
+        border-radius: 50%;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        @media only screen and (min-width: 992px) {
+            width: 4.8rem;
+            height: 4.8rem;
+            margin: 0 auto 20px;
+        }
+        @media only screen and (min-width: 1600px) {
+            width: 5.2rem;
+            height: 5.2rem;
+            margin: 0 auto 20px;
+        }
+        & svg{
+            width: 22px;
+            height: auto;
+            @media only screen and (min-width: 992px) {
+                width: 24px;
+            }
+            @media only screen and (min-width: 1600px) {
+                width: 30px;
+            }
+        }
+    }
+    &--content{
+        @media only screen and (max-width: 991px) {
+            text-align: left !important;
+            padding-left: 20px;
+        }
+    }
+    &--title{
+        margin-bottom: 8px;
+        @media only screen and (min-width: 992px) {
+            font-size: 2rem;
+            line-height: 2.2rem;
+            margin-bottom: 8px;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 2.2rem;
+            line-height: 2.6rem;
+            margin-bottom: 10px;
+        }
+    }
+    &--desc{
+        color: var(--sky-color);
+        font-size: 1.5rem;
+        @media only screen and (min-width: 1200px) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+
+// home two shipping css here
+.shipping__section2{
+    &--inner{
+        box-shadow: 0 -4px 27px rgba(62, 70, 120, 0.16);
+        padding: 30px 20px;
+        background: var(--white-color);
+        @media only screen and (max-width: 991px) {
+            flex-wrap: wrap;
+            padding: 30px 20px 5px;
+        }
+        @media only screen and (min-width: 992px) {
+            padding: 35px 25px;
+        }
+        @media only screen and (min-width: 1200px) {
+            padding: 35px 65px;
+        }
+    }
+}
+
+.shipping__items2{
+    margin-right: 30px;
+    @media only screen and (max-width: 991px) {
+        margin-bottom: 25px;
+        width: 23.2%;
+        margin-right: 14px;
+    }
+    @media only screen and (max-width: 767px) {
+        width: 46%;
+    }
+    @media only screen and (max-width: 479px) {
+        width: 100%;
+        margin-right: 0;
+        justify-content: center;
+    }
+    &:last-child{
+        margin-right: 0;
+    }
+    &--content{
+        padding-left: 12px;
+        @media only screen and (min-width: 992px) {
+            padding-left: 15px;
+        }
+        &__title{
+            font-size: 1.6rem;
+            line-height: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.8rem;
+            }
+        }
+        &__desc{
+            font-size: 1.2rem;
+            color: var(--sky-color);
+        }
+    }
+    &--icon{
+        & img{
+            @media only screen and (max-width: 991px) {
+                max-width: 42px;
+            }
+            @media only screen and (max-width: 575px) {
+                width: 40px;
+            }
+        }
+    }
+}
+
+// home three css here
+.shipping__style3{
+    &--inner{
+        position: relative;
+        z-index: 9;
+        border-radius: 10px;
+        @media only screen and (min-width: 992px) {
+            border-radius: 63px;
+        }
+    }
+}
+

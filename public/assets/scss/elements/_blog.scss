@@ -1,0 +1,135 @@
+/* 
+    6. Blog css 
+*/
+
+.blog__items{
+    &:hover{
+        & .blog__items--img{
+            transform: scale(1.05);
+        }
+    }
+    &--link{
+        display: block;
+        @media only screen and (max-width: 767px) {
+            width: 100%;
+        }
+    }
+    &--img{
+        display: block;
+        @media only screen and (max-width: 767px) {
+            width: 100%;
+        }
+    }
+    &--thumbnail{
+        overflow: hidden;
+    }
+    &--content{
+        padding: 23px 15px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16);
+        @media only screen and (min-width: 768px) {
+            padding: 22px 15px 20px;
+        }
+        @media only screen and (min-width: 992px) {
+            padding: 25px 15px 22px;
+        }
+        @media only screen and (min-width: 1200px) {
+            padding: 25px 20px 22px;
+        }
+    }
+    &--meta{
+        margin-bottom: 15px;
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 15px;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 16px;
+        }
+        @media only screen and (min-width: 1200px) {
+            margin-bottom: 19px;
+        }
+        &__list{
+            display: flex;
+            align-items: center;
+            margin-right: 14px;
+            &:last-child{
+                margin-right: 0;
+            }
+            @media only screen and (min-width: 768px) {
+                margin-right: 18px;
+            }
+            @media only screen and (max-width: 575px) {
+                margin-right: 10px;
+            }
+
+        }
+        &__icon{
+            margin-right: 7px;
+            color: var(--theme-color);
+            @media only screen and (min-width: 768px) {
+                margin-right: 10px;
+            }
+            @media only screen and (max-width: 575px) {
+                margin-right: 5px;
+                width: 12px;
+            }
+        }
+        &__text{
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--light-color);
+            font-size: 1.2rem;
+            @media only screen and (min-width: 768px) {
+                font-size: 1.3rem;
+            }
+            @media only screen and (min-width: 1200px) {
+                font-size: 1.4rem;
+            }
+            @media only screen and (max-width: 575px) {
+                font-size: 1.1rem;
+            }
+        }
+    }
+    &--title{
+        margin-bottom: 11px;
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 12px;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            line-height: 2.6rem;
+        }
+        @media only screen and (min-width: 1600px) {
+            font-size: 2rem;
+            line-height: 2.8rem;
+        }
+    }
+    &--readmore{
+        color: var(--secondary-color);
+        &__icon{
+            vertical-align: middle;
+            margin-left: 3px;
+        }
+        &:hover{
+            color: var(--theme-color);
+        }
+    }
+    &--desc{
+        margin-bottom: 11px;
+        @media only screen and (min-width: 768px) {
+            margin-bottom: 10px;
+        }
+        @media only screen and (min-width: 992px) {
+            margin-bottom: 14px;
+        }
+    }
+}
+.blog__swiper--activation{
+    padding: 0 10px 10px;
+}
+.blog__section--container{
+    @media only screen and (min-width: 1200px) {
+        max-width: 1220px;
+    }
+}
+// End blog css here
