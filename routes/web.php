@@ -10,7 +10,11 @@ use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ThongkeController;
+use App\Http\Controllers\Shipper\HomeShipperController;
+use App\Http\Controllers\Shipper\AccountShipperController;
+use App\Http\Controllers\Shipper\OrderShipperController;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', [HomeController::class, "index"]);
@@ -66,3 +70,12 @@ Route::group(
         Route::get('/history-order', [OrderController::class, "historyorder"]);
     }
 );
+Route::group(
+    ["prefix" => "/shipper"],
+    function(){
+        Route::get('/home',[HomeShipperController::class,"homeshipper"]);
+        Route::get('/login',[AccountShipperController::class,"loginshipper"]);
+        Route::get('/order',[OrderShipperController::class,"ordershipper"]);
+        Route::get('/order-history',[OrderShipperController::class,"orderhistoryshipper"]);
+        Route::get('/order-history-detail',[OrderShipperController::class,"detailhistory"]);
+    });
