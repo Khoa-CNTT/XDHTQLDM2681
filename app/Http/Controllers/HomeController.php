@@ -12,8 +12,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('client.page.home');
+        return view('Client.page.home');
     }
+    
 
 
     public function create()
