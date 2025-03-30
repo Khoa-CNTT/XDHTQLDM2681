@@ -1,4 +1,4 @@
-@extends('share.master')
+@extends('Admin.share.master')
 @section('noi_dung')
     <div class="row" id="app">
         <div class=" col-sm-2  col-4">
@@ -12,7 +12,7 @@
                             <label class="from-label">
                                 Tên danh mục
                             </label>
-                            <input v-model="add_cate.category_name" v-on:blur="checkSlug()" type="text"
+                            <input v-model="add_cate.title" v-on:blur="checkSlug()" type="text"
                                 class="form-control">
                         </div>
 
@@ -57,7 +57,7 @@
                                     <th class="text-center align-middle">
                                         <input type="checkbox" v-model="value.check">
                                     </th>
-                                    <td class="align-middle">@{{ value.category_name }}</td>
+                                    <td class="align-middle">@{{ value.title }}</td>
                                     <td class="align-middle text-center">
                                         <button v-on:click="changeStatus(value)" v-if="value.status == 1"
                                             class="btn btn-primary">Hiển Thị</button>
@@ -80,14 +80,14 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-category_name fs-5" id="exampleModalLabel">Cập Nhật Danh Mục</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cập Nhật Danh Mục</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label class="form-label">Tên danh mục</label>
-                                        <input v-model="edit_cate.category_name" v-on:blur="checkSlug()" type="text"
+                                        <input v-model="edit_cate.title" v-on:blur="checkSlug()" type="text"
                                             class="form-control">
                                     </div>
 
@@ -112,14 +112,14 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-category_name fs-5" id="exampleModalLabel">Xóa danh mục</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Xóa danh mục</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="alert alert-primary" role="alert">
                                         Bạn có chắc chắn muốn xóa khu vực: <b class="text-danger text-uppercase">@{{
-                                            del_cate.category_name }}</b> này không?
+                                            del_cate.title }}</b> này không?
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -196,7 +196,7 @@
                     axios
                         .post("/admin/category/changeStatus", payload)
                         .then((res) => {
-                            alert("Đã đổi trạng thái thành công");
+                             toastr.success(res.data.message, "success");
                             this.LoadData();
                         });
                 },
@@ -204,12 +204,15 @@
                     axios
                         .get("/admin/category/Edit", this.edit_cate)
                         .then((res) => {
-                            alert("Lấy dữ liệu thành công");
+
+                            if (res.data.status == 1) {
+                                toastr.success(res.data.message, "Success");
+                                this.LoadData();
                             this.edit_cate = {
 
                             },
                                 this.LoadData();
-
+                        }
 
                         });
                 },
@@ -217,9 +220,11 @@
                     axios
                         .post("/admin/category/Update", this.edit_cate)
                         .then((res) => {
-                            alert("đã cập nhật thành công");
+                             if (res.data.status == 1) {
+                           toastr.success(res.data.message, "Success");
                             this.LoadData();
                             $('#updateModal').modal('hide');
+                             }
 
                         })
                         .catch((res) => {
@@ -234,7 +239,7 @@
                         .post("/admin/category/delete", this.del_cate)
                         .then((res) => {
 
-                            alert("Đã xóa thành công");
+                             toastr.success(res.data.message, "Success");
                             this.LoadData();
                         });
                 },
@@ -245,13 +250,17 @@
                     axios
                         .post("/admin/category/deleteAll", this.list)
                         .then((res) => {
-                            alert("Thành công");
-                            this.LoadData();
+                            if (res.data.status == 1) {
+                                toastr.success(res.data.message, "Success");
+                                this.LoadData();
+
+                            }
+
                         });
                 },
                 checkSlug() {
                     var payload = {
-                        'category_name': this.add_cate.category_name,
+                        'title': this.add_cate.title,
                     };
                     axios
                         .post('/admin/category/checkSlug', payload)

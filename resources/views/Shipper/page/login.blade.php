@@ -10,14 +10,21 @@
     <div class="card shadow p-4 text-center" style="max-width: 400px;">
         <h1 class="text-success fw-bold">CallFood</h1>
         <h2 class="text-success">Đăng Nhập</h2>
-        <form>
+        <form action="/shipper/actionlogin" method="post">
+            @csrf
             <div class="mb-3 text-start">
-                <label for="email" class="form-label">Tên tài khoản</label>
-                <input type="text" class="form-control" id="email" placeholder="Nhập tài khoản" required>
+                <label for="email" class="form-label">Email</label>
+                <input type="text" name="email" class="form-control" id="email" placeholder="Nhập email" >
+                @error('email')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-3 text-start">
                 <label for="password" class="form-label">Mật khẩu</label>
-                <input type="password" class="form-control" id="password" placeholder="Nhập mật khẩu" required>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Nhập mật khẩu" >
+                @error('password')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <button type="submit" class="btn btn-success w-100 fw-bold">Đăng Nhập</button>
         </form>

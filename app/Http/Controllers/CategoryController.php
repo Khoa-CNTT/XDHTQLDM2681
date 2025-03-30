@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
@@ -37,7 +36,7 @@ class CategoryController extends Controller
         $cate = new Category();
         $cate->title = $data["title"];
         $cate->status = $data["status"];
-        $cate->save();
+
         // dd($data);
         return response()->json([
             "status" => true,
@@ -153,11 +152,10 @@ class CategoryController extends Controller
     public function destroyAll(Request $request)
     {
         $data = $request->all();
-        // dd($request->all());
         $str = "";
         foreach ($data as $key => $value) {
             if (isset($value["check"])) {
-                $str .= $value["id"]  . ",";
+                $str .= $value["id "]  . ",";
             }
             $data_id = explode(",", rtrim($str, ","));
             foreach ($data_id as $k => $v) {

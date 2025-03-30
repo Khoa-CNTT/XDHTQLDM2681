@@ -17,8 +17,17 @@ return new class extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->string('phonenumber')->nullable();
-
+            $table->string('fullname');
+            $table->string('address')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('dateofbirth')->nullable();
+            $table->string('vehicle_type')->nullable();
+            $table->string('license_plate')->nullable(); // Biển số xe
+            $table->string('id_card')->nullable(); // CMND/CCCD
+            $table->enum('status', ['chờ duyệt', 'đã duyệt', 'từ chối'])->default('chờ duyệt'); // Trạng thái duyệt
             $table->timestamps();
+
+
         });
     }
 

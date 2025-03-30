@@ -31,13 +31,12 @@
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
                     <form class="d-flex header__search--form" action="#">
                         <div class="header__select--categories select">
-                            <select class="header__select--inner">
-                                <option selected value="1">Select Categories</option>
-                                <option value="2">Accessories</option>
-                                <option value="3">Accessories & More</option>
-                                <option value="4">Camera & Video </option>
-                                <option value="5">Butters & Eggs </option>
-                            </select>
+                        <select class="header__select--inner">
+                            <option selected value="0">Chọn danh mục</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
+                        </select>
                         </div>
                         <div class="header__search--box">
                             <label>
