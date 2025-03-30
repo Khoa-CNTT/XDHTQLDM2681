@@ -17,10 +17,10 @@ class ShipperAuth
 
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::guard("driver_auth")->check()) {
+        if (Auth::guard('driver_auth')->check()) {
             return $next($request);
         } else {
-            toastr()->error("yêu cầu cần đăng nhập");
+            toastr()->error("Yêu cầu phải login!");
             return redirect('/shipper/login');
         }
     }

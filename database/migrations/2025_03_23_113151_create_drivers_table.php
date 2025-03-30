@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('fullname');
             $table->string('address')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('dateofbirth')->nullable();
+            $table->date('dateofbirth')->nullable();
             $table->string('vehicle_type')->nullable();
             $table->string('license_plate')->nullable(); // Biển số xe
             $table->string('id_card')->nullable(); // CMND/CCCD

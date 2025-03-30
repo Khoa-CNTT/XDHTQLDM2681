@@ -10,6 +10,7 @@ class Driver extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+
     protected $table = "drivers";
 
     protected $fillable = [
@@ -17,6 +18,14 @@ class Driver extends Authenticatable
         'password',
         'email',
         'phonenumber',
+        'fullname',
+        'address',
+        'avatar',
+        'dateofbirth',
+        'vehicle_type',
+        'license_plate',
+        'id_card',
+
     ];
 
     protected $hidden = [

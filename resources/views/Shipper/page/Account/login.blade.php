@@ -10,7 +10,7 @@
     <div class="card shadow p-4 text-center" style="max-width: 400px;">
         <h1 class="text-success fw-bold">CallFood</h1>
         <h2 class="text-success">Đăng Nhập</h2>
-        <form action="/shipper/actionlogin" method="post">
+        <form action="/shipper/actionlogin" method="POST">
             @csrf
             <div class="mb-3 text-start">
                 <label for="email" class="form-label">Email</label>
