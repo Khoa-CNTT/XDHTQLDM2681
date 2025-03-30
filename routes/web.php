@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\facebookController;
@@ -50,15 +51,15 @@ Route::group(
 
 
         Route::group(["prefix" => "/category"], function () {
-            Route::get("/index", [CategoryController::class, "index"])->name("index");
-            Route::get("/data", [CategoryController::class, "getdata"])->name("data");
-            Route::post("/create", [CategoryController::class, "create"])->name("create");
-            Route::post("/changeStatus", [CategoryController::class, "changeStatus"])->name("changeStatus");
-            Route::get("/Edit", [CategoryController::class, "Edit"])->name("Edit");
-            Route::post("/Update", [CategoryController::class, "update"])->name("Update");
-            Route::post("/delete", [CategoryController::class, "delete"])->name("delete");
-            Route::post("/deleteAll", [CategoryController::class, "destroyAll"])->name("deleteAll");
-            Route::post("/checkSlug", [CategoryController::class, "checkSlug"])->name("checkSlug");
+            Route::get("/index", [AdminCategoryController::class, "index"])->name("index");
+            Route::get("/data", [AdminCategoryController::class, "getdata"])->name("data");
+            Route::post("/create", [AdminCategoryController::class, "create"])->name("create");
+            Route::post("/changeStatus", [AdminCategoryController::class, "changeStatus"])->name("changeStatus");
+            Route::get("/Edit", [AdminCategoryController::class, "Edit"])->name("Edit");
+            Route::post("/Update", [AdminCategoryController::class, "update"])->name("Update");
+            Route::post("/delete", [AdminCategoryController::class, "delete"])->name("delete");
+            Route::post("/deleteAll", [AdminCategoryController::class, "destroyAll"])->name("deleteAll");
+            Route::post("/checkSlug", [AdminCategoryController::class, "checkSlug"])->name("checkSlug");
         });
 
 
@@ -75,6 +76,7 @@ Route::group(
     function(){
         Route::get('/home',[HomeShipperController::class,"homeshipper"]);
         Route::get('/login',[AccountShipperController::class,"loginshipper"]);
+        Route::post('/actionlogin', [AccountShipperController::class, "actionloginshipper"]);
         Route::get('/order',[OrderShipperController::class,"ordershipper"]);
         Route::get('/order-history',[OrderShipperController::class,"orderhistoryshipper"]);
         Route::get('/order-history-detail',[OrderShipperController::class,"detailhistory"]);

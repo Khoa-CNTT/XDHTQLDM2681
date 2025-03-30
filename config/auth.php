@@ -40,21 +40,23 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'driver_auth' => [ // Phải khớp với Auth::guard('driver_auth')
+            'driver' => 'session',
+            'provider' => 'drivers',
+        ],
     ],
+
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        // 'admin' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Admin::class,
-        // ],
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'drivers' => [  // Đây là phần bị Laravel không nhận diện
+            'driver' => 'eloquent',
+            'model' => App\Models\Driver::class,
+        ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
