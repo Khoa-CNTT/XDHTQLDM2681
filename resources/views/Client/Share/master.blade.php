@@ -7,6 +7,14 @@
     <meta name="description" content="Morden Bootstrap HTML5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<!-- Thêm CSS cho toastr -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+<!-- Thêm JS cho toastr -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<!-- Phần render Toastr (nếu bạn sử dụng) -->
+
 
     <!-- ======= All CSS Plugins here ======== -->
     @include('Client.Share.css')
@@ -14,6 +22,7 @@
 </head>
 
 <body>
+    {!! Toastr::render() !!}
 
     <!-- Start preloader -->
 

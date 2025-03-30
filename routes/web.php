@@ -75,8 +75,15 @@ Route::group(
     ["prefix" => "/shipper"],
     function(){
         Route::get('/home',[HomeShipperController::class,"homeshipper"]);
-        Route::get('/login',[AccountShipperController::class,"loginshipper"]);
+
+        Route::get('/verify-otp', [AccountShipperController::class, 'showOTPForm'])->name('verify.otp');
+        Route::post('/verify-otp', [AccountShipperController::class, 'verifyOTP'])->name('verify.otp.submit');
+        Route::get('/login',[AccountShipperController::class,"loginshipper"])->name('login.shipper');
+        Route::get('/register', [AccountShipperController::class, "registershipper"]);
+        Route::post('/actionregister', [AccountShipperController::class, "actionregistershipper"])->name("driver.register");
         Route::post('/actionlogin', [AccountShipperController::class, "actionloginshipper"]);
+
+
         Route::get('/order',[OrderShipperController::class,"ordershipper"]);
         Route::get('/order-history',[OrderShipperController::class,"orderhistoryshipper"]);
         Route::get('/order-history-detail',[OrderShipperController::class,"detailhistory"]);
