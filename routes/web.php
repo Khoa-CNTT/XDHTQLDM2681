@@ -32,6 +32,13 @@ Route::get('login/facebook/callback', [facebookController::class, 'handleFaceboo
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
+
+// Routes for Forget Password
+Route::get('forget-password', [AccountController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('forget-password', [AccountController::class, 'submitForgetPasswordForm'])->name('forget.password.post');
+Route::get('reset-password/{token}', [AccountController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [AccountController::class, 'submitResetPasswordForm'])->name('reset.password.post');
+
 Route::group(
     ["prefix" => "/client"],
     function () {

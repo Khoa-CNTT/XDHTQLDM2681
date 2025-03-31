@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    {!! Toastr::render() !!}
+
 
     <!-- Start preloader -->
 
