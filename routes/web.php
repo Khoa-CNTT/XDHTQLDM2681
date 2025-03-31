@@ -8,6 +8,7 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Restaurant\ResRegister;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;

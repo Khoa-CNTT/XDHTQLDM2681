@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Restaurant;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ResRegister extends Controller
+class ResRegisterController extends Controller
 {
-    public function resRegister()
-    {
+     public function resRegister(){
         return view('Restaurant/page/register');
-    }
+     }
 }
