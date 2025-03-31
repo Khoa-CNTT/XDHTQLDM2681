@@ -13,6 +13,7 @@ use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;
 use App\Http\Controllers\Shipper\AccountShipperController;
 use App\Http\Controllers\Shipper\OrderShipperController;
+use App\Http\Controllers\Restaurant\ResRegisterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -68,6 +69,12 @@ Route::group(
         Route::get('/restaurant', [RestaurantController::class, "index"]);
         Route::get('/order', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
+    }
+);
+Route::group(
+    ["prefix" => "/restaurant"],
+    function(){
+        Route::get('/register',[ResRegisterController::class,"resRegister"]);
     }
 );
 Route::group(
