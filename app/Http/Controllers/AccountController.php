@@ -23,6 +23,18 @@ class AccountController extends Controller
             return view("Client.page.Account.login");
         }
     }
+    public function dashboard()
+    {
+        return view("Client.page.Account.Dashboard");
+    }
+    public function address()
+    {
+        return view("Client.page.Account.Address");
+    }
+    public function information()
+    {
+        return view("Client.page.Account.Information");
+    }
 
 
     public function actionLogin(UserLoginRequest $request)

@@ -41,6 +41,9 @@ Route::group(
         Route::get('/cart', [CartController::class, "index"]);
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
+        Route::get('/account/dashboard', [AccountController::class, "dashboard"]);
+        Route::get('/account/address', [AccountController::class, "address"]);
+        Route::get('/account/information', [AccountController::class, "information"]);
 
     });
 
@@ -67,8 +70,7 @@ Route::group(
         Route::get('/user/index', [AccountController::class, "index"]);
         Route::get('/menu/index', [MenuItemController::class, "index"]);
         Route::get('/restaurant', [RestaurantController::class, "index"]);
-        Route::get('/order', [OrderController::class, "index"]);
-        Route::get('/history-order', [OrderController::class, "historyorder"]);
+
     }
 );
 Route::group(

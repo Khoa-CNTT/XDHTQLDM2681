@@ -1,5 +1,4 @@
 <header>
-@if(Auth::user()->role === 'admin')
     <div class="topbar d-flex align-items-center">
         <nav class="navbar navbar-expand">
             <div class="topbar-logo-header">
