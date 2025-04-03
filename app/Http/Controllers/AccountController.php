@@ -8,6 +8,8 @@ use App\Models\Account;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 
 class AccountController extends Controller
 {
@@ -33,7 +35,35 @@ class AccountController extends Controller
     }
     public function information()
     {
-        return view("Client.page.Account.Information");
+        $user = auth()->user();
+        return view("Client.page.Account.Information",compact('user'));
+    }
+    public function updateinformation(Request $request)
+    {
+        $user = auth()->user();
+
+        // Xác thực dữ liệu đầu vào
+        $request->validate([
+        'username' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id, 
+        'phone_number' => 'nullable|string|max:15',
+        'address' => 'nullable|string|max:255',
+        'password' => 'nullable|string|min:6|confirmed', // Kiểm tra mật khẩu nếu có
+        ]);
+    
+        // Cập nhật thông tin người dùng
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->PhoneNumber = $request->input('PhoneNumber');
+        $user->Address = $request->input('Address');
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+        // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
+        $user->save();
+    
+        // Trả về thông báo thành công và chuyển hướng về trang thông tin người dùng
+        return redirect()->route('account.information')->with('success', 'Your profile has been updated successfully.');
     }
 
 
@@ -77,7 +107,15 @@ class AccountController extends Controller
         toastr()->success("Đăng ký thành công!");
         return redirect('/');
     }
+    public function logout(Request $request)
+    {
+    Auth::logout(); // Đăng xuất người dùng
+    // Hủy session nếu cần
+       $request->session()->invalidate();
+       $request->session()->regenerateToken();
 
+    return redirect('/account/login')->with('success', 'You have logged out successfully.');
+    }
 
 
 

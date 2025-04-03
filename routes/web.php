@@ -41,9 +41,11 @@ Route::group(
         Route::get('/cart', [CartController::class, "index"]);
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
-        Route::get('/account/dashboard', [AccountController::class, "dashboard"]);
-        Route::get('/account/address', [AccountController::class, "address"]);
-        Route::get('/account/information', [AccountController::class, "information"]);
+        Route::get('/dashboard', [AccountController::class, "dashboard"]);
+        Route::get('/address', [AccountController::class, "address"]);
+        Route::get('/information', [AccountController::class, "information"])->name('account.information');
+        Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
+        Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
     });
 

@@ -10,7 +10,12 @@
                             <li class="account__menu--list active"><a href="my-account.html">Dashboard</a></li>
                             <li class="account__menu--list"><a href="my-account-2.html">Addresses</a></li>
                             <li class="account__menu--list"><a href="wishlist.html">Information</a></li>
-                            <li class="account__menu--list"><a href="login.html">Log Out</a></li>
+                            <li class="account__menu--list">
+                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <a href="#" onclick="confirmLogout(event)">Log Out</a>
+        </form>
+                            </li>
                         </ul>
                     </div>
                     <div class="account__wrapper">
@@ -241,4 +246,14 @@
                 </div>
             </div>
         </section>
+        <script>
+    function confirmLogout(event) {
+        event.preventDefault(); // Ngăn chặn hành động mặc định của link
+        let confirmAction = confirm("Bạn có chắc chắn muốn đăng xuất?");
+        if (confirmAction) {
+            document.getElementById('logoutForm').submit(); // Nếu chọn "OK", thực hiện logout
+        }
+    }
+</script>
+
 @endsection
