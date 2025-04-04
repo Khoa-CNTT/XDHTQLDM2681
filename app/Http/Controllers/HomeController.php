@@ -16,7 +16,6 @@ class HomeController extends Controller
     {
 
 
-        $categories = MenuItem::all();
 
         return view('Client.page.home' );
 
