@@ -23,9 +23,9 @@
                     <div class="account__details two" id="profileDetails">
                         <h3 class="account__details--title h4">Profile Details</h3>
                         <p class="account__details--desc" id="profileInfo">
-                            Name : {{$user->username}} <br> 
-                            Email : {{ $user->email }} <br> 
-                            Phone : {{ $user->PhoneNumber ?? 'Thêm số điện thoại' }} <br> 
+                            Name : {{$user->username}} <br>
+                            Email : {{ $user->email }} <br>
+                            Phone : {{ $user->PhoneNumber ?? 'Thêm số điện thoại' }} <br>
                             Address : {{ $user->Address ?? 'Thêm địa chỉ' }}</p>
                         <div class="account__details--footer d-flex" id="profileButtons">
                             <button class="account__details--footer__btn" type="button" onclick="enableEdit()">Edit</button>
@@ -80,7 +80,7 @@
             alert("Passwords do not match!");
             return;
         }
-        
+
         document.getElementById('profileInfo').innerHTML = `Name: ${name} <br> Email: ${email} <br> Phone: ${phone} <br> Date of Birth: ${dob} <br> Address: ${address}`;
         cancelEdit();
     }

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\ResisterUserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\Account;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 
 
@@ -35,33 +36,35 @@ class AccountController extends Controller
     }
     public function information()
     {
-        $user = auth()->user();
+        $user = Auth::user();
+
         return view("Client.page.Account.Information",compact('user'));
     }
     public function updateinformation(Request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
+
 
         // Xác thực dữ liệu đầu vào
         $request->validate([
         'username' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . $user->id, 
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
         'phone_number' => 'nullable|string|max:15',
         'address' => 'nullable|string|max:255',
         'password' => 'nullable|string|min:6|confirmed', // Kiểm tra mật khẩu nếu có
         ]);
-    
+
         // Cập nhật thông tin người dùng
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->PhoneNumber = $request->input('PhoneNumber');
         $user->Address = $request->input('Address');
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $user->password = bcrypt($request->password);
         }
         // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
         $user->save();
-    
+
         // Trả về thông báo thành công và chuyển hướng về trang thông tin người dùng
         return redirect()->route('account.information')->with('success', 'Your profile has been updated successfully.');
     }
