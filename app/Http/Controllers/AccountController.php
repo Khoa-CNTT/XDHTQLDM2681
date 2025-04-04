@@ -145,6 +145,12 @@ class AccountController extends Controller
 
           return redirect('/account/login')->with('message', 'Thay đổi mật khẩu thành công');
       }
+    public function actionLogout()
+    {
+        Auth::guard('web')->logout(); // Đăng xuất user
+        toastr()->success("Đã đăng xuất thành công!");
+        return redirect('/account/login'); // Chuyển hướng về trang login
+    }
 
 
 

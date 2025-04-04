@@ -124,5 +124,15 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    // 'providers' => [
+    //     // Các provider khác
+    //     CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+    // ],
+
+    // 'aliases' => [
+    //     // Các alias khác
+    //     'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+    // ],
+
 
 ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Home;
+use App\Models\MenuItem;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -15,9 +16,9 @@ class HomeController extends Controller
     {
 
 
-        $categories = Category::all();
+        $categories = MenuItem::all();
 
-        return view('Client.page.home', );
+        return view('Client.page.home' );
 
     }
 
