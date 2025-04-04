@@ -45,7 +45,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </label>
-                                        <button class="account__login--btn btn" type="submit">Login</button>
+                                        <button class="account__login--btn btn" type="submit">Đăng nhập</button>
                                     </form>
                                     <div class="account__login--divide">
                                         <span class="account__login--divide__text">OR</span>
@@ -60,6 +60,7 @@
                                     </div>
                                     <p class="account__login--signup__text">Don,t Have an Account? <button
                                             type="submit">Sign up now</button></p>
+                                            <p><a href="{{ route('forget.password.get') }}">Quên mật khẩu</a></p>
                                 </div>
                             </div>
                         </div>
