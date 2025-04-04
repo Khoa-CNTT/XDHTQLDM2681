@@ -42,6 +42,11 @@ Route::group(
         Route::get('/cart', [CartController::class, "index"]);
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
+        Route::get('/dashboard', [AccountController::class, "dashboard"]);
+        Route::get('/address', [AccountController::class, "address"]);
+        Route::get('/information', [AccountController::class, "information"])->name('account.information');
+        Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
+        Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
 
     });
 
@@ -68,8 +73,7 @@ Route::group(
         Route::get('/user/index', [AccountController::class, "index"]);
         Route::get('/menu/index', [MenuItemController::class, "index"]);
         Route::get('/restaurant', [RestaurantController::class, "index"]);
-        Route::get('/order', [OrderController::class, "index"]);
-        Route::get('/history-order', [OrderController::class, "historyorder"]);
+
     }
 );
 Route::group(
