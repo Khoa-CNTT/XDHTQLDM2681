@@ -30,4 +30,8 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Location::class);
     }
+    public function menuItems()
+    {
+        return $this->hasMany(MenuItem::class, 'restaurant_id');
+    }
 }
