@@ -13,11 +13,17 @@ return new class extends Migration
     {
         Schema::create('restaurants', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name'); // Tên shop
+            $table->boolean('approved')->default(false); // Mặc định là chưa duyệt
             $table->bigInteger('PhoneNumber');
-            $table->boolean('Status')->default(true);
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->string('email')->unique(); // Email
+            $table->boolean('status')->default(true); // Trạng thái hoạt động
+            $table->time('start_time')->nullable(); // Giờ mở cửa
+            $table->time('end_time')->nullable(); // Giờ đóng cửa
+            $table->string('business_type'); // Loại hình kinh doanh
+            $table->text('description')->nullable(); // Mô tả shop
+            $table->string('logo')->nullable(); // Logo cửa hàng
+            $table->string('business_license')->nullable(); // Giấy phép kinh doanh
             $table->integer('location_id');
             $table->timestamps();
         });

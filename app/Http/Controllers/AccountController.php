@@ -191,7 +191,6 @@ class AccountController extends Controller
         toastr()->success("Đã đăng xuất thành công!");
         return redirect('/account/login'); // Chuyển hướng về trang login
     }
-   
 
 
 

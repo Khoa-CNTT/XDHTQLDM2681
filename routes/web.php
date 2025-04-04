@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
+use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\facebookController;
@@ -9,13 +10,16 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Restaurant\MenuController;
 use App\Http\Controllers\Restaurant\ResRegister;
+use App\Http\Controllers\Restaurant\RestaurantController as  SellController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;
 use App\Http\Controllers\Shipper\AccountShipperController;
 use App\Http\Controllers\Shipper\OrderShipperController;
 use App\Http\Controllers\Restaurant\ResRegisterController;
+use App\Http\Controllers\Restaurant\RestaurantController as RestaurantRestaurantController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,6 +38,9 @@ Route::get('login/facebook/callback', [facebookController::class, 'handleFaceboo
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
+Route::get('/account/logout', [AccountController::class, 'actionLogout'])->name('logout');
+
+
 
 // Routes for Forget Password
 Route::get('forget-password', [AccountController::class, 'showForgetPasswordForm'])->name('forget.password.get');
@@ -58,6 +65,10 @@ Route::group(
 
     });
 
+
+
+    //admin
+
 Route::group(
     ["prefix" => "/admin"],
     function () {
@@ -75,7 +86,13 @@ Route::group(
             Route::post("/deleteAll", [AdminCategoryController::class, "destroyAll"])->name("deleteAll");
             Route::post("/checkSlug", [AdminCategoryController::class, "checkSlug"])->name("checkSlug");
         });
+        Route::group(["prefix" => "/restaurant"], function () {
+            Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
+            // routes/web.php
+            Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
 
+
+        });
 
         Route::get('/thong-ke', [ThongkeController::class, "index"]);
         Route::get('/user/index', [AccountController::class, "index"]);
@@ -84,12 +101,37 @@ Route::group(
 
     }
 );
+
+
+
+
+
+
+
+
+//restaurant
 Route::group(
     ["prefix" => "/restaurant"],
     function(){
         Route::get('/register',[ResRegisterController::class,"resRegister"]);
+        Route::post('/register-restaurant', [SellController::class, 'store'])->name('restaurant.store');
+        Route::get('/admin/restaurants', [SellController::class, 'pendingRestaurants'])->name('admin.restaurants');
+        Route::resource('menu_items', MenuController::class);
+
     }
+
 );
+
+
+
+
+
+
+
+
+
+
+//shipper
 Route::group(
     ["prefix" => "/shipper"],
     function(){
