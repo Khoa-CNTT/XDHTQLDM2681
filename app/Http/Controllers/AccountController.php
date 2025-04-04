@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\updateinformationRequest;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\ResisterUserRequest;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,7 @@ class AccountController extends Controller
 
         return view("Client.page.Account.Information",compact('user'));
     }
-    public function updateinformation(Request $request)
+    public function updateinformation(updateinformationRequest $request)
     {
         $user = Auth::user();
 
