@@ -14,9 +14,27 @@ class MenuItemController extends Controller
     {
         return view('Client.page.Menu.index');
     }
-    public function detail()
+    public function detail($id)
     {
-        return view('Client.page.Menu.detail');
+        // Lấy chi tiết món ăn theo ID
+        $menuItem = MenuItem::with(['category', 'restaurant'])
+            ->where('id', $id)
+            ->firstOrFail(); // Nếu không tìm thấy sẽ trả về lỗi 404
+
+        // Trả về view với dữ liệu món ăn
+        return view('Client.page.Menu.detail', compact('menuItem'));
+    }
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        if ($query) {
+            $results = MenuItem::where('title', 'like', '%' . $query . '%')->get();
+        } else {
+            $results = MenuItem::all();
+        }
+
+        return view('Client.page.Menu.index', compact('results'));
     }
 
 

@@ -22,15 +22,15 @@ class RestaurantController extends Controller
          //dd($request->hasFile('logo'));
         if ($request->hasFile('logo')) {
             $get_image = $request->file('logo');
-            $path = public_path("image/logo");
+            $path = "image/logo";
             // dd($path) ;
             $get_image_name = $get_image->getClientOriginalName(); // Lấy tên gốc của ảnh
-            $name_image = pathinfo($get_image_name, PATHINFO_FILENAME); // Lấy tên ảnh mà không có đuôi
+            $name_image = current(explode(".", $get_image_name));
             $new_image = $name_image . rand(0, 999) . "." . $get_image->getClientOriginalExtension(); // Tạo tên ảnh mới
             $get_image->move($path, $new_image); // Di chuyển ảnh vào thư mục
 
             // Lưu đường dẫn ảnh vào cơ sở dữ liệu
-            $logoPath = "image/foods/" . $new_image;
+            $logoPath =  $new_image;
             // dd(
             //     $logoPath);
         } else {
@@ -50,10 +50,20 @@ class RestaurantController extends Controller
         }
         // dd($location);
         if ($request->hasFile('business_license')) {
-            // Lưu vào thư mục 'public/image/restaurant'
-            $businessLicensePath = $request->file('business_license')->store('image/restaurant/giayphep', 'public');
+            $get_image = $request->file('business_license');
+            $path = "image/restaurant";
+            // dd($path) ;
+            $get_image_name = $get_image->getClientOriginalName(); // Lấy tên gốc của ảnh
+            $name_image = current(explode(".", $get_image_name)); // Lấy tên ảnh mà không có đuôi
+            $new_image = $name_image . rand(0, 999) . "." . $get_image->getClientOriginalExtension(); // Tạo tên ảnh mới
+            $get_image->move($path, $new_image); // Di chuyển ảnh vào thư mục
+
+            // Lưu đường dẫn ảnh vào cơ sở dữ liệu
+            $businessLicensePath = $new_image;
+            // dd(
+            //     $logoPath);
         } else {
-            $businessLicensePath = null; // Nếu không có ảnh, giữ giá trị null
+            return response()->json(['success' => false, 'message' => 'Không có file ảnh để tải lên.'], 400);
         }
 
         try {

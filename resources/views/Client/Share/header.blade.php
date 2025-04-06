@@ -36,151 +36,18 @@
                         </select>
 
                         </div>
+                         <form action="{{ route('search') }}" method="GET">
                         <div class="header__search--box">
                             <label>
-                                <input class="header__search--input" placeholder="nhập từ khóa tìm kiếm" type="text">
+                                <input  name="query" class="header__search--input" placeholder="nhập từ khóa tìm kiếm" type="text">
                             </label>
                             <button class="header__search--button bg__secondary text-white"
                                 type="submit">Tìm kiếm</button>
                         </div>
+                    </form>
                     </div>
                 </div>
-                {{-- <div class="header__menu d-none d-lg-block header__sticky--block">
-                    <nav class="header__menu--navigation">
-                        <ul class="d-flex">
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="index.html">Home
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="/"
-                                            class="header__sub--menu__link">Home </a></li>
 
-                                </ul>
-                            </li>
-                            <li class="header__menu--items mega__menu--items">
-                                <a class="header__menu--link" href="shop.html">Nhà Hàng
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__mega--menu d-flex">
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column One</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/menu/index">Shop
-                                                    Left Sidebar</a></li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Two</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="/client/menu/detail">Product Details</a></li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Three</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/history-order">My
-                                                    Account</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="my-account-2.html">My Account 2</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="404.html">404
-                                                    Page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/account/login">Login
-                                                    Page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="faq.html">Faq
-                                                    Page</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Four</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="compare.html">Compare Pages</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout.html">Checkout page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-2.html">Checkout Style 2</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-3.html">Checkout Style 3</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-4.html">Checkout Style 4</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="blog.html">Blog
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="blog.html"
-                                            class="header__sub--menu__link">Blog Grid</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-details.html"
-                                            class="header__sub--menu__link">Blog Details</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-left-sidebar.html"
-                                            class="header__sub--menu__link">Blog Left Sidebar</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-right-sidebar.html"
-                                            class="header__sub--menu__link">Blog Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="#">Pages
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="about.html"
-                                            class="header__sub--menu__link">About Us</a></li>
-                                    <li class="header__sub--menu__items"><a href="contact.html"
-                                            class="header__sub--menu__link">Contact Us</a></li>
-                                    <li class="header__sub--menu__items"><a href="cart.html"
-                                            class="header__sub--menu__link">Cart Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="portfolio.html"
-                                            class="header__sub--menu__link">Portfolio Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="wishlist.html"
-                                            class="header__sub--menu__link">Wishlist Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="login.html"
-                                            class="header__sub--menu__link">Login Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="404.html"
-                                            class="header__sub--menu__link">Error Page</a></li>
-                                </ul>
-                            </li>
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="contact.html">Contact </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div> --}}
                 <div class="header__account header__sticky--none">
                     <ul class="d-flex">
                         <li class="header__account--items d-none d-lg-block">
@@ -342,87 +209,7 @@
                         </svg>
                     </div>
                     <div class="dropdown__categories--menu">
-                        {{-- <ul class="d-none d-lg-block">
 
- @foreach($categories as $category)
-                            <li class="categories__menu--items">
-                                <a class="categories__menu--link" href="shop.html">
-                                    <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
-                                            fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32" />
-                                    </svg> {{ $category->title }}
-                                    <svg class="categories__menu--right__arrow--icon"
-                                        xmlns="http://www.w3.org/2000/svg" width="17.007" height="16.831"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="48"
-                                            d="M184 112l144 144-144 144" />
-                                    </svg>
-                                </a>
-                                <ul class="categories__submenu border-radius-10 d-flex justify-content-between">
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Hot
-                                                Offers</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html"> AFresh Seafood</a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html"> Apple Juice</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Fresh
-                                                Meat</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Apple Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">AFresh Seafood </a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Nature
-                                                Food</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Apple Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">AFresh Seafood </a></li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            @endforeach
-
-                        </ul> --}}
                         <ul class="d-none d-lg-block">
                             @foreach($categories as $category)
                                 <li class="categories__menu--items">

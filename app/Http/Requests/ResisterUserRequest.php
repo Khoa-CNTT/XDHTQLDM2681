@@ -23,7 +23,7 @@ class ResisterUserRequest extends FormRequest
     {
         return [
             'username' => 'required|string|min:3|max:50|unique:users,username',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'password' => 'required|string|min:6|max:32|confirmed',
         ];
 
@@ -38,7 +38,7 @@ class ResisterUserRequest extends FormRequest
 
             'email.required' => 'Vui lòng nhập email!',
             'email.email' => 'Email không hợp lệ!',
-            'email.unique' => 'Email này đã được sử dụng!',
+
 
             'password.required' => 'Vui lòng nhập mật khẩu!',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự!',

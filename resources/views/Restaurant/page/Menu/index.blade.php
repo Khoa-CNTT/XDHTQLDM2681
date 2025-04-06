@@ -19,7 +19,7 @@
                 @foreach($menuItems as $menuItem)
                     <tr>
                         <td>{{ $menuItem->Title_items }}</td>
-                        <td>{{ $menuItem->restaurant->name }}</td>
+                        <td>{{ $menuItem->restaurant?->name }}</td>
                         <td>{{ $menuItem->category->title }}</td>
                         <td>{{ $menuItem->Price }}</td>
                         <td>{{ $menuItem->Quantity }}</td>
