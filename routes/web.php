@@ -48,12 +48,15 @@ Route::post('forget-password', [AccountController::class, 'submitForgetPasswordF
 Route::get('reset-password/{token}', [AccountController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [AccountController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+//menu 
+Route::get('/menu/index', [MenuItemController::class, "index"]);
+Route::get('/menu/detail', [MenuItemController::class, "detail"]);
 Route::group(
-    ["prefix" => "/client"],
+    ["prefix" => "/client",
+    "middleware" => ['auth.custom']],
     function () {
-
-        Route::get('/menu/index', [MenuItemController::class, "index"]);
-        Route::get('/menu/detail', [MenuItemController::class, "detail"]);
+        // Route::get('/menu/index', [MenuItemController::class, "index"]);
+        // Route::get('/menu/detail', [MenuItemController::class, "detail"]);
         Route::get('/cart', [CartController::class, "index"]);
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
@@ -61,8 +64,6 @@ Route::group(
         Route::get('/address', [AccountController::class, "address"]);
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
-        Route::post('/logout', [AccountController::class, 'logout'])->name('logout');
-
     });
 
 

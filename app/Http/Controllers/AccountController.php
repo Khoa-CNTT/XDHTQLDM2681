@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Requests\updateinformationRequest;
 
 class AccountController extends Controller
 {
@@ -40,26 +41,17 @@ class AccountController extends Controller
         $user = auth()->user();
         return view("Client.page.Account.Information",compact('user'));
     }
-    public function updateinformation(Request $request)
+    public function updateinformation(updateinformationRequest $request)
     {
-        $user = auth()->user();
 
-        // Xác thực dữ liệu đầu vào
-        $request->validate([
-        'username' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:users,email,' . $user->id, 
-        'phone_number' => 'nullable|string|max:15',
-        'address' => 'nullable|string|max:255',
-        'password' => 'nullable|string|min:6|confirmed', // Kiểm tra mật khẩu nếu có
-        ]);
-    
+        $user = auth()->user(); 
         // Cập nhật thông tin người dùng
         $user->username = $request->input('username');
         $user->email = $request->input('email');
         $user->PhoneNumber = $request->input('PhoneNumber');
         $user->Address = $request->input('Address');
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $user->password = bcrypt($request->password);
         }
         // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
         $user->save();

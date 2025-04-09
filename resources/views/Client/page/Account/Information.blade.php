@@ -1,22 +1,5 @@
-@extends('Client.Share.master')
-@section('content')
-<section class="my__account--section section--padding">
-    <div class="container">
-        <div class="my__account--section__inner border-radius-10 d-flex">
-            <div class="account__left--sidebar">
-                <h2 class="account__content--title h3 mb-20">My Profile</h2>
-                <ul class="account__menu">
-                    <li class="account__menu--list"><a href="my-account.html">Dashboard</a></li>
-                    <li class="account__menu--list"><a href="my-account-2.html">Addresses</a></li>
-                    <li class="account__menu--list active"><a href="information.html">Information</a></li>
-                    <li class="account__menu--list">
-                    <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <a href="#" onclick="confirmLogout(event)">Log Out</a>
-        </form>
-                    </li>
-                </ul>
-            </div>
+@extends('Client.page.Account.settingmaster')
+@section('settingaccount_content')
             <div class="account__wrapper">
                 <div class="account__content">
                     <h2 class="account__content--title h3 mb-20">Personal Information</h2>
@@ -33,27 +16,61 @@
                         </div>
                     </div>
                     <div id="editForm" style="display: none;">
-                        <h3 class="account__details--title h4">Edit Profile</h3>
-                        <form method="POST" action="{{ url('/client/information/update') }}">
-                            @csrf
-                            <label>Name: <input type="text" name="username"  value="{{ $user->username }}"></label><br>
-                            <label>Email: <input type="email" name="email" value="{{ $user->email }}"></label><br>
-                            <label>Phone: <input type="text" name="PhoneNumber" value="{{ $user->PhoneNumber }}"></label><br>
-                            <label>Address: <input type="text"  name="Address" value="{{ $user->Address }}"></label><br>
-                            <h3 class="account__details--title h4">Change Password</h3>
-                            <label>New Password: <input name="password" type="password"></label><br>
-                            <label>Confirm Password: <input name="password_confirmation" type="password"></label><br>
-                            <div class="d-flex gap-2">
-                                <button type="submit" class="btn btn-success">Save</button>
-                                <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
+    <h3 class="account__details--title h4">Edit Profile</h3>
+    <form method="POST" action="{{ url('/client/information/update') }}">
+        @csrf
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">Name:</label>
+            <input type="text" name="username" value="{{ $user->username }}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('username')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">Email:</label>
+            <input type="email" name="email" value="{{ $user->email }}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('email')
+            <div class="text-danger">{{ $message }}</div>
+             @enderror
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">Phone:</label>
+            <input type="text" name="PhoneNumber" value="{{ $user->PhoneNumber }}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('PhoneNumber')
+            <div class="text-danger">{{ $message }}</div>
+              @enderror
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">Address:</label>
+            <input type="text" name="Address" value="{{ $user->Address }}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('Address')
+            <div class="text-danger">{{ $message }}</div>
+              @enderror
+        </div>
+        <h3 class="account__details--title h4">Change Password</h3>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">New Password:</label>
+            <input name="password" type="password" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('password')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        </div>
+        <div style="margin-bottom: 1rem;">
+            <label style="display: block;">Confirm Password:</label>
+            <input name="password_confirmation" type="password" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+            @error('password_confirmation')
+            <div class="text-danger">{{ $message }}</div>
+        @enderror
+        </div>
+        <div style="display: flex; gap: 1rem; align-items: center;">
+    <button type="submit" class="btn btn-success" style="background-color: #28a745; border: none; padding: 0.5rem 1rem; border-radius: 5px; color: white; line-height: 1.5; vertical-align: middle;">Save</button>
+    <button type="button" class="btn btn-secondary" onclick="cancelEdit()" style="background-color: #6c757d; border: none; padding: 0.5rem 1rem; border-radius: 5px; color: white; line-height: 1.5; vertical-align: middle;">Cancel</button>
+</div>
+
+    </form>
+</div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
 <script>
     function enableEdit() {
         document.getElementById('profileDetails').style.display = 'none';
@@ -67,29 +84,5 @@
         document.getElementById('editForm').style.display = 'none';
     }
 
-    function saveChanges() {
-        const name = document.getElementById('editName').value;
-        const email = document.getElementById('editEmail').value;
-        const phone = document.getElementById('editPhone').value;
-        const dob = document.getElementById('editDOB').value;
-        const address = document.getElementById('editAddress').value;
-        const password = document.getElementById('editPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-
-        if (password && password !== confirmPassword) {
-            alert("Passwords do not match!");
-            return;
-        }
-
-        document.getElementById('profileInfo').innerHTML = `Name: ${name} <br> Email: ${email} <br> Phone: ${phone} <br> Date of Birth: ${dob} <br> Address: ${address}`;
-        cancelEdit();
-    }
-    function confirmLogout(event) {
-        event.preventDefault(); // Ngăn chặn hành động mặc định của link
-        let confirmAction = confirm("Bạn có chắc chắn muốn đăng xuất?");
-        if (confirmAction) {
-            document.getElementById('logoutForm').submit(); // Nếu chọn "OK", thực hiện logout
-        }
-    }
 </script>
 @endsection

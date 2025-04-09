@@ -1,23 +1,5 @@
-@extends('Client.Share.master')
-@section('content')
-<section class="my__account--section section--padding">
-            <div class="container">
-                <p class="account__welcome--text">Hello, Admin welcome to your dashboard!</p>
-                <div class="my__account--section__inner border-radius-10 d-flex">
-                    <div class="account__left--sidebar">
-                        <h2 class="account__content--title h3 mb-20">My Profile</h2>
-                        <ul class="account__menu">
-                            <li class="account__menu--list active"><a href="my-account.html">Dashboard</a></li>
-                            <li class="account__menu--list"><a href="my-account-2.html">Addresses</a></li>
-                            <li class="account__menu--list"><a href="wishlist.html">Information</a></li>
-                            <li class="account__menu--list">
-                            <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <a href="#" onclick="confirmLogout(event)">Log Out</a>
-        </form>
-                            </li>
-                        </ul>
-                    </div>
+@extends('Client.page.Account.settingmaster')
+@section('settingaccount_content')
                     <div class="account__wrapper">
                         <div class="account__content">
                             <h2 class="account__content--title h3 mb-20">Orders History</h2>
@@ -243,17 +225,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
         <script>
-    function confirmLogout(event) {
-        event.preventDefault(); // Ngăn chặn hành động mặc định của link
-        let confirmAction = confirm("Bạn có chắc chắn muốn đăng xuất?");
-        if (confirmAction) {
-            document.getElementById('logoutForm').submit(); // Nếu chọn "OK", thực hiện logout
-        }
-    }
 </script>
-
 @endsection
