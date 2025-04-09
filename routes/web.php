@@ -38,6 +38,8 @@ Route::get('login/facebook/callback', [facebookController::class, 'handleFaceboo
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
+Route::get('/verify-otp', [AccountController::class, 'showOTPForm'])->name('verify.otp_client');
+Route::post('/verify-otp', [AccountController::class, 'verifyOTP'])->name('verify.otp.submit_client');
 Route::get('/account/logout', [AccountController::class, 'actionLogout'])->name('logout');
 
 
@@ -48,22 +50,29 @@ Route::post('forget-password', [AccountController::class, 'submitForgetPasswordF
 Route::get('reset-password/{token}', [AccountController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [AccountController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-//menu 
-Route::get('/menu/index', [MenuItemController::class, "index"]);
-Route::get('/menu/detail', [MenuItemController::class, "detail"]);
 Route::group(
-    ["prefix" => "/client",
-    "middleware" => ['auth.custom']],
+    ["prefix" => "/client"],
     function () {
-        // Route::get('/menu/index', [MenuItemController::class, "index"]);
-        // Route::get('/menu/detail', [MenuItemController::class, "detail"]);
-        Route::get('/cart', [CartController::class, "index"]);
+        Route::get('/search', [MenuController::class, 'search'])->name('search');
+
+        Route::get('/menu/index', [MenuItemController::class, "index"]);
+        // web.php
+        Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
+
+
+       // giỏ hàng
+        Route::get('/cart', [CartController::class, "index"])->name('cart.index');;
+        Route::get('cart/add/{menuItemId}', [CartController::class, 'addToCart'])->name('cart.add');
+        Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+        Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+        Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+
+
+
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
-        Route::get('/dashboard', [AccountController::class, "dashboard"]);
-        Route::get('/address', [AccountController::class, "address"]);
-        Route::get('/information', [AccountController::class, "information"])->name('account.information');
-        Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
+
+
     });
 
 

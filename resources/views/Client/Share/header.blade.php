@@ -36,9 +36,10 @@
                         </select>
 
                         </div>
+                         <form action="{{ route('search') }}" method="GET">
                         <div class="header__search--box">
                             <label>
-                                <input class="header__search--input" placeholder="Nhập từ khóa tìm kiếm" type="text">
+                                <input  name="query" class="header__search--input" placeholder="nhập từ khóa tìm kiếm" type="text">
                             </label>
                             <button class="header__search--button bg__secondary text-white"
                                 type="submit">Tìm kiếm</button>
@@ -345,87 +346,6 @@
                         </svg>
                     </div>
                     <div class="dropdown__categories--menu">
-                        {{-- <ul class="d-none d-lg-block">
-
- @foreach($categories as $category)
-                            <li class="categories__menu--items">
-                                <a class="categories__menu--link" href="shop.html">
-                                    <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 512 512">
-                                        <path
-                                            d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
-                                            fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32" />
-                                    </svg> {{ $category->title }}
-                                    <svg class="categories__menu--right__arrow--icon"
-                                        xmlns="http://www.w3.org/2000/svg" width="17.007" height="16.831"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-linejoin="round" stroke-width="48"
-                                            d="M184 112l144 144-144 144" />
-                                    </svg>
-                                </a>
-                                <ul class="categories__submenu border-radius-10 d-flex justify-content-between">
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Hot
-                                                Offers</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html"> AFresh Seafood</a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html"> Apple Juice</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Fresh
-                                                Meat</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Apple Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">AFresh Seafood </a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="categories__submenu--items"><a
-                                            class="categories__submenu--items__text" href="shop.html"><strong>Nature
-                                                Food</strong></a>
-                                        <ul class="categories__submenu--child">
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Apple Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Oil and Vinegar </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">Bread and Juice </a></li>
-                                            <li class="categories__submenu--child__items"><a
-                                                    class="categories__submenu--child__items--link"
-                                                    href="shop.html">AFresh Seafood </a></li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            @endforeach
-
-                        </ul> --}}
                         <ul class="d-none d-lg-block">
                             @foreach($categories as $category)
                                 <li class="categories__menu--items">

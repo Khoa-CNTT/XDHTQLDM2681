@@ -19,7 +19,11 @@
                 @foreach($menuItems as $menuItem)
                     <tr>
                         <td>{{ $menuItem->Title_items }}</td>
+<<<<<<< HEAD
                         <td>{{ $menuItem->restaurant->name }}</td>
+=======
+                        <td>{{ $menuItem->restaurant?->name }}</td>
+>>>>>>> origin/main
                         <td>{{ $menuItem->category->title }}</td>
                         <td>{{ $menuItem->Price }}</td>
                         <td>{{ $menuItem->Quantity }}</td>

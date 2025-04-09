@@ -11,10 +11,10 @@
                     <div class="row row-cols-1">
                         <div class="col">
                             <div class="breadcrumb__content text-center">
-                                <h1 class="breadcrumb__content--title text-white mb-25">Product Details</h1>
+                                <h1 class="breadcrumb__content--title text-white mb-25">Chi tiết món ăn</h1>
                                 <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                                    <li class="breadcrumb__content--menu__items"><a class="text-white" href="index.html">Home</a></li>
-                                    <li class="breadcrumb__content--menu__items"><span class="text-white">Product Details</span></li>
+                                    <li class="breadcrumb__content--menu__items"><a class="text-white" href="/">Trang chủ</a></li>
+                                    <li class="breadcrumb__content--menu__items"><span class="text-white">{{ $menuItem->Title_items }}</span></li>
                                 </ul>
                             </div>
                         </div>
@@ -200,10 +200,11 @@
                         <div class="col">
                             <div class="product__details--info">
                                 <form action="#">
-                                    <h2 class="product__details--info__title mb-15">Red-tomato-isolated</h2>
+                                    <h2 class="product__details--info__title mb-15">{{$menuItem->Title_items}}</h2>
                                     <div class="product__details--info__price mb-15">
-                                        <span class="current__price">$58.00</span>
-                                        <span class="old__price">$68.00</span>
+                                    <span class="current__price">{{ number_format($menuItem->Price, 0, ',', '.') }} VNĐ</span>
+
+                                        {{-- <span class="old__price">$68.00</span> --}}
                                     </div>
                                     <div class="product__items--rating d-flex align-items-center mb-15">
                                         <ul class="d-flex">
@@ -245,7 +246,7 @@
                                         </ul>
                                         <span class="product__items--rating__count--number">(24)</span>
                                     </div>
-                                    <p class="product__details--info__desc mb-20">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut numquam ullam is recusandae laborum explicabo id sequi quisquam, ab sunt deleniti quidem ea animi facilis quod nostrum odit! Repellendus voluptas suscipit cum harum dolor sciunt.</p>
+                                    <p class="product__details--info__desc mb-20">{{$menuItem->description}}</p>
                                     <div class="product__variant">
                                         <div class="product__variant--list mb-10">
                                             <fieldset class="variant__input--fieldset">
@@ -270,7 +271,7 @@
                                                 </div>
                                             </fieldset>
                                         </div>
-                                        <div class="product__variant--list mb-20">
+                                        {{-- <div class="product__variant--list mb-20">
                                             <fieldset class="variant__input--fieldset">
                                                 <legend class="product__variant--title mb-8">Weight :</legend>
                                                 <ul class="variant__size d-flex">
@@ -288,7 +289,7 @@
                                                     </li>
                                                 </ul>
                                             </fieldset>
-                                        </div>
+                                        </div> --}}
                                         <div class="product__variant--list quantity d-flex align-items-center mb-20">
                                             <div class="quantity__box">
                                                 <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
@@ -297,14 +298,14 @@
                                                 </label>
                                                 <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
                                             </div>
-                                            <button class="btn quickview__cart--btn" type="submit">Add To Cart</button>
+                                            <a class="btn quickview__cart--btn" type="submit" href="{{ route('cart.add', $menuItem->id) }}">Thêm vào giỏ</a>
                                         </div>
                                         <div class="product__variant--list mb-15">
                                             <a class="variant__wishlist--icon mb-15" href="wishlist.html" title="Add to wishlist">
                                                 <svg class="quickview__variant--wishlist__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path></svg>
                                                 Add to Wishlist
                                             </a>
-                                            <button class="variant__buy--now__btn btn" type="submit">Buy it now</button>
+                                            <button class="variant__buy--now__btn btn" type="submit">Mua ngay</button>
                                         </div>
                                         <div class="product__variant--list mb-15">
                                             <div class="product__details--info__meta">

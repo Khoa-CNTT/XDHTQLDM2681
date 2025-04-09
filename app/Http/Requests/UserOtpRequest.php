@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserLoginRequest extends FormRequest
+class UserOtpRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,14 @@ class UserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username_client'         =>  'required',
-            'password_client'          =>  'required',
-
+            'otp' => 'required|numeric',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
-            'username_client.required' => 'Tên tài khoản  không được để trống',
-            'password_client.required' => 'Mật khẩu không được để trống'
-
+            'otp.required' => 'Vui lòng nhập mã OTP.',
+            'otp.numeric' => 'Mã OTP phải là số.',
         ];
     }
 }

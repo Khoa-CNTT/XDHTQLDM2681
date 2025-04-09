@@ -89,7 +89,6 @@ class MenuController extends Controller
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;
         $menuItem->description = $request->description;
-        $menuItem->save();
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
             $path = "public/image/foods";
@@ -98,10 +97,11 @@ class MenuController extends Controller
             $new_image = $name_image . rand(0, 999) . "." . $get_image->getClientOriginalExtension();
             $get_image->move($path, $new_image);
 
-              $menuItem->image = $new_image;
+              $menuItem->Image = $new_image;
         } else {
-              $menuItem->image =   $menuItem->getOriginal('Image');
+              $menuItem->Image =   $menuItem->getOriginal('Image');
         }
+        $menuItem->save();
 
 
         return redirect('/restaurant/menu_items')->with('success', 'Món ăn đã được cập nhật thành công!');
