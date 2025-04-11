@@ -49,6 +49,7 @@ Route::group(
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
 
+
     });
 
 Route::group(
@@ -67,6 +68,7 @@ Route::group(
             Route::post("/delete", [AdminCategoryController::class, "delete"])->name("delete");
             Route::post("/deleteAll", [AdminCategoryController::class, "destroyAll"])->name("deleteAll");
             Route::post("/checkSlug", [AdminCategoryController::class, "checkSlug"])->name("checkSlug");
+            Route::post("/search", [AdminCategoryController::class, "search"]);
         });
 
 
