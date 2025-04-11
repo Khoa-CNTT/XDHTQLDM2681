@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('restaurant_id');
             $table->integer('category_id');
-            $table->string('Title');
+            $table->string('Title_items');
             $table->double('Price')->default(0);
             $table->string('Image');
             $table->integer('Quantity')->default(1);

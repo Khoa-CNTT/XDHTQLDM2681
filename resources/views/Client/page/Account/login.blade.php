@@ -27,39 +27,38 @@
                         <div class="col">
                             <div class="account__login">
                                 <div class="account__login--header mb-25">
-                                    <h2 class="account__login--header__title h3 mb-10">Login</h2>
-                                    <p class="account__login--header__desc">Login if you area a returning customer.</p>
+                                    <h2 class="account__login--header__title h3 mb-10">Đăng nhập</h2>
+                                    <p class="account__login--header__desc">Nếu bạn đã có tài khoản hãy đăng nhập ở đây.</p>
                                 </div>
                                 <div class="account__login--inner">
                                     <form action="/account/actionlogin" method="POST">
                                         @csrf
                                         <label>
-                                            <input class="account__login--input" placeholder="Email Address" type="email" name="email">
-                                            @error('email')
+                                            <input class="account__login--input" placeholder="Tên tài khoản" type="text" name="username_client">
+                                            @error('username_client')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </label>
                                         <label>
-                                            <input class="account__login--input" placeholder="Password" type="password" name="password">
-                                            @error('password')
+                                            <input class="account__login--input" placeholder="Mật khẩu" type="password" name="password_client">
+                                            @error('password_client')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </label>
                                         <button class="account__login--btn btn" type="submit">Đăng nhập</button>
                                     </form>
                                     <div class="account__login--divide">
-                                        <span class="account__login--divide__text">OR</span>
+                                        <span class="account__login--divide__text">hoặc</span>
                                     </div>
                                     <div class="account__social d-flex justify-content-center mb-15">
                                         <a class="account__social--link facebook" target="_blank"
                                             href="{{ route('auth.facebook') }}">Facebook</a>
                                         <a class="account__social--link google" target="_blank"
                                             href="{{ route('auth.google') }}">Google</a>
-                                        <a class="account__social--link twitter" target="_blank"
-                                            href="{{ route('auth.facebook') }}">Twitter</a>
+
                                     </div>
-                                    <p class="account__login--signup__text">Don,t Have an Account? <button
-                                            type="submit">Sign up now</button></p>
+                                    <p class="account__login--signup__text">Nếu chưa có tài khoản? <button
+                                            type="submit">Tạo tài khoản mới</button></p>
                                             <p><a href="{{ route('forget.password.get') }}">Quên mật khẩu</a></p>
                                 </div>
                             </div>
@@ -67,14 +66,14 @@
                         <div class="col">
                             <div class="account__login register">
                                 <div class="account__login--header mb-25">
-                                    <h2 class="account__login--header__title h3 mb-10">Create an Account</h2>
-                                    <p class="account__login--header__desc">Register here if you are a new customer</p>
+                                    <h2 class="account__login--header__title h3 mb-10">Đăng ký</h2>
+                                    <p class="account__login--header__desc">đăng ký tài khoản mới</p>
                                 </div>
                                 <div class="account__login--inner">
                                     <form action="{{ route('register') }}" method="POST">
                                         @csrf
                                         <label>
-                                            <input class="account__login--input" name="username" placeholder="Username" type="text"
+                                            <input class="account__login--input" name="username" placeholder="Tên tài khoản" type="text"
                                                 >
                                         </label>
                                     @error('username')
@@ -91,18 +90,18 @@
                                         @enderror
 
                                         <label>
-                                            <input class="account__login--input" name="password" placeholder="Password" type="password">
+                                            <input class="account__login--input" name="password" placeholder="Mật khẩu mới" type="password">
                                         </label>
                                         @error('password')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
 
                                         <label>
-                                            <input class="account__login--input" name="password_confirmation" placeholder="Confirm Password"
+                                            <input class="account__login--input" name="password_confirmation" placeholder="Mật khẩu lặp lại"
                                                 type="password">
                                         </label>
 
-                                        <button class="account__login--btn btn mb-10" type="submit">Submit & Register</button>
+                                        <button class="account__login--btn btn mb-10" type="submit">Đăng ký</button>
 
                                         <div class="account__login--remember position__relative">
                                             <input class="checkout__checkbox--input" id="check2" type="checkbox" required>

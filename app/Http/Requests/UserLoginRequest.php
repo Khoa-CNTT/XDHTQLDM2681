@@ -22,17 +22,16 @@ class UserLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'         =>  'required|min:5',
-            'password'          =>  'required',
+            'username_client'         =>  'required',
+            'password_client'          =>  'required',
 
         ];
     }
     public function messages()
     {
         return [
-            'email.required' => 'Email không được để trống',
-            'email.email'    => 'Email không hợp lệ',
-            'password.required' => 'Mật khẩu không được để trống'
+            'username_client.required' => 'Tên tài khoản  không được để trống',
+            'password_client.required' => 'Mật khẩu không được để trống'
 
         ];
     }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Home;
+use App\Models\MenuItem;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,12 +15,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-
+        $restaurants_item = Restaurant::get();
+        $results = MenuItem::all();
+        $products = MenuItem::take(3)->get();
 
         $categories = Category::all();
+          // Kiểm tra dữ liệu ở đây
+         //dd($products);
 
-        return view('Client.page.home', );
-
+        return view('Client.page.home', compact('restaurants_item','results', 'categories', 'products'));
     }
 
 

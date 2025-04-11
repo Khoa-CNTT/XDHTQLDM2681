@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class UserSeeder extends Seeder
 {
     /**
@@ -20,7 +21,8 @@ class UserSeeder extends Seeder
                 'email'                 => "admin@master.com",
                 'password'              => bcrypt("123456"),
                 'PhoneNumber'           => "0905807623",
-                 'Address'                   => "Quảng nam",
+                'Address'                   => "Quảng nam",
+                // 'token'                 => null,
             ]
         ]);
     }

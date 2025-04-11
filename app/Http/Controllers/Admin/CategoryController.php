@@ -74,6 +74,14 @@ class CategoryController extends Controller
 
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $products = Category::where('Title', 'LIKE', "%$keyword%")->get();
+        return view('products', compact('products'));
+    }
+
     public function checkSlug(Request $request)
     {
         if (isset($request->id)) {

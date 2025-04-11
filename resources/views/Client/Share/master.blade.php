@@ -522,6 +522,7 @@
 
     <!-- All Script JS Plugins here  -->
     @include('Client.Share.js')
+    @yield('js')
 
 </body>
 

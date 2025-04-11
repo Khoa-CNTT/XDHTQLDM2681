@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserOtpRequest;
+use App\Mail\OTPMail;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Http\Requests\UserLoginRequest;
@@ -12,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class AccountController extends Controller
 {
@@ -34,41 +37,78 @@ class AccountController extends Controller
         // dd($request->all());
         // $request->email, $request->password
         $check =  Auth::guard('web')->attempt([
-            'email'     => $request->email,
-            'password'  => $request->password
+            'username'     => $request->username_client,
+            'password'  => $request->password_client
         ]);
         // dd($check);
         if ($check) {
-            toastr()->success("Đã đăng nhập thành công!");
             return redirect('/');
         } else {
-            toastr()->error("Tài khoản hoặc mật khẩu không đúng!");
             return redirect('/account/login');
         }
     }
     public function actionRegister(ResisterUserRequest $request)
     {
-        if (User::where('email', $request->email)->exists()) {
-            toastr()->error("Email đã được sử dụng!");
-            return redirect('/account/register');
-        }
+
 
         if (User::where('username', $request->username)->exists()) {
-            toastr()->error("Tên tài khoản đã tồn tại!");
+
             return redirect('/account/register');
         }
+        $otp = rand(100000, 999999);
+        Session::put('otp', $otp);
+        Session::put('register_data', $request->all()); // Lưu dữ liệu đăng ký tạm thời
+        Mail::to($request->email)->send(new OTPMail($otp));
 
-        $user = User::create([
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
 
-        Auth::guard('web')->login($user);
 
-        toastr()->success("Đăng ký thành công!");
-        return redirect('/');
+
+         return redirect()->route('verify.otp_client')->with('success', 'Mã OTP đã được gửi đến email của bạn!');
     }
+    public function showOTPForm()
+    {
+        return view('Client.page.Account.Emails.verify_otp');
+    }
+
+    public function verifyOTP(UserOtpRequest $request)
+    {
+        // dd($request->all());
+
+
+        if (Session::get('otp') == $request->otp) {
+            // Lấy dữ liệu đăng ký từ Session
+            $data = Session::get('register_data');
+          // dd($data);
+            // Kiểm tra dữ liệu có tồn tại không
+            if (!$data) {
+                return back()->with('error', 'Dữ liệu đăng ký không hợp lệ. Vui lòng đăng ký lại.');
+            }
+
+            $user = User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+
+            //dd($user);
+
+            Auth::guard('web')->login($user);
+
+            // Xóa OTP và dữ liệu đăng ký trong session sau khi xác thực thành công
+            Session::forget(['otp', 'register_data']);
+
+            return redirect('account/login')->with('success', 'Xác thực thành công! Tài khoản của bạn đã được tạo.');
+        }
+
+        return back()->withErrors(['otp' => 'Mã OTP không hợp lệ. Vui lòng thử lại.'])->withInput();
+    }
+
+
+
+
+
+    //xử lý quên mật khẩu
+
     public function showForgetPasswordForm()
       {
          return view('Client.page.Account.forgetPassword');
@@ -145,6 +185,12 @@ class AccountController extends Controller
 
           return redirect('/account/login')->with('message', 'Thay đổi mật khẩu thành công');
       }
+    public function actionLogout()
+    {
+        Auth::guard('web')->logout(); // Đăng xuất user
+        toastr()->success("Đã đăng xuất thành công!");
+        return redirect('/account/login'); // Chuyển hướng về trang login
+    }
 
 
 

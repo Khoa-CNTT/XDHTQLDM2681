@@ -25,8 +25,13 @@ class AppServiceProvider extends ServiceProvider
         if (env('APP_ENV') !== 'local') {
             URL::forceScheme('https');
         }
-        View::composer('Client.Share.header', function ($view) {
-            $categories = Category::all();
+
+        // Lấy danh mục với các món ăn và nhà hàng tương ứng sử dụng eager loading
+        $categories = Category::with(['menuItems.restaurant'])->get();
+
+        // Cập nhật dữ liệu cho view 'Client.Share.header'
+        View::composer('Client.Share.header', function ($view) use ($categories) {
+            // Truyền dữ liệu categories đã eager load vào view
             $view->with('categories', $categories);
         });
     }
