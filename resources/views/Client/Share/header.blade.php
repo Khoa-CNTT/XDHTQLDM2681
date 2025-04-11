@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="header__menu d-none d-lg-block header__sticky--block">
+                <div class="header__menu d-none d-lg-block header__sticky--block">
                     <nav class="header__menu--navigation">
                         <ul class="d-flex">
                             <li class="header__menu--items">
@@ -64,7 +64,7 @@
                                 </ul>
                             </li>
                             <li class="header__menu--items mega__menu--items">
-                                <a class="header__menu--link" href="shop.html">Nhà Hàng
+                                <a class="header__menu--link" href="/menu/index">Thực đơn
                                     <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
                                         height="7.41" viewBox="0 0 12 7.41">
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
@@ -76,7 +76,7 @@
                                         <span class="header__mega--subtitle">Column One</span>
                                         <ul class="header__mega--sub__menu">
                                             <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/menu/index">Shop
+                                                    class="header__mega--sub__menu--title" href="/menu/index">Shop
                                                     Left Sidebar</a></li>
 
                                         </ul>
@@ -181,7 +181,7 @@
                             </li>
                         </ul>
                     </nav>
-                </div> --}}
+                </div>
                 <div class="header__account header__sticky--none">
                     <ul class="d-flex">
                         <li class="header__account--items d-none d-lg-block">
@@ -407,7 +407,7 @@
 
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link text-white" href="shop.html">Nhà Hàng
+                                    <a class="header__menu--link text-white" href="/menu/index">Thực đơn
                                         <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                             width="12" height="7.41" viewBox="0 0 12 7.41">
                                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"

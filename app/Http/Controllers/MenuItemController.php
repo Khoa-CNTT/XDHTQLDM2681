@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\MenuItem;
+use App\Models\Category;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
 
 class MenuItemController extends Controller
@@ -12,7 +14,13 @@ class MenuItemController extends Controller
      */
     public function index()
     {
-        return view('Client.page.Menu.index');
+        $restaurants_item = Restaurant::get();
+        $results = MenuItem::all();
+        $products = MenuItem::take(4)->get();
+        $categories = Category::all();
+
+        //dd($products);
+        return view('Client.page.Menu.index',compact('restaurants_item','results','categories'));
     }
     public function detail($id)
     {
