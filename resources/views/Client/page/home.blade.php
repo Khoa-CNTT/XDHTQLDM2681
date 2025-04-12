@@ -14,24 +14,26 @@
             </div>
             <div class="product__section--inner product__swiper--activation swiper">
                 <div class="swiper-wrapper">
-                @foreach ($restaurants_item as $restaurant)
-                    <div class="swiper-slide">
-                        <div class="product__items product__bg">
-                            <div class="product__items--thumbnail">
-                                <a class="product__items--link" href="shop.html">
-                                    <img class="product__items--img" src="{{ asset('/image/logo/' . $restaurant->logo) }}" alt="{{$restaurant->name}}">
-                                    <div class="product__categories--content d-flex justify-content-between align-items-center">
-                                        <div class="product__categories--content__left">
-                                            <h3 class="product__categories--content__maintitle">{{$restaurant->name}}</h3>
-                                            <span class="product__categories--content__subtitle">99 items</span>
-                                        </div>
+                    @foreach ($restaurants_item as $restaurant)
+                        <div class="swiper-slide">
+                            <div class="product__items product__bg">
+                                <div class="product__items--thumbnail">
+                                    <a class="product__items--link" href="shop.html">
+                                        <img class="product__items--img" src="{{ asset('/image/logo/' . $restaurant->logo) }}"
+                                            alt="{{$restaurant->name}}">
+                                        <div
+                                            class="product__categories--content d-flex justify-content-between align-items-center">
+                                            <div class="product__categories--content__left">
+                                                <h3 class="product__categories--content__maintitle">{{$restaurant->name}}</h3>
+                                                <span class="product__categories--content__subtitle">99 items</span>
+                                            </div>
 
-                                    </div>
-                                </a>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
 
 
                 </div>
@@ -40,6 +42,70 @@
             </div>
         </div>
     </section>
+    <!-- Nút nhắn tin -->
+    <!-- Nút nhắn tin -->
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring youtube1" id="chat-toggle-btn">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="javascript:void(0);"><i class="fas fa-comment-dots"></i></a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .hotline-phone-ring-wrap {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .hotline-phone-ring {
+            position: relative;
+            background-color: #d90000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .hotline-phone-ring i {
+            color: white;
+            font-size: 20px;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Ẩn viền động nếu không thích */
+        .hotline-phone-ring-circle,
+        .hotline-phone-ring-circle-fill {
+            display: none;
+        }
+    </style>
+
+
+
+    <!-- Overlay khi mở chat -->
+    <div id="chat-overlay" class="chat-overlay"></div>
+
+
+
     <!-- End categories product section -->
 
     <!-- Start product section -->
@@ -67,7 +133,8 @@
                                 <div class="col md-28">
                                     <div class="product__items ">
                                         <div class="product__items--thumbnail">
-                                            <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
+                                            <a class="product__items--link"
+                                                href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
                                                 <img class="product__items--img product__primary--img"
                                                     src="{{ asset('public/image/foods/' . $result->Image) }}" alt="product-img">
                                                 <img class="product__items--img product__secondary--img"
@@ -123,7 +190,8 @@
                                             </ul>
                                         </div>
                                         <div class="product__items--content text-center">
-                                        <a href="{{ route('cart.add', $result->id) }}" class="add__to--cart__btn">+ Thêm vào giỏ</a>
+                                            <a href="{{ route('cart.add', $result->id) }}" class="add__to--cart__btn">+ Thêm vào
+                                                giỏ</a>
                                             <h3 class="product__items--content__title h4"><a
                                                     href="product-details.html">{{$result->Title_items}}</a></h3>
                                             <div class="product__items--price">
@@ -133,7 +201,7 @@
                                         </div>
                                     </div>
                                 </div>
-                             @endforeach
+                            @endforeach
 
                         </div>
                     </div>

@@ -53,6 +53,10 @@ return [
         'api_secret' => env('CLOUDINARY_API_SECRET'),
         'url' => env('CLOUDINARY_URL'),
     ],
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+    ],
+
 
 
 
