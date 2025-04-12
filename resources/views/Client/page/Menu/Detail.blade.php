@@ -1,8 +1,5 @@
 @extends('Client.Share.master')
 @section('content')
-
-
-
     <main class="main__content_wrapper">
 
             <!-- Start breadcrumb section -->

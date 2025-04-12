@@ -89,7 +89,6 @@ class MenuController extends Controller
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;
         $menuItem->description = $request->description;
-
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
             $path = "public/image/foods";
