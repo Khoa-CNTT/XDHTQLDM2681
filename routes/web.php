@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\facebookController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -34,7 +35,7 @@ Route::controller(GoogleController::class)->group(function () {
 Route::get('auth/facebook', [facebookController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('login/facebook/callback', [facebookController::class, 'handleFacebookCallback']);
 
-
+Route::post('/chatbot/ask', [ChatBotController::class, 'ask'])->name('chatbox');
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
