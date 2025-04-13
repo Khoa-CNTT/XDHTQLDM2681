@@ -36,14 +36,20 @@
                         </select>
 
                         </div>
-                         <form action="{{ route('search') }}" method="GET">
-                        <div class="header__search--box">
+                        <form class="product__view--search__form" action="{{ route('menu-items.search') }}" method="GET">
                             <label>
-                                <input  name="query" class="header__search--input" placeholder="nhập từ khóa tìm kiếm" type="text">
+                                <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
                             </label>
-                            <button class="header__search--button bg__secondary text-white"
-                                type="submit">Tìm kiếm</button>
-                        </div>
+                            <button class="product__view--search__btn" aria-label="search btn" type="submit">
+                                <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                    height="20.443" viewBox="0 0 512 512">
+                                    <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                        stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
+                                        d="M338.29 338.29L448 448"></path>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div class="header__menu d-none d-lg-block header__sticky--block">

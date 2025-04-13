@@ -52,7 +52,8 @@ Route::post('reset-password', [AccountController::class, 'submitResetPasswordFor
 //menu 
 Route::get('/menu/index', [MenuItemController::class, "index"]);
 Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
-Route::get('/search', [MenuController::class, 'search'])->name('search');
+Route::get('/menu-items/search', [MenuItemController::class, 'search'])->name('menu-items.search');
+Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('restaurant.menu');
 Route::group(
     ["prefix" => "/client",
     "middleware" => ['auth.custom']],

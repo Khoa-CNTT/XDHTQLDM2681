@@ -368,7 +368,7 @@
                     <div class="row row-cols-1">
                         <div class="col">
                             <ul class="product__tab--one product__details--tab d-flex mb-30">
-                                <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Description</li>
+                                <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Mô tả</li>
                                 <li class="product__details--tab__list" data-toggle="tab" data-target="#reviews">Product Reviews</li>
                                 <li class="product__details--tab__list" data-toggle="tab" data-target="#information">Additional Info</li>
                                 <li class="product__details--tab__list" data-toggle="tab" data-target="#custom">Custom Content</li>
@@ -378,8 +378,14 @@
                                     <div id="description" class="tab_pane active show">
                                         <div class="product__tab--content">
                                             <div class="product__tab--content__step mb-30">
-                                                <h2 class="product__tab--content__title h4 mb-10">Nam provident sequi</h2>
-                                                <p class="product__tab--content__desc">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam provident sequi, nemo sapiente culpa nostrum rem eum perferendis quibusdam, magnam a vitae corporis! Magnam enim modi, illo harum suscipit tempore aut dolore doloribus deserunt voluptatum illum, est porro? Ducimus dolore accusamus impedit ipsum maiores, ea iusto temporibus numquam eaque mollitia fugiat laborum dolor tempora eligendi voluptatem quis necessitatibus nam ab?</p>
+                                                <a href="{{ route('restaurant.menu', ['id' => $menuItem->restaurant->id]) }}">
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <img src="{{ asset('/image/logo/' . $menuItem->restaurant->logo) }}" 
+                                                             style="width: 40px; height: 40px; object-fit: cover; border-radius: 20%;">
+                                                        <h2 class="product__tab--content__title h4 mb-0">Nhà hàng : {{ $menuItem->restaurant->name }}</h2>       
+                                                    </div>      
+                                                </a>
+                                                <p class="product__tab--content__desc">Mô tả : {{ $menuItem->restaurant->description }}</p>
                                             </div>
                                             <div class="product__tab--content__step">
                                                 <h2 class="product__tab--content__title h4 mb-10">More Details</h2>
