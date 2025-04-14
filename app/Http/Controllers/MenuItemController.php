@@ -82,6 +82,20 @@ class MenuItemController extends Controller
         // Trả về view với dữ liệu món ăn
         return view('Client.page.Menu.detail', compact('menuItem'));
     }
+    public function homeres($id)
+    {
+          $restaurant = Restaurant::findOrFail($id);
+         $results = MenuItem::where('restaurant_id', $id)->get();
+
+          $products = MenuItem::where('restaurant_id', $id)
+        ->latest()
+        ->take(4)
+        ->get();
+           $categories = Category::all();
+
+         return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'products', 'categories'));
+    }
+
     public function search(Request $request)
     {
         $query = $request->input('query');
@@ -89,14 +103,26 @@ class MenuItemController extends Controller
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
         $district = $request->input('district');
+
         $resultsQuery = MenuItem::query();
 
+        // Lọc theo quận
         if (!empty($district)) {
             $resultsQuery->whereHas('restaurant.location', function ($query) use ($district) {
                 $query->where('District', $district);
             });
         }
 
+        // Lọc theo từ khóa
+        if (!empty($query)) {
+            $resultsQuery->where(function ($q) use ($query) {
+                $q->where('Title_items', 'like', '%' . $query . '%')
+                    ->orWhere('description', 'like', '%' . $query . '%')
+                    ->orWhere('Price', 'like', '%' . $query . '%');
+            });
+        }
+
+        // Lọc theo giá
         if ($minPrice && $maxPrice) {
             $resultsQuery->whereBetween('Price', [(float)$minPrice, (float)$maxPrice]);
         } elseif ($minPrice) {
@@ -105,26 +131,7 @@ class MenuItemController extends Controller
             $resultsQuery->where('Price', '<=', (float)$maxPrice);
         }
 
-        $restaurants_item = Restaurant::get();
-        $categories = Category::take(5)->get();
-        $products = MenuItem::take(4)->get();
-
-        $relatedItems = [];
-        if ($products->count() > 0) {
-            $firstCategoryId = $products->first()->category_id;
-            $relatedItems = MenuItem::where('category_id', $firstCategoryId)
-                ->where('id', '!=', $products->first()->id)
-                ->take(5)
-                ->get();
-        }
-
-        // Tìm kiếm + sắp xếp
-        $resultsQuery = MenuItem::where(function ($q) use ($query) {
-            $q->where('Title_items', 'like', '%' . $query . '%')
-                ->orWhere('description', 'like', '%' . $query . '%')
-                ->orWhere('Price', 'like', '%' . $query . '%');
-        });
-
+        // Sắp xếp kết quả
         switch ($sort) {
             case 'newness':
                 $resultsQuery->orderBy('created_at', 'desc');
@@ -139,9 +146,31 @@ class MenuItemController extends Controller
                 $resultsQuery->latest();
         }
 
+        // Lấy kết quả tìm kiếm
         $results = $resultsQuery->paginate(13);
 
-        return view('Client.page.Menu.index', compact('restaurants_item', 'results', 'categories', 'products', 'relatedItems'));
+        // Dữ liệu phụ
+        $restaurants_item = Restaurant::get();
+        $categories = Category::take(5)->get();
+        $products = MenuItem::take(4)->get();
+
+        // Gợi ý món ăn liên quan
+        $relatedItems = [];
+        if ($products->count() > 0) {
+            $firstCategoryId = $products->first()->category_id;
+            $relatedItems = MenuItem::where('category_id', $firstCategoryId)
+                ->where('id', '!=', $products->first()->id)
+                ->take(5)
+                ->get();
+        }
+
+        return view('Client.page.Menu.index', compact(
+            'restaurants_item',
+            'results',
+            'categories',
+            'products',
+            'relatedItems'
+        ));
     }
 
 
