@@ -49,11 +49,12 @@ Route::post('forget-password', [AccountController::class, 'submitForgetPasswordF
 Route::get('reset-password/{token}', [AccountController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [AccountController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
-//menu 
-Route::get('/menu/index', [MenuItemController::class, "index"]);
+//menu
+Route::get('/menu/index', [MenuItemController::class, "index"])->name('menu.item.index');
 Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
 Route::get('/menu-items/search', [MenuItemController::class, 'search'])->name('menu-items.search');
 Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('restaurant.menu');
+
 Route::group(
     ["prefix" => "/client",
     "middleware" => ['auth.custom']],
@@ -68,11 +69,11 @@ Route::group(
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
         //setting account
-        Route::get('/dashboard', [AccountController::class, "dashboard"]); 
+        Route::get('/dashboard', [AccountController::class, "dashboard"]);
         Route::get('/address', [AccountController::class, "address"]);
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
-        
+
     });
 
 //admin

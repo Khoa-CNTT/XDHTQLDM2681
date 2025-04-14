@@ -30,13 +30,19 @@
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
                     <div class="d-flex header__search--form" action="#">
+
                         <div class="header__select--categories select">
-                        <select class="header__select--inner" id="quan">
-                            <option selected value="0">Chọn Quận/Huyện</option>
+                        <div class="header__select--categories select">
+                    <form method="GET" action="{{ route('menu.item.index') }}">
+                        <select name="district" onchange="this.form.submit()" class="header__select--inner" id="quan">
+                            <option selected value="">Chọn Quận/Huyện</option>
                         </select>
+                    </form>
 
                         </div>
-                        <form class="product__view--search__form" action="{{ route('menu-items.search') }}" method="GET">
+</div>
+<form class="product__view--search__form header__search--box" action="{{ route('menu-items.search') }}" method="GET">
+
                             <label>
                                 <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
                             </label>
@@ -191,7 +197,7 @@
                 <div class="header__account header__sticky--none">
                     <ul class="d-flex">
                         <li class="header__account--items d-none d-lg-block">
-                            @if(Auth::check())                        
+                            @if(Auth::check())
                             <a class="header__account--btn" href="/client/dashboard">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
                                         <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
@@ -383,7 +389,7 @@
                                                                 {{ $menuItem->Title_items }}
                                                             </a>
                                                             <!-- Hiển thị chi tiết món ăn -->
-                                                         <p><span class="price">{{ $menuItem->Price }} VND</span></p>
+
 
                                                         </li>
                                                     @endforeach
