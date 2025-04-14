@@ -96,9 +96,9 @@ Route::group(
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
         });
         Route::get('/thong-ke', [ThongkeController::class, "index"]);
-        Route::get('/user/index', [AccountController::class, "index"]);
-        Route::get('/menu/index', [MenuItemController::class, "index"]);
-        Route::get('/restaurant', [RestaurantController::class, "index"]);
+        // Route::get('/user/index', [AccountController::class, "index"]);
+        // Route::get('/menu/index', [MenuItemController::class, "index"]);
+       Route::get('/restaurant', [RestaurantController::class, "index"]);
     }
 );
 
