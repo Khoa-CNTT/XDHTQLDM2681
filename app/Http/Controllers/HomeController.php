@@ -18,13 +18,16 @@ class HomeController extends Controller
         $restaurants_item = Restaurant::get();
         $results = MenuItem::all();
         $products = MenuItem::take(3)->get();
+        $food_like = MenuItem::skip(4)->take(4)->get();
+
+        $decilious_foods = MenuItem::with('restaurant.location')->skip(1)->take(12)->get();
 
         $categories = Category::all();
-          // Kiểm tra dữ liệu ở đây
-         //dd($products);
 
-        return view('Client.page.home', compact('restaurants_item','results', 'categories', 'products'));
+        return view('Client.page.home', compact('restaurants_item', 'results', 'categories', 'products', 'food_like', 'decilious_foods'));
     }
+
+
 
 
 
