@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\facebookController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -22,8 +23,6 @@ use App\Http\Controllers\Restaurant\ResRegisterController;
 use App\Http\Controllers\Restaurant\RestaurantController as RestaurantRestaurantController;
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('/', [HomeController::class, "index"]);
 
 Route::controller(GoogleController::class)->group(function () {
@@ -34,7 +33,7 @@ Route::controller(GoogleController::class)->group(function () {
 Route::get('auth/facebook', [facebookController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('login/facebook/callback', [facebookController::class, 'handleFacebookCallback']);
 
-
+Route::post('/chatbot/ask', [ChatBotController::class, 'ask'])->name('chatbox');
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
@@ -50,41 +49,37 @@ Route::post('forget-password', [AccountController::class, 'submitForgetPasswordF
 Route::get('reset-password/{token}', [AccountController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [AccountController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+//menu
+Route::get('/menu/index', [MenuItemController::class, "index"])->name('menu.item.index');
+Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
+Route::get('/menu-items/search', [MenuItemController::class, 'search'])->name('menu-items.search');
+Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('restaurant.menu');
+
 Route::group(
-    ["prefix" => "/client"],
+    ["prefix" => "/client",
+    "middleware" => ['auth.custom']],
     function () {
-        Route::get('/search', [MenuController::class, 'search'])->name('search');
-
-        Route::get('/menu/index', [MenuItemController::class, "index"]);
-        // web.php
-        Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
-
-
-       // giỏ hàng
+        //giỏ hàng
         Route::get('/cart', [CartController::class, "index"])->name('cart.index');;
         Route::get('cart/add/{menuItemId}', [CartController::class, 'addToCart'])->name('cart.add');
         Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
         Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
         Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
-
-
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::get('/history-order', [OrderController::class, "historyorder"]);
-
+        //setting account
+        Route::get('/dashboard', [AccountController::class, "dashboard"]);
+        Route::get('/address', [AccountController::class, "address"]);
+        Route::get('/information', [AccountController::class, "information"])->name('account.information');
+        Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
 
     });
 
-
-
-    //admin
-
+//admin
 Route::group(
     ["prefix" => "/admin"],
     function () {
-
-
-
         Route::group(["prefix" => "/category"], function () {
             Route::get("/index", [AdminCategoryController::class, "index"])->name("index");
             Route::get("/data", [AdminCategoryController::class, "getdata"])->name("data");
@@ -101,25 +96,13 @@ Route::group(
             Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
             // routes/web.php
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
-
-
         });
-
         Route::get('/thong-ke', [ThongkeController::class, "index"]);
         Route::get('/user/index', [AccountController::class, "index"]);
         Route::get('/menu/index', [MenuItemController::class, "index"]);
         Route::get('/restaurant', [RestaurantController::class, "index"]);
-        Route::get('/order', [OrderController::class, "index"]);
-        Route::get('/history-order', [OrderController::class, "historyorder"]);
     }
 );
-
-
-
-
-
-
-
 
 //restaurant
 Route::group(
@@ -129,19 +112,9 @@ Route::group(
         Route::post('/register-restaurant', [SellController::class, 'store'])->name('restaurant.store');
         Route::get('/admin/restaurants', [SellController::class, 'pendingRestaurants'])->name('admin.restaurants');
         Route::resource('menu_items', MenuController::class);
-
     }
 
 );
-
-
-
-
-
-
-
-
-
 
 //shipper
 Route::group(

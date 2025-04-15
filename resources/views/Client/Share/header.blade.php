@@ -30,32 +30,183 @@
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
                     <div class="d-flex header__search--form" action="#">
+
                         <div class="header__select--categories select">
-                        <select class="header__select--inner" id="quan">
-                            <option selected value="0">Chọn Quận/Huyện</option>
+                        <div class="header__select--categories select">
+                    <form method="GET" action="{{ route('menu.item.index') }}">
+                        <select name="district" onchange="this.form.submit()" class="header__select--inner" id="quan">
+                            <option selected value="">Chọn Quận/Huyện</option>
                         </select>
+                    </form>
 
                         </div>
-                         <form action="{{ route('search') }}" method="GET">
-                        <div class="header__search--box">
+</div>
+<form class="product__view--search__form header__search--box" action="{{ route('menu-items.search') }}" method="GET">
+
                             <label>
-                                <input  name="query" class="header__search--input" placeholder="nhập từ khóa tìm kiếm" type="text">
+                                <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
                             </label>
-                            <button class="header__search--button bg__secondary text-white"
-                                type="submit">Tìm kiếm</button>
-                        </div>
-                    </form>
+                            <button class="product__view--search__btn" aria-label="search btn" type="submit">
+                                <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                    height="20.443" viewBox="0 0 512 512">
+                                    <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                        stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
+                                        d="M338.29 338.29L448 448"></path>
+                                </svg>
+                            </button>
+                        </form>
                     </div>
                 </div>
+                <div class="header__menu d-none d-lg-block header__sticky--block">
+                    <nav class="header__menu--navigation">
+                        <ul class="d-flex">
+                            <li class="header__menu--items">
+                                <a class="header__menu--link" href="index.html">Home
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
+                                        height="7.41" viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
+                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    </svg>
+                                </a>
+                                <ul class="header__sub--menu">
+                                    <li class="header__sub--menu__items"><a href="/"
+                                            class="header__sub--menu__link">Home </a></li>
 
+                                </ul>
+                            </li>
+                            <li class="header__menu--items mega__menu--items">
+                                <a class="header__menu--link" href="/menu/index">Thực đơn
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
+                                        height="7.41" viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
+                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    </svg>
+                                </a>
+                                <ul class="header__mega--menu d-flex">
+                                    <li class="header__mega--menu__li">
+                                        <span class="header__mega--subtitle">Column One</span>
+                                        <ul class="header__mega--sub__menu">
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title" href="/menu/index">Shop
+                                                    Left Sidebar</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="header__mega--menu__li">
+                                        <span class="header__mega--subtitle">Column Two</span>
+                                        <ul class="header__mega--sub__menu">
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="/client/menu/detail">Product Details</a></li>
+
+                                        </ul>
+                                    </li>
+                                    <li class="header__mega--menu__li">
+                                        <span class="header__mega--subtitle">Column Three</span>
+                                        <ul class="header__mega--sub__menu">
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title" href="/client/history-order">My
+                                                    Account</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="my-account-2.html">My Account 2</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title" href="404.html">404
+                                                    Page</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title" href="/client/account/login">Login
+                                                    Page</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title" href="faq.html">Faq
+                                                    Page</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="header__mega--menu__li">
+                                        <span class="header__mega--subtitle">Column Four</span>
+                                        <ul class="header__mega--sub__menu">
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="compare.html">Compare Pages</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="checkout.html">Checkout page</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="checkout-2.html">Checkout Style 2</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="checkout-3.html">Checkout Style 3</a></li>
+                                            <li class="header__mega--sub__menu_li"><a
+                                                    class="header__mega--sub__menu--title"
+                                                    href="checkout-4.html">Checkout Style 4</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="header__menu--items">
+                                <a class="header__menu--link" href="blog.html">Blog
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
+                                        height="7.41" viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
+                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    </svg>
+                                </a>
+                                <ul class="header__sub--menu">
+                                    <li class="header__sub--menu__items"><a href="blog.html"
+                                            class="header__sub--menu__link">Blog Grid</a></li>
+                                    <li class="header__sub--menu__items"><a href="blog-details.html"
+                                            class="header__sub--menu__link">Blog Details</a></li>
+                                    <li class="header__sub--menu__items"><a href="blog-left-sidebar.html"
+                                            class="header__sub--menu__link">Blog Left Sidebar</a></li>
+                                    <li class="header__sub--menu__items"><a href="blog-right-sidebar.html"
+                                            class="header__sub--menu__link">Blog Right Sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li class="header__menu--items">
+                                <a class="header__menu--link" href="#">Pages
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
+                                        height="7.41" viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
+                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    </svg>
+                                </a>
+                                <ul class="header__sub--menu">
+                                    <li class="header__sub--menu__items"><a href="about.html"
+                                            class="header__sub--menu__link">About Us</a></li>
+                                    <li class="header__sub--menu__items"><a href="contact.html"
+                                            class="header__sub--menu__link">Contact Us</a></li>
+                                    <li class="header__sub--menu__items"><a href="cart.html"
+                                            class="header__sub--menu__link">Cart Page</a></li>
+                                    <li class="header__sub--menu__items"><a href="portfolio.html"
+                                            class="header__sub--menu__link">Portfolio Page</a></li>
+                                    <li class="header__sub--menu__items"><a href="wishlist.html"
+                                            class="header__sub--menu__link">Wishlist Page</a></li>
+                                    <li class="header__sub--menu__items"><a href="login.html"
+                                            class="header__sub--menu__link">Login Page</a></li>
+                                    <li class="header__sub--menu__items"><a href="404.html"
+                                            class="header__sub--menu__link">Error Page</a></li>
+                                </ul>
+                            </li>
+                            <li class="header__menu--items">
+                                <a class="header__menu--link" href="contact.html">Contact </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
                 <div class="header__account header__sticky--none">
                     <ul class="d-flex">
                         <li class="header__account--items d-none d-lg-block">
                             @if(Auth::check())
-                                <div class="header__account">
-                                    <span>Xin chào, {{ Auth::user()->username }}</span>
-                                    <a href="{{ route('logout') }}" class="btn btn-danger">Đăng xuất</a>
-                                </div>
+                            <a class="header__account--btn" href="/client/dashboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
+                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                            stroke-width="32" />
+                                    </svg>
+                                </a>
                             @else
                                 <a class="header__account--btn" href="/account/login">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
@@ -65,10 +216,8 @@
                                                 15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
                                             stroke-width="32" />
                                     </svg>
-                                    <span class="visually-hidden">Đăng nhập</span>
                                 </a>
                             @endif
-
                         </li>
                         <li
                             class="header__account--items  header__account--search__items mobile__d--block d-sm-2-none">
@@ -209,7 +358,6 @@
                         </svg>
                     </div>
                     <div class="dropdown__categories--menu">
-
                         <ul class="d-none d-lg-block">
                             @foreach($categories as $category)
                                 <li class="categories__menu--items">
@@ -241,7 +389,7 @@
                                                                 {{ $menuItem->Title_items }}
                                                             </a>
                                                             <!-- Hiển thị chi tiết món ăn -->
-                                                         <p><span class="price">{{ $menuItem->Price }} VND</span></p>
+
 
                                                         </li>
                                                     @endforeach
@@ -271,7 +419,7 @@
 
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
-                                    <a class="header__menu--link text-white" href="shop.html">Nhà Hàng
+                                    <a class="header__menu--link text-white" href="/menu/index">Thực đơn
                                         <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                             width="12" height="7.41" viewBox="0 0 12 7.41">
                                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"

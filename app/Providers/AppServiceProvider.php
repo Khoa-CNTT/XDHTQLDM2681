@@ -34,5 +34,8 @@ class AppServiceProvider extends ServiceProvider
             // Truyền dữ liệu categories đã eager load vào view
             $view->with('categories', $categories);
         });
+
+        //chuyển trang 
+        $this->app['router']->aliasMiddleware('auth.custom', \App\Http\Middleware\CheckToken::class);
     }
 }

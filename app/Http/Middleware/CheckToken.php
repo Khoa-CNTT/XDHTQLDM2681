@@ -22,8 +22,21 @@ class CheckToken
         if ($check) {
             return $next($request);
         } else {
-            toastr()->error("Yêu cầu phải login!");
+            toastr()->error("Yêu cầu phải đăng nhập!");
             return redirect('/account/login');
         }
     }
+//     public function handle($request, Closure $next, ...$guards)
+// {
+//     if (Auth::guard()->guest()) {
+//         if ($request->ajax() || $request->wantsJson()) {
+//             return response('Unauthorized.', 401);
+//         } else {
+//             // Hiển thị thông báo yêu cầu đăng nhập mà không chuyển hướng
+//             return back()->with('message', 'Vui lòng đăng nhập để tiếp tục.');
+//         }
+//     }
+
+    // return $next($request);
+// }
 }

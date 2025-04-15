@@ -30,6 +30,37 @@ class AccountController extends Controller
             return view("Client.page.Account.login");
         }
     }
+    public function dashboard()
+    {
+        return view("Client.page.Account.Dashboard");
+    }
+    public function address()
+    {
+        return view("Client.page.Account.Address");
+    }
+    public function information()
+    {
+        $user = auth()->user();
+        return view("Client.page.Account.Information",compact('user'));
+    }
+    public function updateinformation(updateinformationRequest $request)
+    {
+
+        $user = auth()->user(); 
+        // Cập nhật thông tin người dùng
+        $user->username = $request->input('username');
+        $user->email = $request->input('email');
+        $user->PhoneNumber = $request->input('PhoneNumber');
+        $user->Address = $request->input('Address');
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
+        $user->save();
+    
+        // Trả về thông báo thành công và chuyển hướng về trang thông tin người dùng
+        return redirect()->route('account.information')->with('success', 'Your profile has been updated successfully.');
+    }
 
 
     public function actionLogin(UserLoginRequest $request)
@@ -191,8 +222,7 @@ class AccountController extends Controller
         toastr()->success("Đã đăng xuất thành công!");
         return redirect('/account/login'); // Chuyển hướng về trang login
     }
-
-
+    
 
 
     /**
