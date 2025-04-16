@@ -78,6 +78,7 @@
 
                         </div>
                   <p class="product__showing--count">
+
         Hiển thị từ {{ $results->firstItem() }} đến {{ $results->lastItem() }} trong tổng số {{ $results->total() }} kết quả
     </p>
 
@@ -86,25 +87,19 @@
                         <div class="col-xl-3 col-lg-4">
                             <div class="shop__sidebar--widget widget__area d-none d-lg-block">
                                 <div class="single__widget widget__bg">
-                                    <h2 class="widget__title h3">Danh mục</h2>
+                                    <h2 class="widget__title h3">
+                                        <a href="{{route('menu.item.index')}}">
+                                            Danh mục
+                                            </a>
+                                    </h2>
                                 <ul class="widget__categories--menu">
                                     @foreach ($categories as $category)
-                                        <li class="widget__categories--menu__list">
+                                        <li class="widget__categories--menu__list py-2 px-2">
+                                            <a href="{{route('menu-items.category',['id'=>$category->id])}}">
                                             <label class="widget__categories--menu__label d-flex align-items-center">
                                                 <span class="widget__categories--menu__text">{{ $category->title }}</span>
                                             </label>
-
-                                            <ul class="widget__categories--sub__menu">
-                                                @foreach ($results->where('category_id', $category->id) as $result)
-                                                    <li class="widget__categories--sub__menu--list">
-                                                        <a class="widget__categories--sub__menu--link d-flex align-items-center" href="#">
-                                                            <img class="widget__categories--sub__menu--img"
-                                                                src="{{ asset('public/image/foods/' . $result->Image) }}" alt="categories-img">
-                                                            <span class="widget__categories--sub__menu--text">{{ $result->Title_items }}</span>
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                           </a>                                        
                                         </li>
                                     @endforeach
                                 </ul>
@@ -149,7 +144,7 @@
             </div>
         </div>
     </div>
-    <button class="btn price__filter--btn" type="submit">lọc</button>
+    <button class="btn price__filter--btn" type="submit">Lọc</button>
 </form>
 
                             @if(count($relatedItems) > 0)
@@ -209,15 +204,18 @@
                                             <div
                                                 class="row row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-md-3 row-cols-sm-3 row-cols-2 mb--n30">
                                                 <!-- menu  -->
+                                                @if ($results->count() > 0)
                                                 @foreach ($results as $result)
                                                 <div class="col mb-30">
                                                     <div class="product__items product__items2">
                                                         <div class="product__items--thumbnail">
                                                             <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $result->id])}}">
                                                                 <img class="product__items--img product__primary--img"
-                                                                    src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img">
+                                                                    src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img"
+                                                                    style="width: 250px; height: 170px; object-fit: cover;">
                                                                 <img class="product__items--img product__secondary--img"
-                                                                    src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img">
+                                                                    src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img"
+                                                                    style="width: 250px; height: 170px; object-fit: cover;">
                                                             </a>
                                                             <div class="product__badge">
                                                                 <span class="product__badge--items sale">Sale</span>
@@ -278,7 +276,7 @@
                                                         </div>
                                                         <div
                                                             class="product__items--content product__items2--content text-center">
-                                                            <a class="add__to--cart__btn" href=  "{{ route('cart.add', $result->id) }}">+ Add to cart</a>
+                                                            <a class="add__to--cart__btn" href=  "{{ route('cart.add', $result->id) }}">+ Thêm vào giỏ hàng</a>
                                                             <h3 class="product__items--content__title h4"><a
                                                                     href="product-details.html">{{$result->Title_items}}</a></h3>
                                                             <div class="product__items--price">
@@ -355,6 +353,11 @@
                                                     </div>
                                                 </div>
                                                 @endforeach
+                                                @else
+    <div class="col-12 text-center">
+        <h3>Danh mục này hiện chưa có món</h3>
+    </div>
+@endif
                                                 <!-- dừng -->
 
                                             </div>

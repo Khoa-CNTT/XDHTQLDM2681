@@ -4,8 +4,7 @@
             <div class="header__topbar--inner d-flex align-items-center justify-content-center">
                 <div class="header__shipping">
                     <p class="header__shipping--text text-white"><img class="header__shipping--icon"
-                            src="/assets/img/icon/car.png" alt="header-shipping-img"> Claim your online FREE Delivery
-                        or Shipping today! Expires in</p>
+                            src="/assets/img/icon/car.png" alt="header-shipping-img"> Yêu cầu giao hàng trực tuyến hoặc vận chuyển trực tuyến của bạn ngay hôm nay! Hết hạn trong</p>
                 </div>
                 <div class="header__topbar--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
             </div>
@@ -25,7 +24,7 @@
                     </a>
                 </div>
                 <div class="main__logo">
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="index.html"><img
+                    <h1 class="main__logo--title"><a class="main__logo--link" href="/"><img
                                 class="main__logo--img" src="/assets/img/logo/nav-log.png" alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
@@ -62,18 +61,18 @@
                     <nav class="header__menu--navigation">
                         <ul class="d-flex">
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="index.html">Home
+                                <a class="header__menu--link" href="/">Trang chủ
                                     <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
                                         height="7.41" viewBox="0 0 12 7.41">
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
                                             transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
                                     </svg>
                                 </a>
-                                <ul class="header__sub--menu">
+                                {{-- <ul class="header__sub--menu">
                                     <li class="header__sub--menu__items"><a href="/"
                                             class="header__sub--menu__link">Home </a></li>
 
-                                </ul>
+                                </ul> --}}
                             </li>
                             <li class="header__menu--items mega__menu--items">
                                 <a class="header__menu--link" href="/menu/index">Thực đơn
@@ -82,67 +81,8 @@
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
                                             transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
                                     </svg>
-                                </a>
-                                <ul class="header__mega--menu d-flex">
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column One</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/menu/index">Shop
-                                                    Left Sidebar</a></li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Two</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="/client/menu/detail">Product Details</a></li>
-
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Three</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/history-order">My
-                                                    Account</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="my-account-2.html">My Account 2</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="404.html">404
-                                                    Page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="/client/account/login">Login
-                                                    Page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title" href="faq.html">Faq
-                                                    Page</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="header__mega--menu__li">
-                                        <span class="header__mega--subtitle">Column Four</span>
-                                        <ul class="header__mega--sub__menu">
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="compare.html">Compare Pages</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout.html">Checkout page</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-2.html">Checkout Style 2</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-3.html">Checkout Style 3</a></li>
-                                            <li class="header__mega--sub__menu_li"><a
-                                                    class="header__mega--sub__menu--title"
-                                                    href="checkout-4.html">Checkout Style 4</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                </a> 
+                                                             
                             </li>
                             <li class="header__menu--items">
                                 <a class="header__menu--link" href="blog.html">Blog
@@ -164,7 +104,7 @@
                                 </ul>
                             </li>
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="#">Pages
+                                <a class="header__menu--link" href="#">Trang
                                     <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
                                         height="7.41" viewBox="0 0 12 7.41">
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
@@ -189,7 +129,7 @@
                                 </ul>
                             </li>
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="contact.html">Contact </a>
+                                <a class="header__menu--link" href="contact.html">Liên hệ </a>
                             </li>
                         </ul>
                     </nav>
@@ -297,20 +237,27 @@
                             </a>
                         </li>
                         <li class="header__account--items d-none d-lg-block">
-                            <a class="header__account--btn" href="my-account.html">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443"
-                                    viewBox="0 0 512 512">
-                                    <path
-                                        d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
-                                        fill="none" stroke="currentColor" stroke-linecap="round"
-                                        stroke-linejoin="round" stroke-width="32" />
-                                    <path
-                                        d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z"
-                                        fill="none" stroke="currentColor" stroke-miterlimit="10"
-                                        stroke-width="32" />
-                                </svg>
-                                <span class="visually-hidden">My account</span>
-                            </a>
+                            @if(Auth::check())
+                            <a class="header__account--btn" href="/client/dashboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
+                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                            stroke-width="32" />
+                                    </svg>
+                                </a>
+                            @else
+                                <a class="header__account--btn" href="/account/login">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
+                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                            stroke-width="32" />
+                                    </svg>
+                                </a>
+                            @endif
                         </li>
                         <li class="header__account--items">
                             <a class="header__account--btn minicart__open--btn" href="javascript:void(0)"
@@ -468,7 +415,7 @@
                                     </ul>
                                 </li>
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="#">Pages
+                                    <a class="header__menu--link text-white" href="#">Trang
                                         <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                             width="12" height="7.41" viewBox="0 0 12 7.41">
                                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
@@ -493,7 +440,7 @@
                                     </ul>
                                 </li>
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="contact.html">Contact </a>
+                                    <a class="header__menu--link text-white" href="contact.html">Liên hệ </a>
                                 </li>
                             </ul>
                         </nav>
@@ -526,8 +473,8 @@
                                     transform="translate(0.006 0.01)" fill="currentColor" />
                             </svg>
                             <p class="suport__contact--text text-white">
-                                <span class="suport__text--24">24/7 Suport</span>
-                                <a class="suport__contact--number" href="tel:09786542214">09 7865 42214</a>
+                                <span class="suport__text--24">Hổ trợ 24/7</span>
+                                <a class="suport__contact--number" href="tel:09786542214">076 305 8366</a>
                             </p>
                         </div>
                     </div>
@@ -543,7 +490,7 @@
     <div class="offcanvas__stikcy--toolbar">
         <ul class="d-flex justify-content-between">
             <li class="offcanvas__stikcy--toolbar__list">
-                <a class="offcanvas__stikcy--toolbar__btn" href="index.html">
+                <a class="offcanvas__stikcy--toolbar__btn" href="/">
                     <span class="offcanvas__stikcy--toolbar__icon">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" width="21.51" height="21.443"
                             viewBox="0 0 22 17">
@@ -707,11 +654,11 @@
     <div class="predictive__search--box ">
         <div class="predictive__search--box__inner">
             <h2 class="predictive__search--title">Search Products</h2>
-            <form class="predictive__search--form" action="#">
+            <form class="predictive__search--form" action="{{ route('menu-items.search') }}" method="GET">
                 <label>
-                    <input class="predictive__search--input" placeholder="Search Here" type="text">
+                    <input class="predictive__search--input" placeholder="Tìm kiếm món" name="query" type="text">
                 </label>
-                <button class="predictive__search--button" aria-label="search button"><svg
+                <button class="predictive__search--button" type="submit" aria-label="search button"><svg
                         class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="30.51"
                         height="25.443" viewBox="0 0 512 512">
                         <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"

@@ -10,10 +10,15 @@
                             Email : {{ $user->email }} <br>
                             Phone : {{ $user->PhoneNumber ?? 'Thêm số điện thoại' }} <br>
                             Address : {{ $user->Address ?? 'Thêm địa chỉ' }}</p>
-                        <div class="account__details--footer d-flex" id="profileButtons">
-                            <button class="account__details--footer__btn" type="button" onclick="enableEdit()">Edit</button>
-                            <button class="account__details--footer__btn" type="button">Delete Account</button>
-                        </div>
+                            <div class="d-flex justify-content-start gap-3 mt-3" id="profileButtons">
+                                <button type="button" class="btn btn-primary" onclick="enableEdit()">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Delete Account
+                                </button>
+                            </div>
+                            
                     </div>
                     <div id="editForm" style="display: none;">
     <h3 class="account__details--title h4">Edit Profile</h3>

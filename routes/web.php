@@ -53,7 +53,9 @@ Route::post('reset-password', [AccountController::class, 'submitResetPasswordFor
 Route::get('/menu/index', [MenuItemController::class, "index"])->name('menu.item.index');
 Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('menu.item.detail');
 Route::get('/menu-items/search', [MenuItemController::class, 'search'])->name('menu-items.search');
+Route::get('/menu-items/category/{id}',[MenuItemController::class,'category'])->name('menu-items.category');
 Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('restaurant.menu');
+Route::get('/homeres/{id}/category/{category_id}', [MenuItemController::class, "homeres"])->name('restaurant.menu.category');
 
 Route::group(
     ["prefix" => "/client",
@@ -97,9 +99,6 @@ Route::group(
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
         });
         Route::get('/thong-ke', [ThongkeController::class, "index"]);
-        // Route::get('/user/index', [AccountController::class, "index"]);
-        // Route::get('/menu/index', [MenuItemController::class, "index"]);
-       Route::get('/restaurant', [RestaurantController::class, "index"]);
     }
 );
 

@@ -112,7 +112,7 @@
         <section class="product__section section--padding pt-0">
             <div class="container">
                 <div class="section__heading text-center mb-25">
-                    <span class="section__heading--subtitle">thực đơn gần đây</span>
+                    <span class="section__heading--subtitle">Thực Đơn Gần Đây</span>
                     <h2 class="section__heading--maintitle">THỰC ĐƠN MỚI NHẤT</h2>
                 </div>
                 <ul class="product__tab--one product__tab--btn d-flex justify-content-center mb-35">
@@ -134,12 +134,17 @@
                                         <div class="product__items ">
                                             <div class="product__items--thumbnail">
                                                 <a class="product__items--link"
-                                                    href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
-                                                    <img class="product__items--img product__primary--img"
-                                                        src="{{ asset('public/image/foods/' . $result->Image) }}" alt="product-img">
-                                                    <img class="product__items--img product__secondary--img"
-                                                        src="{{ asset('public/image/foods/' . $result->Image) }}" alt="product-img">
-                                                </a>
+   href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
+    <img class="product__items--img product__primary--img"
+         src="{{ asset('public/image/foods/' . $result->Image) }}"
+         alt="product-img"
+         style="width: 250px; height: 170px; object-fit: cover;">
+    <img class="product__items--img product__secondary--img"
+         src="{{ asset('public/image/foods/' . $result->Image) }}"
+         alt="product-img"
+         style="width: 200px; height: 200px; object-fit: cover;">
+</a>
+
                                                 <div class="product__badge">
                                                     <span class="product__badge--items sale">Đang bán</span>
                                                 </div>
@@ -3016,9 +3021,11 @@
                                     <div class="product__items--thumbnail">
                                         <a class="product__items--link"  href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
                                             <img class="product__items--img product__primary--img"
-                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}">
+                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
+                                                style="width: 250px; height: 170px; object-fit: cover;">
                                             <img class="product__items--img product__secondary--img"
-                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}">
+                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
+                                                style="width: 250px; height: 170px; object-fit: cover;">
                                         </a>
                                         <div class="product__badge">
                                             <span class="product__badge--items sale">Bán chạy</span>

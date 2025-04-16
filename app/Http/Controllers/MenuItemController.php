@@ -55,7 +55,8 @@ class MenuItemController extends Controller
         $results = $resultsQuery->paginate(13);
         $restaurants_item = Restaurant::get();
         $products = MenuItem::take(4)->get();
-        $categories = Category::take(5)->get();
+        $categories = Category::all();
+
 
         $relatedItems = [];
         if ($products->count() > 0) {
@@ -82,19 +83,54 @@ class MenuItemController extends Controller
         // Trả về view với dữ liệu món ăn
         return view('Client.page.Menu.detail', compact('menuItem'));
     }
-    public function homeres($id)
-    {
-          $restaurant = Restaurant::findOrFail($id);
-         $results = MenuItem::where('restaurant_id', $id)->get();
+    public function homeres(Request $request, $id, $category_id = null)
+{
+    // Lấy thông tin nhà hàng
+    $restaurant = Restaurant::findOrFail($id);
 
-          $products = MenuItem::where('restaurant_id', $id)
-        ->latest()
-        ->take(4)
-        ->get();
-           $categories = Category::all();
+    // Lấy tham số sắp xếp (tùy chọn)
+    $sort = $request->input('sort');
 
-         return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'products', 'categories'));
+    // Query món ăn theo nhà hàng
+    $resultsQuery = MenuItem::where('restaurant_id', $id);
+
+    // Nếu có category_id trong URL, lọc theo danh mục
+    if ($category_id) {
+        $resultsQuery->where('category_id', $category_id);
     }
+
+    // Xử lý sắp xếp
+    switch ($sort) {
+        case 'newness':
+            $resultsQuery->orderBy('created_at', 'desc');
+            break;
+        case 'price_asc':
+            $resultsQuery->orderBy('Price', 'asc');
+            break;
+        case 'price_desc':
+            $resultsQuery->orderBy('Price', 'desc');
+            break;
+        default:
+            $resultsQuery->orderBy('created_at', 'desc');
+            break;
+    }
+
+    // Lấy danh sách món ăn
+    $results = $resultsQuery->get();
+
+    // Lấy danh mục món ăn của nhà hàng
+    $categories = Category::whereIn('id', function ($query) use ($id) {
+        $query->select('category_id')
+              ->from('menu_items')
+              ->where('restaurant_id', $id)
+              ->groupBy('category_id');
+    })->get();
+
+    // Trả về view
+    return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'categories', 'category_id'));
+}
+
+    
 
     public function search(Request $request)
     {
@@ -171,6 +207,35 @@ class MenuItemController extends Controller
             'products',
             'relatedItems'
         ));
+    }
+    public function category($id)
+    {
+        $categories = Category::all(); // giữ nguyên sidebar
+    $category = Category::findOrFail($id);
+    
+    // Đổi từ get() sang paginate()
+    $results = MenuItem::where('category_id', $id)->paginate(16);
+
+    // Dữ liệu phụ (tùy bạn có dùng không)
+    $restaurants_item = Restaurant::get();
+    $products = MenuItem::take(4)->get();
+
+    $relatedItems = [];
+    if ($products->count() > 0) {
+        $firstCategoryId = $products->first()->category_id;
+        $relatedItems = MenuItem::where('category_id', $firstCategoryId)
+            ->where('id', '!=', $products->first()->id)
+            ->take(5)
+            ->get();
+    }
+    return view('Client.page.Menu.index', compact(
+        'categories',
+        'category',
+        'results',
+        'restaurants_item',
+        'products',
+        'relatedItems'
+    ));
     }
 
 

@@ -9,10 +9,15 @@
                                 <p class="account__details--desc">Admin <br> Dhaka <br> Dhaka 12119 <br> Bangladesh</p>
                                 <a class="account__details--link" href="my-account-2.html">View Addresses (1)</a>
                             </div>
-                            <div class="account__details--footer d-flex">
-                                <button class="account__details--footer__btn" type="button">Edit</button>
-                                <button class="account__details--footer__btn" type="button">Delete</button>
+                            <div class="d-flex justify-content-start gap-3 mt-3">
+                                <button type="button" class="btn btn-primary">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i> Delete Account
+                                </button>
                             </div>
+                            
                         </div>
                     </div>
         <script>
