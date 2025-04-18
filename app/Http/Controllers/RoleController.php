@@ -7,59 +7,53 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view('admin.page.role.index', compact('roles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.page.role.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        Role::create($request->all());
+        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Role $role)
+    public function edit($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return view('admin.page.role.edit', compact('role'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Role $role)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $role = Role::findOrFail($id);
+        $role->update($request->all());
+        return redirect()->route('roles.index')->with('success', 'Role updated successfully.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Role $role)
+    public function destroy($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        $role->delete();
+        return redirect()->route('roles.index')->with('success', 'Role deleted successfully.');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Role $role)
+    public function show($id)
     {
-        //
+        // Nếu không cần show, có thể redirect hoặc return 404
+        return redirect()->route('roles.index');
     }
 }

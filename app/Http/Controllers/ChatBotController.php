@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CustomerMessage;
+use App\Events\RestaurantMessage;
 use App\Models\MenuItem;
+use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Pusher\Pusher;
 
 class ChatBotController extends Controller
 {
@@ -35,7 +41,7 @@ class ChatBotController extends Controller
 
 
             if ($foundItem) {
-                $reply = "🍽️ Món ăn: **{$foundItem->Title_items}** - {$foundItem->description}, giá: {$foundItem->price} VNĐ.";
+                $reply = "🍽️ Món ăn: **{$foundItem->Title_items}**  giá: {$foundItem->Price} VNĐ.";
             } else {
                 $reply .= "\n\nChưa tìm thấy món phù hợp, bạn vui lòng để lại thông tin để được hỗ trợ.";
             }
@@ -74,5 +80,74 @@ class ChatBotController extends Controller
             ]);
 
         return $res['choices'][0]['message']['content'] ?? 'Không hiểu yêu cầu.';
+    }
+    public function index()
+    {
+       return view('Client.page.Chat.chat') ;// Đường dẫn đến view chat.php
+    }
+    //gioa diện dành cho khách hàng
+    public function chatWithRestaurant($restaurant_id)
+    {
+        $restaurant = Restaurant::findOrFail($restaurant_id);
+
+        // Lấy tin nhắn từ session
+        $chatKey = "chat_messages_$restaurant_id";
+        $messages = session()->get($chatKey, []);  // Lấy tất cả tin nhắn
+
+        return view('Client.page.Chat.chat', compact('restaurant', 'messages'));
+    }
+
+
+    // giao diện dành cho nhà hàng
+    public function chatAsRestaurant()
+    {
+        $user = Auth::guard('web')->user();
+
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if ($restaurant) {
+            $restaurantId = $restaurant->id;
+
+            // Lấy tin nhắn từ session
+            $chatKey = "chat_messages_$restaurantId";
+            $messages = session()->get($chatKey, []);  // Lấy tất cả tin nhắn
+
+            return view('Client.page.Chat.restaurant', compact('restaurantId', 'messages'));
+        }
+
+        return redirect()->route('home')->with('error', 'Không tìm thấy nhà hàng!');
+    }
+
+
+
+
+    public function send(Request $request)
+    {
+        $message = $request->input('message');
+        $sender = $request->input('sender'); // 'customer' hoặc 'restaurant'
+        $restaurantId = $request->input('restaurant_id');
+
+        // Dữ liệu tin nhắn mới
+        $messageData = [
+            'sender' => $sender,
+            'message' => $message,
+            'restaurant_id' => $restaurantId,
+            'time' => now()->toDateTimeString(),
+        ];
+
+        // Lưu tin nhắn vào session
+        $chatKey = "chat_messages_$restaurantId";
+        $messages = session()->get($chatKey, []);
+        $messages[] = $messageData;
+        session()->put($chatKey, $messages);
+
+        // Phát broadcast sự kiện khi có tin nhắn mới
+        if ($sender === 'customer') {
+            broadcast(new CustomerMessage($restaurantId, $message));
+        } else if ($sender === 'restaurant') {
+            broadcast(new RestaurantMessage($restaurantId, $message));
+        }
+
+        return response()->json(['status' => 'ok']);
     }
 }

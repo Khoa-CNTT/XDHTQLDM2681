@@ -20,6 +20,7 @@ class MenuItem extends Model
         'Quantity',
         'Status',
         'description',
+        'OldPrice',
     ];
     public function category()
     {

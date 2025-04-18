@@ -28,17 +28,17 @@
                 </ul>
             </li> --}}
             <li class="nav-item dropdown">
-                <a href="/admin/region/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/restaurant/menu_items" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <div class="menu-title">Khu Vực</div>
+                    <div class="menu-title">Quản lý món ăn</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/table/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="{{ route('restaurant.info') }}" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-dragon"></i>
                     </div>
-                    <div class="menu-title">Bàn</div>
+                    <div class="menu-title">Thay đổi thông tin nhà hàng</div>
                 </a>
             </li>
             <li class="nav-item dropdown">

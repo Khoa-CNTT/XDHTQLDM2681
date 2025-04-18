@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatBotController;
@@ -10,11 +11,15 @@ use App\Http\Controllers\facebookController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuItemController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Restaurant\DashboardController;
 use App\Http\Controllers\Restaurant\MenuController;
 use App\Http\Controllers\Restaurant\ResRegister;
 use App\Http\Controllers\Restaurant\RestaurantController as  SellController;
+use App\Http\Controllers\Restaurant\AccountController as  AccountRestaurantController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;
 use App\Http\Controllers\Shipper\AccountShipperController;
@@ -32,8 +37,18 @@ Route::controller(GoogleController::class)->group(function () {
 
 Route::get('auth/facebook', [facebookController::class, 'redirectToFacebook'])->name('auth.facebook');
 Route::get('login/facebook/callback', [facebookController::class, 'handleFacebookCallback']);
-
+//
 Route::post('/chatbot/ask', [ChatBotController::class, 'ask'])->name('chatbox');
+//chat thời gian thực
+// Giao diện chat của khách hàng
+Route::get('/chat/{restaurant_id}', [ChatBotController::class, 'chatWithRestaurant'])->name('chat.customer');
+
+// Giao diện chat của nhà hàng
+Route::get('/restaurant/chat', [ChatBotController::class, 'chatAsRestaurant'])->name('chat.restaurant');
+
+Route::post('/chat/send', [ChatBotController::class, 'send']);
+
+
 Route::get('/account/login', [AccountController::class, "index"]);
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
@@ -55,6 +70,8 @@ Route::get('/menu/detail/{id}', [MenuItemController::class, 'detail'])->name('me
 Route::get('/menu-items/search', [MenuItemController::class, 'search'])->name('menu-items.search');
 Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('restaurant.menu');
 
+
+
 Route::group(
     ["prefix" => "/client",
     "middleware" => ['auth.custom']],
@@ -73,7 +90,7 @@ Route::group(
         Route::get('/address', [AccountController::class, "address"]);
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
-
+        Route::post('/account/location/update', [AccountController::class, 'update'])->name('location.update');
     });
 
 //admin
@@ -91,6 +108,14 @@ Route::group(
             Route::post("/deleteAll", [AdminCategoryController::class, "destroyAll"])->name("deleteAll");
             Route::post("/checkSlug", [AdminCategoryController::class, "checkSlug"])->name("checkSlug");
         });
+
+        //crud roles
+        Route::resource('roles', RoleController::class);
+        //crud
+        Route::resource('users', UserController::class);
+
+
+
         Route::group(["prefix" => "/restaurant"], function () {
             Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
             // routes/web.php
@@ -107,10 +132,26 @@ Route::group(
 Route::group(
     ["prefix" => "/restaurant"],
     function(){
+        //thông tin nhà hàng
+        Route::get('/info', [DashboardController::class, "getRestaurantInfo"])->name('restaurant.info');
+        Route::get('/edit', [DashboardController::class, "EditRestaurantInfo"])->name('restaurant.edit');
+        Route::put('/update-info', [DashboardController::class, 'updateRestaurantInfo'])->name('restaurant.update.info');
+        Route::post('/restaurant/toggle-status', [DashboardController::class, 'toggleStatus'])->name('restaurant.toggle.status');
+
+
+        // đăng ký nhà hàng
         Route::get('/register',[ResRegisterController::class,"resRegister"]);
         Route::post('/register-restaurant', [SellController::class, 'store'])->name('restaurant.store');
         Route::get('/admin/restaurants', [SellController::class, 'pendingRestaurants'])->name('admin.restaurants');
+        //đăng nhập
+        Route::get('/login', [AccountRestaurantController::class, "login"])->name('login.restaurant');
+        Route::post('/actionlogin', [AccountRestaurantController::class, 'actionlogin'])->name('restaurant.actionlogin');
+
+        //thêm món
         Route::resource('menu_items', MenuController::class);
+
+
+
     }
 
 );

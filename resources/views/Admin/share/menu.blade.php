@@ -28,31 +28,31 @@
                 </ul>
             </li> --}}
             <li class="nav-item dropdown">
-                <a href="/admin/region/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/roles" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <div class="menu-title">Khu Vực</div>
+                    <div class="menu-title">Quản lý hệ thống</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/table/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/users" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-dragon"></i>
                     </div>
-                    <div class="menu-title">Bàn</div>
+                    <div class="menu-title">Quản lý tài khoản</div>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/admin/restaurant/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                    <div class="parent-icon"><i class="fa-regular fa-rectangle-list"></i>
+                    </div>
+                    <div class="menu-title">Quản lý nhà hàng</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
                 <a href="/admin/category/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-regular fa-rectangle-list"></i>
-                    </div>
-                    <div class="menu-title">Danh Mục</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/food/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-bowl-food"></i>
                     </div>
-                    <div class="menu-title">Món Ăn</div>
+                    <div class="menu-title">Quản lý danh mục</div>
                 </a>
             </li>
 
