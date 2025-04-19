@@ -117,7 +117,6 @@ class MenuItemController extends Controller
         if (!empty($query)) {
             $resultsQuery->where(function ($q) use ($query) {
                 $q->where('Title_items', 'like', '%' . $query . '%')
-                    ->orWhere('description', 'like', '%' . $query . '%')
                     ->orWhere('Price', 'like', '%' . $query . '%');
             });
         }
