@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\updateinformationRequest;
 use App\Http\Requests\UserOtpRequest;
 use App\Mail\OTPMail;
+use App\Models\Location;
+use App\Models\Role;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use App\Http\Requests\UserLoginRequest;
@@ -36,46 +39,64 @@ class AccountController extends Controller
     }
     public function address()
     {
-        return view("Client.page.Account.Address");
+        $user = Auth::user();
+
+        $location = Location::find($user->location_id);
+        return view('Client.page.Account.Address', compact('location', 'user'));
     }
     public function information()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         return view("Client.page.Account.Information",compact('user'));
     }
     public function updateinformation(updateinformationRequest $request)
     {
+        $user = Auth::user();
 
-        $user = auth()->user(); 
-        // Cập nhật thông tin người dùng
-        $user->username = $request->input('username');
-        $user->email = $request->input('email');
-        $user->PhoneNumber = $request->input('PhoneNumber');
-        $user->Address = $request->input('Address');
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
+        $fields = ['username', 'email', 'PhoneNumber', 'Address'];
+
+        foreach ($fields as $field) {
+            if ($request->filled($field) && $request->input($field) !== $user->$field) {
+                $user->$field = $request->input($field);
+            }
         }
-        // Lưu thông tin đã cập nhật vào cơ sở dữ liệu
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
         $user->save();
-    
-        // Trả về thông báo thành công và chuyển hướng về trang thông tin người dùng
-        return redirect()->route('account.information')->with('success', 'Your profile has been updated successfully.');
+
+        return redirect()->route('account.information')->with('success', 'Thông tin tài khoản đã được cập nhật thành công.');
     }
+
+
 
 
     public function actionLogin(UserLoginRequest $request)
     {
-        // dd($request->all());
-        // $request->email, $request->password
-        $check =  Auth::guard('web')->attempt([
-            'username'     => $request->username_client,
-            'password'  => $request->password_client
-        ]);
-        // dd($check);
-        if ($check) {
-            return redirect('/');
+        $credentials = [
+            'username' => $request->username_client,
+            'password' => $request->password_client,
+        ];
+
+        if (Auth::guard('web')->attempt($credentials)) {
+            $user = Auth::user();
+
+
+            $adminRole = Role::where('name', 'Admin')->first();
+            $customerRole = Role::where('name', 'Khách hàng')->first();
+
+            if ($adminRole && $user->roles->contains($adminRole->id)) {
+                return redirect('/admin/roles');
+            } elseif ($customerRole && $user->roles->contains($customerRole->id)) {
+                return redirect('/');
+            } else {
+                Auth::logout(); // Nếu không có quyền phù hợp
+                return redirect('/account/login')->with('error', 'Bạn không có quyền truy cập.');
+            }
         } else {
-            return redirect('/account/login');
+            return redirect('/account/login')->with('error', 'Sai tên đăng nhập hoặc mật khẩu.');
         }
     }
     public function actionRegister(ResisterUserRequest $request)
@@ -88,7 +109,7 @@ class AccountController extends Controller
         }
         $otp = rand(100000, 999999);
         Session::put('otp', $otp);
-        Session::put('register_data', $request->all()); // Lưu dữ liệu đăng ký tạm thời
+        Session::put('register_data', $request->all());
         Mail::to($request->email)->send(new OTPMail($otp));
 
 
@@ -101,16 +122,13 @@ class AccountController extends Controller
         return view('Client.page.Account.Emails.verify_otp');
     }
 
+
+
     public function verifyOTP(UserOtpRequest $request)
     {
-        // dd($request->all());
-
-
         if (Session::get('otp') == $request->otp) {
-            // Lấy dữ liệu đăng ký từ Session
             $data = Session::get('register_data');
-          // dd($data);
-            // Kiểm tra dữ liệu có tồn tại không
+
             if (!$data) {
                 return back()->with('error', 'Dữ liệu đăng ký không hợp lệ. Vui lòng đăng ký lại.');
             }
@@ -121,11 +139,14 @@ class AccountController extends Controller
                 'password' => bcrypt($data['password']),
             ]);
 
-            //dd($user);
+            $role = Role::where('name', 'Khách hàng')->first();
+
+            if ($role) {
+                $user->roles()->attach($role->id);
+            }
 
             Auth::guard('web')->login($user);
 
-            // Xóa OTP và dữ liệu đăng ký trong session sau khi xác thực thành công
             Session::forget(['otp', 'register_data']);
 
             return redirect('account/login')->with('success', 'Xác thực thành công! Tài khoản của bạn đã được tạo.');
@@ -222,7 +243,7 @@ class AccountController extends Controller
         toastr()->success("Đã đăng xuất thành công!");
         return redirect('/account/login'); // Chuyển hướng về trang login
     }
-    
+
 
 
     /**
@@ -256,13 +277,36 @@ class AccountController extends Controller
     {
         //
     }
+    // UserController.php
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'City' => 'required|string|max:100',
+            'District' => 'required|string|max:100',
+            'Ward' => 'required|string|max:100',
+            'Address' => 'required|string|max:255',
+        ]);
+
+        $user = Auth::user();
+
+        if ($user->location_id) {
+            $location = Location::find($user->location_id);
+            if ($location) {
+                $location->update($request->only(['City', 'District', 'Ward', 'Address']));
+            }
+        }
+        else {
+            $location = Location::create($request->only(['City', 'District', 'Ward', 'Address']));
+            $user->location_id = $location->id;
+            $user->save();
+        }
+
+        return back()->with('success', 'Địa chỉ đã được cập nhật');
     }
 
     /**

@@ -29,6 +29,10 @@ class User extends Authenticatable
 
         'location_id',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

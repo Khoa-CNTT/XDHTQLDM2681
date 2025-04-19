@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class ResRegisterController extends Controller
 {
      public function resRegister(){
-        return view('Restaurant/page/register');
+        return view('restaurant.page.account.register');
      }
 }

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -32,6 +33,7 @@ class MenuController extends Controller
 
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;
+        $menuItem->OldPrice = $request->OldPrice;
         $menuItem->description = $request->description;
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
@@ -51,12 +53,25 @@ class MenuController extends Controller
         return redirect('/restaurant/menu_items')->with('success', 'Món ăn đã được thêm thành công!');
     }
 
-    // Hàm xem danh sách món ăn
+
     public function index()
     {
-        $menuItems = MenuItem::with('category', 'restaurant')->get();
+        $user = Auth::guard('web')->user();
+
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if (!$restaurant) {
+            return redirect()->route('login.restaurant')->with('error', 'Nhà hàng không tồn tại.');
+        }
+
+        $menuItems = MenuItem::with('category', 'restaurant')
+            ->where('restaurant_id', $restaurant->id)
+            ->get();
+
         return view('restaurant.page.menu.index', compact('menuItems'));
     }
+
+
 
     // Hàm sửa món ăn
     public function edit($id)
@@ -85,6 +100,7 @@ class MenuController extends Controller
         $menuItem->category_id = $request->category_id;
         $menuItem->Title_items = $request->Title_items;
         $menuItem->Price = $request->Price;
+        $menuItem->OldPrice = $request->OldPrice;
 
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;

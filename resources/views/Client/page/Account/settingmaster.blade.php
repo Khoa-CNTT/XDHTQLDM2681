@@ -8,13 +8,13 @@
                 <p style="font-size: 16px; margin-bottom: 20px;">Xin chào, {{ Auth::user()->username }}!</p>
                 <ul class="account__menu">
                     <li class="account__menu--list @if(request()->is('client/dashboard')) active @endif">
-                        <a href="/client/dashboard">Lịch sử đặt món</a>
+                        <a href="/client/dashboard">Thông tin</a>
                     </li>
                     <li class="account__menu--list @if(request()->is('client/address')) active @endif">
-                        <a href="/client/address">Địa chỉ</a>
+                        <a href="/client/address">Địa chỉ giao hàng</a>
                     </li>
                     <li class="account__menu--list @if(request()->is('client/information')) active @endif">
-                        <a href="/client/information">Thông tin tài khoản</a>
+                        <a href="/client/information">Thông tin giao hàng</a>
                     </li>
                     <li class="account__menu--list">
                         <form id="logoutForm" action="{{ route('logout') }}" method="POST" style="display: inline;">

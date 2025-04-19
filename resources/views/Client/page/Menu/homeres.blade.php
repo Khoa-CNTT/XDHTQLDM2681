@@ -391,3 +391,14 @@
     </section>
     <!-- End shop section -->
     @endsection
+@section('js')
+    <script>
+        const chatButton = document.getElementById('chatButton');
+        console.log(chatButton);
+        chatButton.addEventListener('click', function () {
+            const restaurantId = chatButton.getAttribute('data-restaurant-id');
+
+            window.location.href = `/chat/${restaurantId}`;
+        });
+    </script>
+@endsection

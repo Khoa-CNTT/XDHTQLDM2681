@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Mail\RestaurantApproved;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 class RestaurantController extends Controller
 {
 
@@ -21,13 +23,27 @@ class RestaurantController extends Controller
     public function approve($id)
     {
         $restaurant = Restaurant::find($id);
-        if ($restaurant) {
-            // Cập nhật trạng thái phê duyệt
+
+        if ($restaurant && !$restaurant->approved) {
+
             $restaurant->approved = true;
             $restaurant->save();
 
-            // Gửi email thông báo phê duyệt
-            Mail::to($restaurant->email)->send(new RestaurantApproved($restaurant));
+            $randomPassword = Str::random(8);
+
+            $username = strstr($restaurant->email, '@', true);
+
+            // Tạo user mới
+            $user = User::create([
+                'username' => $username,
+                'email' => $restaurant->email,
+                'password' => bcrypt($randomPassword),
+                'PhoneNumber' => $restaurant->PhoneNumber,
+                'Address' => $restaurant->location->Address,
+                'location_id' => $restaurant->location_id,
+            ]);
+
+            Mail::to($restaurant->email)->send(new RestaurantApproved($restaurant, $username, $randomPassword));
 
             return response()->json(['success' => true]);
         }
