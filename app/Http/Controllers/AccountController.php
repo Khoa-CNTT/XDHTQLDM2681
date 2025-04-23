@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LocationUpdateRequest;
 use App\Http\Requests\updateinformationRequest;
 use App\Http\Requests\UserOtpRequest;
 use App\Mail\OTPMail;
@@ -18,6 +19,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class AccountController extends Controller
 {
@@ -104,6 +107,10 @@ class AccountController extends Controller
 
 
         if (User::where('username', $request->username)->exists()) {
+
+            return redirect('/account/register');
+        }
+        if (User::where('email', $request->email)->exists()) {
 
             return redirect('/account/register');
         }
@@ -283,7 +290,9 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+
+
+    public function update(LocationUpdateRequest $request)
     {
         $request->validate([
             'City' => 'required|string|max:100',
@@ -294,20 +303,62 @@ class AccountController extends Controller
 
         $user = Auth::user();
 
+        $fullAddress = $request->Address . ', ' . $request->Ward . ', ' . $request->District . ', ' . $request->City;
+
+        $lat = null;
+        $lon = null;
+
+        try {
+            $response = Http::withHeaders([
+                'User-Agent' => 'CallFood/1.0 (longkolp16@gmail.com)'
+            ])->get('https://nominatim.openstreetmap.org/search', [
+                'q' => $fullAddress,
+                'format' => 'json',
+                'limit' => 1
+            ]);
+
+            $data = $response->json();
+
+            if ($response->successful() && !empty($data)) {
+                $lat = $data[0]['lat'] ?? null;
+                $lon = $data[0]['lon'] ?? null;
+            } else {
+                Log::warning('Không tìm được tọa độ cho địa chỉ: ' . $fullAddress);
+            }
+        } catch (\Exception $e) {
+            Log::error('Lỗi khi lấy tọa độ: ' . $e->getMessage());
+        }
+
         if ($user->location_id) {
             $location = Location::find($user->location_id);
             if ($location) {
-                $location->update($request->only(['City', 'District', 'Ward', 'Address']));
+                $location->update([
+                    'City' => $request->City,
+                    'District' => $request->District,
+                    'Ward' => $request->Ward,
+                    'Address' => $request->Address,
+                    'Latitude' => $lat,
+                    'Longitude' => $lon,
+                    'restaurant_id'=> 0,
+                ]);
             }
-        }
-        else {
-            $location = Location::create($request->only(['City', 'District', 'Ward', 'Address']));
+        } else {
+            $location = Location::create([
+                'City' => $request->City,
+                'District' => $request->District,
+                'Ward' => $request->Ward,
+                'Address' => $request->Address,
+                'Latitude' => $lat,
+                'Longitude' => $lon,
+                'restaurant_id' => 0,
+            ]);
             $user->location_id = $location->id;
             $user->save();
         }
 
         return back()->with('success', 'Địa chỉ đã được cập nhật');
     }
+
 
     /**
      * Remove the specified resource from storage.

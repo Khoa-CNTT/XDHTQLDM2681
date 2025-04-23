@@ -83,8 +83,8 @@
                     <div class="col-md-6">
                         <label for="Status" class="form-label">🔘 Trạng thái</label>
                         <select name="Status" id="Status" class="form-select">
-                            <option value="1" {{ old('Status') == '1' ? 'selected' : '' }}>Còn hàng</option>
-                            <option value="0" {{ old('Status') == '0' ? 'selected' : '' }}>Hết hàng</option>
+                            <option value="1" {{ old('Status') == '1' ? 'selected' : '' }}>Mở cửa </option>
+                            <option value="0" {{ old('Status') == '0' ? 'selected' : '' }}>Đóng cửa</option>
                         </select>
                         @error('Status')
                             <small class="text-danger">{{ $message }}</small>

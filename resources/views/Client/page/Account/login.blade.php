@@ -47,6 +47,7 @@
                                         </label>
                                         <button class="account__login--btn btn" type="submit">Đăng nhập</button>
                                     </form>
+                                    <p class="text-end mt-2"><a href="{{ route('forget.password.get') }}">Quên mật khẩu</a></p>
                                     <div class="account__login--divide">
                                         <span class="account__login--divide__text">hoặc</span>
                                     </div>
@@ -59,7 +60,7 @@
                                     </div>
                                     <p class="account__login--signup__text">Nếu chưa có tài khoản? <button
                                             type="submit">Tạo tài khoản mới</button></p>
-                                            <p><a href="{{ route('forget.password.get') }}">Quên mật khẩu</a></p>
+
                                 </div>
                             </div>
                         </div>
@@ -103,12 +104,7 @@
 
                                         <button class="account__login--btn btn mb-10" type="submit">Đăng ký</button>
 
-                                        <div class="account__login--remember position__relative">
-                                            <input class="checkout__checkbox--input" id="check2" type="checkbox" required>
-                                            <span class="checkout__checkbox--checkmark"></span>
-                                            <label class="checkout__checkbox--label login__remember--label" for="check2">
-                                                I have read and agree to the terms & conditions</label>
-                                        </div>
+
                                     </form>
                                 </div>
                             </div>

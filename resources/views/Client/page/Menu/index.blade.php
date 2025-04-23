@@ -36,7 +36,7 @@
                                 <circle cx="336" cy="384" r="28" fill="none" stroke="currentColor" stroke-linecap="round"
                                     stroke-linejoin="round" stroke-width="28"></circle>
                             </svg>
-                            <span class="widget__filter--btn__text">Filter</span>
+                            <span class="widget__filter--btn__text">Lọc</span>
                         </button>
                         <div class="product__view--mode d-flex align-items-center">
 
@@ -51,7 +51,6 @@
                                             <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Giá cao nhất</option>
                                         </select>
 
-                                        {{-- Giữ lại các query khác nếu có (ví dụ query tìm kiếm) --}}
                                         @if(request()->has('query'))
                                             <input type="hidden" name="query" value="{{ request('query') }}">
                                         @endif
@@ -99,7 +98,7 @@
                                             <label class="widget__categories--menu__label d-flex align-items-center">
                                                 <span class="widget__categories--menu__text">{{ $category->title }}</span>
                                             </label>
-                                           </a>                                        
+                                           </a>
                                         </li>
                                     @endforeach
                                 </ul>

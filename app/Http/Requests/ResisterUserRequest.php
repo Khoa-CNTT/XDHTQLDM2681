@@ -24,10 +24,17 @@ class ResisterUserRequest extends FormRequest
         return [
             'username' => 'required|string|min:3|max:50|unique:users,username',
             'email' => 'required|email',
-            'password' => 'required|string|min:6|max:32|confirmed',
+            'password' => [
+                'required',
+                'string',
+                'min:6',
+                'max:32',
+                'confirmed',
+                'regex:/^(?=.*[a-zA-Z])(?=.*\d).+$/'
+            ],
         ];
-
     }
+
     public function messages()
     {
         return [
@@ -39,11 +46,11 @@ class ResisterUserRequest extends FormRequest
             'email.required' => 'Vui lòng nhập email!',
             'email.email' => 'Email không hợp lệ!',
 
-
             'password.required' => 'Vui lòng nhập mật khẩu!',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự!',
             'password.max' => 'Mật khẩu không quá 32 ký tự!',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp!',
+            'password.regex' => 'Mật khẩu phải chứa ít nhất một chữ cái và một số!',
         ];
     }
 }

@@ -20,7 +20,7 @@ class HomeController extends Controller
         $products = MenuItem::take(3)->get();
         $food_like = MenuItem::skip(4)->take(4)->get();
 
-        $decilious_foods = MenuItem::with('restaurant.location')->skip(1)->take(12)->get();
+        $decilious_foods = MenuItem::with('restaurant.locations')->skip(1)->take(12)->get();
 
         $categories = Category::all();
 

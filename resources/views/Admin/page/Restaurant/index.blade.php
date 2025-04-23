@@ -19,53 +19,60 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($restaurants as $index => $restaurant)
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $restaurant->name }}</td>
-                            <td>
-                                @if($restaurant->logo)
-                                    <img src="{{ asset('image/logo/' . $restaurant->logo) }}" alt="Logo" width="60" height="60"
-                                        class="rounded-circle shadow-sm">
-                                @else
-                                    <span class="text-muted">Không có</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($restaurant->business_license)
-                                    <img src="{{ asset('image/restaurant/' . $restaurant->business_license) }}" alt="Logo" width="60" height="60"
-                                        class="rounded-circle shadow-sm">
-                                @else
-                                    <span class="text-muted">Không có</span>
-                                @endif
-                            </td>
-                            <td>{{ $restaurant->email }}</td>
-                            <td>{{ $restaurant->PhoneNumber }}</td>
-                            <td>{{ $restaurant->business_type }}</td>
-                            <td>
-                                {{ $restaurant->location->Address }},
-                                {{ $restaurant->location->Ward }},
-                                {{ $restaurant->location->District }},
-                                {{ $restaurant->location->City }}
-                            </td>
-                            <td>
-                                @if($restaurant->status)
-                                    <span class="badge bg-success">Mở cửa</span>
-                                @else
-                                    <span class="badge bg-secondary">Đóng cửa</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($restaurant->approved)
-                                    <span class="badge bg-success">Đã phê duyệt</span>
-                                @else
-                                    <button class="btn btn-sm btn-outline-primary approve-btn" data-id="{{ $restaurant->id }}">
-                                        Phê duyệt
-                                    </button>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
+                @foreach($restaurants as $index => $restaurant)
+                    <tr>
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $restaurant->name }}</td>
+                        <td>
+                            @if($restaurant->logo)
+                                <img src="{{ asset('image/logo/' . $restaurant->logo) }}" alt="Logo" width="60" height="60"
+                                    class="rounded-circle shadow-sm">
+                            @else
+                                <span class="text-muted">Không có</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($restaurant->business_license)
+                                <img src="{{ asset('image/restaurant/' . $restaurant->business_license) }}" alt="GPLK" width="60" height="60"
+                                    class="rounded-circle shadow-sm">
+                            @else
+                                <span class="text-muted">Không có</span>
+                            @endif
+                        </td>
+                        <td>{{ $restaurant->email }}</td>
+                        <td>{{ $restaurant->PhoneNumber }}</td>
+                        <td>{{ $restaurant->business_type }}</td>
+                        <td>
+                            <ul class="list-unstyled mb-0">
+                                @foreach($restaurant->locations as $location)
+                                    <li>
+                                        {{ $location->Address }},
+                                        {{ $location->Ward }},
+                                        {{ $location->District }},
+                                        {{ $location->City }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </td>
+                        <td>
+                            @if($restaurant->status)
+                                <span class="badge bg-success">Mở cửa</span>
+                            @else
+                                <span class="badge bg-secondary">Đóng cửa</span>
+                            @endif
+                        </td>
+                        <td>
+                            @if($restaurant->approved)
+                                <span class="badge bg-success">Đã phê duyệt</span>
+                            @else
+                                <button class="btn btn-sm btn-outline-primary approve-btn" data-id="{{ $restaurant->id }}">
+                                    Phê duyệt
+                                </button>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+
                 </tbody>
             </table>
         </div>

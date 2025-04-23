@@ -59,19 +59,19 @@ class DashboardController extends Controller
     }
     public function updateRestaurantInfo(Request $request)
     {
-       // dd($request->all());
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'PhoneNumber' => 'required|string|max:15',
-            'status' => 'required|string|max:50',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i',
-            'business_type' => 'required|string|max:100',
-            'description' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'business_license' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location_id' => 'required|exists:locations,id',
-        ]);
+        //dd($request->all());
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'PhoneNumber' => 'required|string|max:15',
+        //     'status' => 'required|string|max:50',
+        //     'start_time' => 'required|date_format:H:i',
+        //     'end_time' => 'required|date_format:H:i',
+        //     'business_type' => 'required|string|max:100',
+        //     'description' => 'nullable|string',
+        //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'business_license' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'location_id' => 'required|exists:locations,id',
+        // ]);
 
         $user = Auth::guard('web')->user();
         $restaurant = Restaurant::where('email', $user->email)->first();

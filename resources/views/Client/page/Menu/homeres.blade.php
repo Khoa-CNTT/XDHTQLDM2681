@@ -55,22 +55,8 @@
     </style>
     <!-- Start slider section -->
         <!-- Start breadcrumb section -->
-        <section class="breadcrumb__section breadcrumb__bg">
-            <div class="container">
-                <div class="row row-cols-1">
-                    <div class="col">
-                        <div class="breadcrumb__content text-center">
-                            <h1 class="breadcrumb__content--title text-white mb-25">Thực đơn</h1>
-                            <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                                <li class="breadcrumb__content--menu__items"><a class="text-white"
-                                        href="index.html">Trang chủ</a></li>
-                                <li class="breadcrumb__content--menu__items"><span class="text-white">Nhà hàng</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+
+        <div id="restaurantMap" style="height: 400px; margin: 20px auto;"></div>
         <section class="restaurant__profile section--padding">
             <div class="container">
               <div class="row align-items-start">
@@ -94,6 +80,7 @@
                       <button class="btn btn-danger px-3 py-1">Yêu Thích</button>
                       <button class="btn btn-outline-dark px-3 py-1">+ Theo Dõi</button>
                     <button class="btn btn-dark px-3 py-1" id="chatButton" data-restaurant-id="{{ $restaurant->id }}">Chat</button>
+                    <a href="/nearby">Tìm kiếm nhà hàng gần nhất</a>
                     </div>
                   </div>
                 </div>
@@ -468,4 +455,26 @@
             window.location.href = `/chat/${restaurantId}`;
         });
     </script>
+    <!-- Leaflet CSS & JS -->
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const lat = {{ $restaurant->locations[0]->Latitude ?? 0 }};
+            const lng = {{ $restaurant->locations[0]->Longitude ?? 0 }};
+            const address = `{{ $restaurant->locations[0]->Address ?? 'Không có địa chỉ' }}, {{ $restaurant->locations[0]->Ward ?? '' }}, {{ $restaurant->locations[0]->District ?? '' }}, {{ $restaurant->locations[0]->City ?? '' }}`;
+
+            const map = L.map('restaurantMap').setView([lat, lng], 16);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            L.marker([lat, lng])
+                .addTo(map)
+                .bindPopup(address)
+                .openPopup();
+        });
+    </script>
+
 @endsection

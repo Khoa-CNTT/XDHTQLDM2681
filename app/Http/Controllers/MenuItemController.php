@@ -15,12 +15,9 @@ class MenuItemController extends Controller
     public function index(Request $request)
     {
         $sort = $request->input('sort');
-        //lọc theo giá
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
-        //lọc quận huyện
         $district = $request->input('district');
-        // dd($district);
 
         $resultsQuery = MenuItem::query();
 
@@ -33,7 +30,7 @@ class MenuItemController extends Controller
         }
         // Lọc theo Quận/Huyện
         if (!empty($district)) {
-            $resultsQuery->whereHas('restaurant.location', function ($query) use ($district) {
+            $resultsQuery->whereHas('restaurant.locations', function ($query) use ($district) {
                 $query->where('District', $district);
             });
         }
@@ -75,31 +72,26 @@ class MenuItemController extends Controller
 
     public function detail($id)
     {
-        // Lấy chi tiết món ăn theo ID
-        $menuItem = MenuItem::with(['category', 'restaurant'])
+        $menuItem = MenuItem::with(['category', 'restaurant.locations']) // eager load đến location
             ->where('id', $id)
-            ->firstOrFail(); // Nếu không tìm thấy sẽ trả về lỗi 404
+            ->firstOrFail();
+        //return response()->json($menuItem);
 
-        // Trả về view với dữ liệu món ăn
         return view('Client.page.Menu.detail', compact('menuItem'));
     }
+
     public function homeres(Request $request, $id, $category_id = null)
 {
-    // Lấy thông tin nhà hàng
     $restaurant = Restaurant::findOrFail($id);
 
-    // Lấy tham số sắp xếp (tùy chọn)
     $sort = $request->input('sort');
 
-    // Query món ăn theo nhà hàng
     $resultsQuery = MenuItem::where('restaurant_id', $id);
 
-    // Nếu có category_id trong URL, lọc theo danh mục
     if ($category_id) {
         $resultsQuery->where('category_id', $category_id);
     }
 
-    // Xử lý sắp xếp
     switch ($sort) {
         case 'newness':
             $resultsQuery->orderBy('created_at', 'desc');
@@ -115,10 +107,8 @@ class MenuItemController extends Controller
             break;
     }
 
-    // Lấy danh sách món ăn
     $results = $resultsQuery->get();
 
-    // Lấy danh mục món ăn của nhà hàng
     $categories = Category::whereIn('id', function ($query) use ($id) {
         $query->select('category_id')
               ->from('menu_items')
@@ -126,11 +116,10 @@ class MenuItemController extends Controller
               ->groupBy('category_id');
     })->get();
 
-    // Trả về view
     return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'categories', 'category_id'));
 }
 
-    
+
 
     public function search(Request $request)
     {
@@ -211,9 +200,9 @@ class MenuItemController extends Controller
     {
         $categories = Category::all(); // giữ nguyên sidebar
     $category = Category::findOrFail($id);
-    
+
     // Đổi từ get() sang paginate()
-    $results = MenuItem::where('category_id', $id)->paginate(16);
+    $results = MenuItem::where('category_id', $id)->paginate(12);
 
     // Dữ liệu phụ (tùy bạn có dùng không)
     $restaurants_item = Restaurant::get();
