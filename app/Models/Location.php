@@ -23,4 +23,8 @@ class Location extends Model
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
     }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'location_id');
+    }
 }

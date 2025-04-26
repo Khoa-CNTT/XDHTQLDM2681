@@ -50,8 +50,9 @@
             <li class="d-flex justify-content-between px-3 py-2">
                 <span>🚀 Trạng thái hoạt động</span>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="toggleStatusSidebar">
+                    <input class="form-check-input" type="checkbox" id="toggleStatusSidebar" {{ Auth::check() && Auth::user()->is_active ? 'checked' : '' }}>
                 </div>
+
             </li>
             <li><a href="#" class="d-block py-2 px-3 text-dark text-decoration-none">📦 Đơn hàng</a></li>
             <li><a href="#" class="d-block py-2 px-3 text-dark text-decoration-none">📜 Lịch sử đơn hàng</a></li>
@@ -62,28 +63,67 @@
 
     <!-- JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('overlay');
-        const menuToggle = document.getElementById('menuToggle');
-        const closeSidebar = document.getElementById('closeSidebar');
+   <script>
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const menuToggle = document.getElementById('menuToggle');
+    const closeSidebar = document.getElementById('closeSidebar');
 
-        menuToggle.addEventListener('click', function () {
-            sidebar.style.transform = "translateX(0)";
-            overlay.classList.remove("d-none");
+    const toggleStatus = document.getElementById('toggleStatus'); // checkbox trên header (nếu có)
+    const toggleStatusSidebar = document.getElementById('toggleStatusSidebar'); // checkbox trong sidebar
+
+    // Mở sidebar
+    menuToggle.addEventListener('click', function () {
+        sidebar.style.transform = "translateX(0)";
+        overlay.classList.remove("d-none");
+    });
+
+    // Đóng sidebar
+    function closeMenu() {
+        sidebar.style.transform = "translateX(-250px)";
+        overlay.classList.add("d-none");
+    }
+
+    closeSidebar.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+
+    // Sự kiện thay đổi trạng thái từ header (nếu có)
+    if (toggleStatus) {
+        toggleStatus.addEventListener('change', function () {
+            toggleStatusSidebar.checked = this.checked;
+            handleStatusChange(this.checked);
         });
+    }
 
-        function closeMenu() {
-            sidebar.style.transform = "translateX(-250px)";
-            overlay.classList.add("d-none");
+    // Sự kiện thay đổi trạng thái từ sidebar
+    toggleStatusSidebar.addEventListener('change', function () {
+        if (toggleStatus) {
+            toggleStatus.checked = this.checked;
         }
+        handleStatusChange(this.checked);
+    });
 
-        closeSidebar.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
+    // Hàm xử lý thông báo và gọi API (nếu có)
+    function handleStatusChange(isActive) {
+        alert(isActive ? 'Bạn đang ở trạng thái hoạt động!' : 'Bạn đã tắt trạng thái hoạt động!');
 
-        document.getElementById('toggleStatus').addEventListener('change', function () {
-            document.getElementById('toggleStatusSidebar').checked = this.checked;
-            alert(this.checked ? 'Bạn đang ở trạng thái hoạt động!' : 'Bạn đã tắt trạng thái hoạt động!');
+        // Gửi cập nhật trạng thái đến server (nếu cần)
+        fetch('/shipper/update-status', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({ is_active: isActive ? 1 : 0 })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Cập nhật thành công:', data.message);
+        })
+        .catch(error => {
+            console.error('Lỗi khi cập nhật trạng thái:', error);
         });
-    </script>
+    }
+</script>
+
 </body>

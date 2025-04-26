@@ -30,11 +30,23 @@ class AccountShipperController extends Controller
         //dd($credentials, Auth::guard('driver_auth')->attempt($credentials));
 
         if (Auth::guard('driver_auth')->attempt($credentials)) {
-            return redirect('/');
+            return redirect('/shipper/home');
         } else {
-            return redirect('/account/login');
+            return redirect('/shipper/login');
         }
     }
+    public function logoutshipper()
+    {
+        $driver = Auth::guard('driver_auth')->user();
+        if ($driver) {
+            $driver->is_active = false; // tắt trạng thái hoạt động
+            $driver->save();
+        }
+
+        Auth::guard('driver_auth')->logout();
+        return redirect('/account/login');
+    }
+
     public function registershipper()
     {
 

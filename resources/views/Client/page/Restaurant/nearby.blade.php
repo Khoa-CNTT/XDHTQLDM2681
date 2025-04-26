@@ -55,7 +55,7 @@
                             <div class="product__view--mode__list product__short--by align-items-center d-none d-lg-flex">
                                 <label class="product__view--label">Sắp xếp:</label>
                                 <div class="select shop__header--select">
-                                    <form method="GET" action="{{ route('menu.item.index') }}">
+                                    <form method="GET" action="{{ route('nearby.index') }}">
                                         <select name="sort" class="product__view--select" onchange="this.form.submit()">
                                             <option value="">Mặc định</option>
                                             <option value="newness" {{ request('sort') == 'newness' ? 'selected' : '' }}>Mới nhất</option>
@@ -99,7 +99,7 @@
                             <div class="shop__sidebar--widget widget__area d-none d-lg-block">
                                 <div class="single__widget widget__bg">
                                     <h2 class="widget__title h3">
-                                        <a href="{{route('menu.item.index')}}">
+                                        <a href="{{route('nearby.index')}}">
                                             Danh mục
                                             </a>
                                     </h2>
@@ -131,7 +131,7 @@
 
                                     </ul>
                                 </div>
-                               <form class="price__filter--form" action="{{ route('menu.item.index') }}" method="GET">
+                               <form class="price__filter--form" action="{{ route('nearby.index') }}" method="GET">
     <div class="price__filter--form__inner mb-15 d-flex align-items-center">
         <div class="price__filter--group">
             <label class="price__filter--label" for="Filter-Price-GTE2">Từ</label>

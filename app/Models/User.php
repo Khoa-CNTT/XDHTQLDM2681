@@ -33,6 +33,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
     }
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

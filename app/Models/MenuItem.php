@@ -21,6 +21,7 @@ class MenuItem extends Model
         'Status',
         'description',
         'OldPrice',
+        'preparation_time',
     ];
     public function category()
     {

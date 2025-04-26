@@ -3,12 +3,95 @@
 namespace App\Http\Controllers\Shipper;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeShipperController extends Controller
 {
     public function homeshipper()
     {
-        return view('Shipper.page.index');
+        $shipper = Auth::guard('driver_auth')->user(); // Sử dụng đúng guard
+         //dd($shipper);
+
+
+        return view('Shipper.page.index', compact('shipper'));
     }
+
+
+    public function updateStatus(Request $request)
+    {
+        $shipper = Auth::guard('driver_auth')->user();
+
+        if ($shipper) {
+            $shipper->is_active = $request->has('is_active') ? (bool)$request->is_active : false;
+            $shipper->save();
+
+            return response()->json(['message' => 'Trạng thái đã được cập nhật']);
+        }
+
+        return response()->json(['message' => 'Không tìm thấy shipper'], 401);
+    }
+   public function getNearbyOrders(Request $request)
+{
+    $lat = $request->input('lat');
+    $lon = $request->input('lon');
+
+    if (!$lat || !$lon) {
+        return response()->json(['message' => 'Không nhận được vị trí từ trình duyệt'], 400);
+    }
+
+    $radius = 100; // km
+
+    // Lấy các nhà hàng + vị trí trong phạm vi
+    $nearbyRestaurants = DB::table('locations')
+        ->join('restaurants', 'locations.restaurant_id', '=', 'restaurants.id')
+        ->select(
+            'restaurants.*',
+            'locations.Latitude',
+            'locations.Longitude',
+            DB::raw("(
+                6371 * acos(
+                    cos(radians($lat)) * cos(radians(locations.Latitude)) *
+                    cos(radians(locations.Longitude) - radians($lon)) +
+                    sin(radians($lat)) * sin(radians(locations.Latitude))
+                )
+            ) AS distance")
+        )
+        ->having('distance', '<=', $radius)
+        ->get();
+
+    // Lấy danh sách ID nhà hàng
+    $restaurantIds = $nearbyRestaurants->pluck('id');
+
+    // Lấy các đơn hàng thuộc những nhà hàng gần đó
+    $orders = Order::whereIn('restaurant_id', $restaurantIds)
+        ->whereNull('driver_id')
+        //->where('status', 'pending')
+        ->with([
+            'orderDetails.menuItem',
+            'user.location',
+            'restaurant.locations' // nếu có quan hệ Eloquent
+        ])
+        ->orderBy('order_date', 'desc')
+        ->get();
+
+    // Thêm dữ liệu nhà hàng gần vào mỗi đơn hàng
+    $orders->transform(function ($order) use ($nearbyRestaurants) {
+        $restaurantInfo = $nearbyRestaurants->firstWhere('id', $order->restaurant_id);
+        $order->restaurant_info = $restaurantInfo;
+        return $order;
+    });
+
+    // Trả về thông tin
+    return response()->json([
+        'orders' => $orders,
+        'user_position' => [
+            'lat' => $lat,
+            'lon' => $lon
+        ]
+    ]);
+}
+
 }

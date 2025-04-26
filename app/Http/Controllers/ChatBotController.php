@@ -18,32 +18,44 @@ class ChatBotController extends Controller
     {
         $prompt = $request->input('prompt');
         $apiKey = config('services.openai.key');
-        //dd($apiKey);
+
         // Phân loại intent
         $intent = $this->classifyIntent($prompt, $apiKey);
 
-        // Gửi prompt chính
+        // Gửi prompt chính để tạo phản hồi nền
         $reply = $this->getChatResponse($prompt, $apiKey);
 
         // Nếu là tư vấn, tìm trong DB
-        if (str_contains($intent, 'Tư vấn')) {
+        if (str_contains($intent, 'Tư vấn') || str_contains($intent, 'Giá cả')) {
             $keywords = $this->extractKeywords($prompt, $apiKey);
 
-            $foundItem = MenuItem::where(function ($q) use ($keywords, $prompt) {
+            // Xử lý tìm món theo từ khóa và giá nếu có
+            $query = MenuItem::query();
+
+            $query->where(function ($q) use ($keywords, $prompt) {
                 $q->whereRaw('LOWER(Title_items) LIKE ?', ['%' . strtolower($prompt) . '%'])
                     ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($prompt) . '%']);
-
                 foreach ($keywords as $keyword) {
                     $q->orWhereRaw('LOWER(Title_items) LIKE ?', ['%' . strtolower($keyword) . '%'])
                         ->orWhereRaw('LOWER(description) LIKE ?', ['%' . strtolower($keyword) . '%']);
                 }
-            })->first();
+            });
 
+            // Thêm tìm kiếm theo giá nếu có số tiền trong prompt
+            if (preg_match('/(\d{1,3}(?:[.,]\d{3})*)\s?đ/', $prompt, $matches)) {
+                $price = (int)str_replace(['.', ','], '', $matches[1]);
+                $query->orWhereBetween('Price', [$price - 5000, $price + 5000]);
+            }
 
-            if ($foundItem) {
-                $reply = "🍽️ Món ăn: **{$foundItem->Title_items}**  giá: {$foundItem->Price} VNĐ.";
+            $foundItems = $query->take(3)->get(); // Gợi ý tối đa 3 món
+
+            if ($foundItems->count()) {
+                $suggestions = $foundItems->map(function ($item) {
+                    return "- 🍽️ {$item->Title_items} ({$item->Price} VNĐ)";
+                })->implode("\n");
+                $reply = "Dưới đây là một số món bạn có thể quan tâm:\n\n" . $suggestions;
             } else {
-                $reply .= "\n\nChưa tìm thấy món phù hợp, bạn vui lòng để lại thông tin để được hỗ trợ.";
+                $reply .= "\n\nHiện tại chưa tìm thấy món phù hợp, bạn vui lòng thử lại với từ khóa khác nhé.";
             }
         }
 
@@ -52,6 +64,7 @@ class ChatBotController extends Controller
             'reply' => $reply
         ]);
     }
+
 
     private function classifyIntent($prompt, $apiKey)
     {
