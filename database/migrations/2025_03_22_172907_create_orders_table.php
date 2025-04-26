@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('total_amount', 10, 2);
             $table->boolean('is_payment')->default(false);
             $table->boolean('is_cancel')->default(false);
-            $table->string('status')->default('chưa thanh toán');
+            $table->string('status')->default('xác nhận món');
             $table->datetime('order_date')->default(now());
             $table->datetime('delivery_date')->nullable();
             $table->double('delivery_fee')->default(0);

@@ -14,12 +14,17 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuItemController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
+
+
 use App\Http\Controllers\Restaurant\DashboardController;
 use App\Http\Controllers\Restaurant\MenuController;
 use App\Http\Controllers\Restaurant\ResRegister;
 use App\Http\Controllers\Restaurant\RestaurantController as  SellController;
 use App\Http\Controllers\Restaurant\AccountController as  AccountRestaurantController;
+use App\Http\Controllers\Restaurant\OrderController as  RestaurantorderController;
 use App\Http\Controllers\RestaurantController;
+
+
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;
@@ -27,6 +32,7 @@ use App\Http\Controllers\Shipper\AccountShipperController;
 use App\Http\Controllers\Shipper\OrderShipperController;
 use App\Http\Controllers\Restaurant\ResRegisterController;
 use App\Http\Controllers\Restaurant\RestaurantController as RestaurantRestaurantController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, "index"]);
@@ -75,7 +81,11 @@ Route::get('/homeres/{id}/category/{category_id}', [MenuItemController::class, "
 
 
 Route::get('/restaurants/nearby', [DriverController::class, 'getNearby']);
-Route::get('/nearby', [DriverController::class, 'Nearby']);
+Route::get('/nearby', [DriverController::class, 'Nearby'])->name('nearby.index');
+
+
+
+
 
 Route::group(
     ["prefix" => "/client",
@@ -89,6 +99,8 @@ Route::group(
         Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
         Route::get('/checkout', [OrderController::class, "index"]);
+        Route::post('/checkout-order', [OrderController::class, 'checkout'])->name('checkout');
+
         Route::get('/history-order', [OrderController::class, "historyorder"]);
         //setting account
         Route::get('/dashboard', [AccountController::class, "dashboard"]);
@@ -152,28 +164,43 @@ Route::group(
 
         //thêm món
         Route::resource('menu_items', MenuController::class);
-
-
-
+        // nhận thông báo đơn hàng
+        Route::get('/order', [RestaurantorderController::class, 'order'])->name('orders.index');
+        Route::get('/orders/{id}', [RestaurantorderController::class, 'Vieworder'])->name('orders.show');
+        Route::post('/order/{id}/accept', [RestaurantorderController::class, 'accept'])->name('restaurant.order.accept');
+        Route::post('/order/{id}/reject', [RestaurantorderController::class, 'reject'])->name('restaurant.order.reject');
+        Route::post('/order/{id}/ready', [RestaurantorderController::class, 'ready'])->name('restaurant.order.ready');
+        Route::post('/order/{id}/shipping', [RestaurantorderController::class, 'shipping'])->name('restaurant.order.shipping');
     }
 
 );
+Route::post('/shipper/nearby', [HomeShipperController::class, 'getNearbyOrders'])->name('shipper.nearby');
+
 
 //shipper
 Route::group(
     ["prefix" => "/shipper"],
     function(){
+        // web.php
+        Route::post('/update-status', [HomeShipperController::class, 'updateStatus'])->name('shipper.update.status');
+
         Route::get('/home',[HomeShipperController::class,"homeshipper"]);
+        //Route::get('/nearby', [HomeShipperController::class, "getNearbyOrders"]);
 
         Route::get('/verify-otp', [AccountShipperController::class, 'showOTPForm'])->name('verify.otp');
         Route::post('/verify-otp', [AccountShipperController::class, 'verifyOTP'])->name('verify.otp.submit');
         Route::get('/login',[AccountShipperController::class,"loginshipper"])->name('login.shipper');
         Route::get('/register', [AccountShipperController::class, "registershipper"]);
         Route::post('/actionregister', [AccountShipperController::class, "actionregistershipper"])->name("driver.register");
-        Route::post('/actionlogin', [AccountShipperController::class, "actionloginshipper"]);
+        Route::post('/actionlogin', [AccountShipperController::class, "actionloginshipper"])->name('shipper.login');
+        Route::get('/logout-shipper', [AccountShipperController::class, "logoutshipper"])->name('shipper.logout');
 
 
         Route::get('/order',[OrderShipperController::class,"ordershipper"]);
+        // routes/web.php hoặc routes/api.php
+        Route::post('order/accept/{orderId}', [OrderShipperController::class, 'acceptOrder']);
+        Route::post('order/cancel/{orderId}', [OrderShipperController::class, 'cancelOrder']);
+
         Route::get('/order-history',[OrderShipperController::class,"orderhistoryshipper"]);
         Route::get('/order-history-detail',[OrderShipperController::class,"detailhistory"]);
     });

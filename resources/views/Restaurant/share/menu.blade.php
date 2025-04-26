@@ -49,10 +49,10 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/food/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/restaurant/order" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-bowl-food"></i>
                     </div>
-                    <div class="menu-title">Món Ăn</div>
+                    <div class="menu-title">Quản lý đơn hàng</div>
                 </a>
             </li>
 

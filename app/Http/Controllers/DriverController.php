@@ -18,7 +18,7 @@ class DriverController extends Controller
     {
         $lat = $request->lat;
         $lon = $request->lon;
-        $radius = 5;
+        $radius = 100;
 
         $results = DB::table('locations')
             ->join('restaurants', 'locations.restaurant_id', '=', 'restaurants.id')
