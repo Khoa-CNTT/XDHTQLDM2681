@@ -30,10 +30,8 @@ class AccountShipperController extends Controller
         //dd($credentials, Auth::guard('driver_auth')->attempt($credentials));
 
         if (Auth::guard('driver_auth')->attempt($credentials)) {
-            toastr()->success("Đã đăng nhập thành công!");
             return redirect('/');
         } else {
-            toastr()->error("Tài khoản hoặc mật khẩu không đúng!");
             return redirect('/account/login');
         }
     }

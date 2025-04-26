@@ -4,7 +4,8 @@
             <div class="header__topbar--inner d-flex align-items-center justify-content-center">
                 <div class="header__shipping">
                     <p class="header__shipping--text text-white"><img class="header__shipping--icon"
-                            src="/assets/img/icon/car.png" alt="header-shipping-img"> Yêu cầu giao hàng trực tuyến hoặc vận chuyển trực tuyến của bạn ngay hôm nay! Hết hạn trong</p>
+                            src="/assets/img/icon/car.png" alt="header-shipping-img"> <a href="/restaurant/login">Nhà hàng</a> <a href="/shipper/login" class="m-1"><img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">Người giao hàng</a></p>
+
                 </div>
                 <div class="header__topbar--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
             </div>
@@ -81,8 +82,8 @@
                                         <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
                                             transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
                                     </svg>
-                                </a> 
-                                                             
+                                </a>
+
                             </li>
                             <li class="header__menu--items">
                                 <a class="header__menu--link" href="blog.html">Blog
@@ -308,7 +309,7 @@
                         <ul class="d-none d-lg-block">
                             @foreach($categories as $category)
                                 <li class="categories__menu--items">
-                                    <a class="categories__menu--link" href="shop.html">
+                                    <a class="categories__menu--link" href="{{route('menu-items.category', ['id' => $category->id])}}">
                                         <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                             <path
                                                 d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
@@ -325,14 +326,14 @@
                                         <!-- Lặp qua từng nhà hàng -->
                                         @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
                                             <li class="categories__submenu--items">
-                                                <a class="categories__submenu--items__text" href="shop.html">
+                                                <a class="categories__submenu--items__text" herf="#">
                                                     <strong>{{ $menuItemsByRestaurant->first()->restaurant->name }}</strong>
                                                 </a>
                                                 <ul class="categories__submenu--child">
                                                     <!-- Lặp qua các món ăn của nhà hàng -->
                                                     @foreach($menuItemsByRestaurant as $menuItem)
                                                         <li class="categories__submenu--child__items">
-                                                            <a class="categories__submenu--child__items--link" href="shop.html">
+                                                            <a class="categories__submenu--child__items--link" href="{{ route('menu.item.detail', $menuItem->id) }}">
                                                                 {{ $menuItem->Title_items }}
                                                             </a>
                                                             <!-- Hiển thị chi tiết món ăn -->
@@ -381,7 +382,7 @@
                                                 <!-- Lặp qua các món ăn của nhà hàng -->
                                                 @foreach($menuItemsByRestaurant as $menuItem)
                                                     <li class="header__mega--sub__menu_li">
-                                                        <a class="header__mega--sub__menu--title" href="shop.html">
+                                                        <a class="header__mega--sub__menu--title" href="{{ route('menu.item.detail', $menuItem->id) }}">
                                                             {{ $menuItem->Title_items }}
                                                         </a>
                                                         <!-- Hiển thị giá món ăn -->

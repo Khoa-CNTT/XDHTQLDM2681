@@ -1,23 +1,35 @@
 @extends('Client.Share.master')
 @section('content')
-        <!-- Start slider section -->
-            <!-- Start breadcrumb section -->
-            <section class="breadcrumb__section breadcrumb__bg">
-                <div class="container">
-                    <div class="row row-cols-1">
-                        <div class="col">
-                            <div class="breadcrumb__content text-center">
-                                <h1 class="breadcrumb__content--title text-white mb-25">Thực đơn</h1>
-                                <ul class="breadcrumb__content--menu d-flex justify-content-center">
-                                    <li class="breadcrumb__content--menu__items"><a class="text-white"
-                                            href="index.html">Trang chủ</a></li>
-                                    <li class="breadcrumb__content--menu__items"><span class="text-white">Thực đơn</span></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+
+    <style>
+        #map {
+            height: 500px;
+        }
+    </style>
+    <div class="container my-4">
+        <h2 class="mb-4">🏠 Nhà hàng gần bạn</h2>
+
+        <div class="mb-3 row">
+            <label class="col-sm-3 col-form-label">Tìm đường đến nhà hàng:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="to" placeholder="Nhập tên nhà hàng hoặc địa chỉ">
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary w-100" onclick="findRoute()">Chỉ đường</button>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div id="map" style="height: 500px;" class="mb-4"></div>
+    <div class="container">
+        <ul id="restaurant-list" class="list-group mb-3"></ul>
+
+        <div id="info" class="alert alert-info" role="alert"></div>
+    </div>
+
             <!-- End breadcrumb section -->
 
             <!-- Start shop section -->
@@ -427,9 +439,101 @@
                     </div>
                 </div>
             </section>
-            <!-- End shop section -->
 
-            <!-- Start shipping section -->
 
-            <!-- End shipping section -->
+@endsection
+@section('js')
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        let userLat, userLon;
+        let map;
+        let routeLine;
+
+        const apiKey = "5b3ce3597851110001cf624837f237df11b94468a2914dfa163ddf4f";
+
+        function initMap(lat, lon) {
+            map = L.map('map').setView([lat, lon], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+            L.marker([lat, lon]).addTo(map).bindPopup("📍 Vị trí của bạn").openPopup();
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                userLat = position.coords.latitude;
+                userLon = position.coords.longitude;
+
+                initMap(userLat, userLon);
+
+                fetch(`/restaurants/nearby?lat=${userLat}&lon=${userLon}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const list = document.getElementById("restaurant-list");
+                        data.forEach(r => {
+                            L.marker([r.Latitude, r.Longitude])
+                                .addTo(map)
+                                .bindPopup(`<b>${r.name}</b><br>${r.Address}- ${r.Ward} -${r.District} - ${r.City}`);
+
+                            const item = document.createElement("li");
+                            item.innerText = `${r.name} - ${r.distance.toFixed(2)} km`;
+                            list.appendChild(item);
+                        });
+                    });
+            });
+        } else {
+            alert("Trình duyệt không hỗ trợ định vị.");
+        }
+
+
+        async function geocode(address) {
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
+            const res = await fetch(url);
+            const data = await res.json();
+            if (data && data.length > 0) {
+                return [parseFloat(data[0].lon), parseFloat(data[0].lat)]; // [lng, lat]
+            }
+            throw new Error("Không tìm thấy tọa độ cho địa chỉ: " + address);
+        }
+
+        async function findRoute() {
+            const toAddress = document.getElementById("to").value;
+            if (!toAddress) {
+                alert("❌ Vui lòng nhập tên nhà hàng hoặc địa chỉ.");
+                return;
+            }
+
+            try {
+                const fromCoord = [userLon, userLat]; // [lng, lat]
+                const toCoord = await geocode(toAddress);
+
+                const url = `https://api.openrouteservice.org/v2/directions/driving-car/geojson`;
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": apiKey,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ coordinates: [fromCoord, toCoord] })
+                });
+
+                const result = await res.json();
+                const route = result.features?.[0];
+                if (!route) throw new Error("Không tìm thấy tuyến đường.");
+
+                const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
+                if (routeLine) map.removeLayer(routeLine);
+                routeLine = L.polyline(coords, { color: 'blue' }).addTo(map);
+                map.fitBounds(routeLine.getBounds());
+
+                const distanceKm = route.properties.summary.distance / 1000;
+                const durationMin = route.properties.summary.duration / 60;
+                document.getElementById("info").innerText =
+                    `📏 Khoảng cách: ${distanceKm.toFixed(2)} km – ⏱️ Thời gian: ${durationMin.toFixed(1)} phút`;
+
+            } catch (err) {
+                console.error(err);
+                alert("❌ " + err.message);
+            }
+        }
+    </script>
 @endsection

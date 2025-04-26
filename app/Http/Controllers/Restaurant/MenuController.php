@@ -58,6 +58,16 @@ class MenuController extends Controller
     {
         $user = Auth::guard('web')->user();
 
+        if (!$user) {
+            return redirect()->route('login.restaurant')->with('error', 'Bạn cần phải đăng nhập.');
+        }
+
+        $hasRestaurantRole = $user->roles->contains('name', 'Nhà hàng');
+
+        if (!$hasRestaurantRole) {
+            return redirect()->route('login.restaurant')->with('error', 'Bạn không có quyền truy cập vào trang này.');
+        }
+
         $restaurant = Restaurant::where('email', $user->email)->first();
 
         if (!$restaurant) {
@@ -66,10 +76,12 @@ class MenuController extends Controller
 
         $menuItems = MenuItem::with('category', 'restaurant')
             ->where('restaurant_id', $restaurant->id)
-            ->get();
+            ->paginate(10);
 
         return view('restaurant.page.menu.index', compact('menuItems'));
     }
+
+
 
 
 

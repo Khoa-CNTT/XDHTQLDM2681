@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Restaurant;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Mail\RestaurantApproved;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 class RestaurantController extends Controller
@@ -14,15 +16,15 @@ class RestaurantController extends Controller
 
     public function index()
     {
-        // Lấy tất cả nhà hàng và địa điểm tương ứng
-        $restaurants = Restaurant::with('location')->get();
 
-        // Trả về view và truyền dữ liệu cho view
+        $restaurants = Restaurant::with('locations')->get();
+
         return view('Admin.page.Restaurant.index', compact('restaurants'));
     }
+
     public function approve($id)
     {
-        $restaurant = Restaurant::find($id);
+        $restaurant = Restaurant::with('locations')->find($id);
 
         if ($restaurant && !$restaurant->approved) {
 
@@ -30,18 +32,26 @@ class RestaurantController extends Controller
             $restaurant->save();
 
             $randomPassword = Str::random(8);
-
             $username = strstr($restaurant->email, '@', true);
 
-            // Tạo user mới
+            $firstLocation = $restaurant->locations->first();
+
             $user = User::create([
                 'username' => $username,
                 'email' => $restaurant->email,
                 'password' => bcrypt($randomPassword),
                 'PhoneNumber' => $restaurant->PhoneNumber,
-                'Address' => $restaurant->location->Address,
-                'location_id' => $restaurant->location_id,
+                'Address' => optional($firstLocation)->Address,
+                'location_id' => optional($firstLocation)->id,
             ]);
+
+            $role = Role::where('name', 'nhà hàng')->first();
+            if ($role) {
+                DB::table('user_roles')->insert([
+                    'user_id' => $user->id,
+                    'role_id' => $role->id,
+                ]);
+            }
 
             Mail::to($restaurant->email)->send(new RestaurantApproved($restaurant, $username, $randomPassword));
 

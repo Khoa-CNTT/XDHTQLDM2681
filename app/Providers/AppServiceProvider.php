@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('categories', $categories);
         });
 
-        //chuyển trang 
+        //chuyển trang
         $this->app['router']->aliasMiddleware('auth.custom', \App\Http\Middleware\CheckToken::class);
     }
 }

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('City');        // Thành phố
-            $table->string('District');    // Quận/Huyện
-            $table->string('Ward');        // Phường/Xã
-            $table->string('Address');     // Địa chỉ chi tiết
+            $table->string('City');
+            $table->string('District');
+            $table->string('Ward');
+            $table->string('Address');
             $table->double('Latitude')->nullable();
             $table->double('Longitude')->nullable();
+            $table->integer('restaurant_id');
             $table->timestamps();
         });
     }

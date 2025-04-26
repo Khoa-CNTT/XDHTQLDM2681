@@ -8,7 +8,7 @@
                                 <div class="account__details two">
                                     <h3 class="account__details--title h4">Mặc định</h3>
                                     <p class="account__details--desc">
-                                    {{ $location->Address }} --{{ $location->Ward }}--{{ $location->District }}-- {{ $location->City }}
+                                    {{ $location?->Address }} --{{ $location?->Ward }}--{{ $location?->District }}-- {{ $location?->City }}
 
 
 
@@ -22,41 +22,54 @@
                                 </div>
                             </div>
                             <div id="editForm" style="display: {{ $errors->any() ? 'block' : 'none' }};" class="mt-3">
-                            <form action="{{ route('location.update') }}" method="POST">
-                                @csrf
+                        <form action="{{ route('location.update') }}" method="POST">
+                            @csrf
 
-                                <div class="form-group">
-                                    <label for="city">Tỉnh/Thành phố</label>
-                                    <select id="city" class="form-control" name="City" required>
-                                        <option value="">Chọn Tỉnh/Thành phố</option>
-                                    </select>
+                            {{-- Hiển thị lỗi tổng --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger mt-2">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                 </div>
+                            @endif
 
-                                <div class="form-group">
-                                    <label for="district">Quận/Huyện</label>
-                                    <select id="district" class="form-control" name="District" required>
-                                        <option value="">Chọn Quận/Huyện</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Tỉnh/Thành phố <span class="text-danger">*</span></label>
+                                <select id="city" name="City" class="form-select rounded-3" >
+                                    <option value="" disabled selected>-- Chọn Tỉnh/Thành phố --</option>
+                                    {{-- Option sẽ được đổ bằng JavaScript hoặc từ backend --}}
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="ward">Phường/Xã</label>
-                                    <select id="ward" class="form-control" name="Ward" required>
-                                        <option value="">Chọn Phường/Xã</option>
-                                    </select>
-                                </div>
+                            <div class="form-group">
+                                <label for="district">Quận/Huyện <span class="text-danger">*</span></label>
+                                <select id="district" class="form-control" name="District" >
+                                    <option value="">Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="address">Địa chỉ cụ thể</label>
-                                    <input type="text" class="form-control" name="Address" id="address" placeholder="Số nhà, tên đường..." required>
-                                </div>
+                            <div class="form-group">
+                                <label for="ward">Phường/Xã <span class="text-danger">*</span></label>
+                                <select id="ward" class="form-control" name="Ward" >
+                                    <option value="">Chọn Phường/Xã</option>
+                                </select>
+                            </div>
 
-                                <button class="mt-3" type="submit">Cập nhật địa chỉ</button>
-                                <button type="button" onclick="cancelEdit()">Huỷ</button>
-                            </form>
+                            <div class="form-group">
+                                <label for="address">Địa chỉ cụ thể <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="Address" id="address" placeholder="Số nhà, tên đường..."
+                                    value="{{ old('Address') }}">
+                            </div>
+
+                            <button class="btn btn-primary mt-3" type="submit">Cập nhật địa chỉ</button>
+                            <button type="button" class="btn btn-secondary mt-3" onclick="cancelEdit()">Huỷ</button>
+                        </form>
+
 
                             </div>
-                            
                         </div>
 
     {{-- Modal Cập nhật địa chỉ --}}

@@ -44,60 +44,7 @@
         </section>
         <!-- Nút nhắn tin -->
         <!-- Nút nhắn tin -->
-        <div class="hotline-phone-ring-wrap">
-            <div class="hotline-phone-ring youtube1" id="chat-toggle-btn">
-                <div class="hotline-phone-ring-circle"></div>
-                <div class="hotline-phone-ring-circle-fill"></div>
-                <div class="hotline-phone-ring-img-circle">
-                    <a href="javascript:void(0);"><i class="fas fa-comment-dots"></i></a>
-                </div>
-            </div>
-        </div>
-        <style>
-            .hotline-phone-ring-wrap {
-                position: fixed;
-                bottom: 120px;
-                right: 20px;
-                z-index: 9999;
-            }
 
-            .hotline-phone-ring {
-                position: relative;
-                background-color: #d90000;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                cursor: pointer;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                animation: pulse-ring 2s infinite;
-            }
-
-            .hotline-phone-ring i {
-                color: white;
-                font-size: 20px;
-            }
-
-            @keyframes pulse-ring {
-                0% {
-                    transform: scale(1);
-                    opacity: 1;
-                }
-
-                100% {
-                    transform: scale(1.2);
-                    opacity: 0.6;
-                }
-            }
-
-            /* Ẩn viền động nếu không thích */
-            .hotline-phone-ring-circle,
-            .hotline-phone-ring-circle-fill {
-                display: none;
-            }
-        </style>
 
 
 

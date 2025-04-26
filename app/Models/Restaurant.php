@@ -20,16 +20,17 @@ class Restaurant extends Model
         'description',
         'logo',
         'business_license',
-        'location_id',
+
     ];
 
     /**
      * Định nghĩa mối quan hệ với Location
      */
-    public function location()
+    public function locations()
     {
-        return $this->belongsTo(Location::class);
+        return $this->hasMany(Location::class, 'restaurant_id'); // Một nhà hàng có nhiều địa điểm
     }
+
     public function menuItems()
     {
         return $this->hasMany(MenuItem::class, 'restaurant_id');

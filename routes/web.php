@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatBotController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\facebookController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\HomeController;
@@ -73,6 +74,8 @@ Route::get('/homeres/{id}', [MenuItemController::class, "homeres"])->name('resta
 Route::get('/homeres/{id}/category/{category_id}', [MenuItemController::class, "homeres"])->name('restaurant.menu.category');
 
 
+Route::get('/restaurants/nearby', [DriverController::class, 'getNearby']);
+Route::get('/nearby', [DriverController::class, 'Nearby']);
 
 Route::group(
     ["prefix" => "/client",
@@ -115,6 +118,7 @@ Route::group(
         Route::resource('roles', RoleController::class);
         //crud
         Route::resource('users', UserController::class);
+
 
 
 

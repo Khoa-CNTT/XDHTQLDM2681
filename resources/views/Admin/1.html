@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Google Maps Demo</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Bản đồ Google Maps</h3>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            const location = { lat: 10.762622, lng: 106.660172 };  // ví dụ: TPHCM
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                center: location
+            });
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+        }
+    </script>
+    <!-- AIzaSyB_JWiYgyvqZIWBk7Qv3mp0BqXNvVpwecQ -->
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_JWiYgyvqZIWBk7Qv3mp0BqXNvVpwecQ&callback=initMap">
+        </script>
+</body>
+
+</html>
