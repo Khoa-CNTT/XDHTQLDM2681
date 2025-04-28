@@ -35,6 +35,8 @@ class MenuController extends Controller
         $menuItem->Status = $request->Status;
         $menuItem->OldPrice = $request->OldPrice;
         $menuItem->description = $request->description;
+        
+        $menuItem->approved = false;
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
             $path = "public/image/foods";
@@ -50,7 +52,7 @@ class MenuController extends Controller
 
         $menuItem->save();
 
-        return redirect('/restaurant/menu_items')->with('success', 'Món ăn đã được thêm thành công!');
+        return redirect('/restaurant/menu_items')->with('success', 'Đã thêm một món mới, vui lòng đợi duyệt!');
     }
 
 
