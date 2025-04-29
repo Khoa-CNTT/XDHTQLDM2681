@@ -35,8 +35,12 @@ class OrderController extends Controller
     public function Vieworder($id)
     {
         $order = Order::with(['orderDetails.menuItem', 'user'])->findOrFail($id);
-        return view('restaurant.page.order.show', compact('order'));
+
+        $restaurantId = $order->restaurant_id;
+
+        return view('restaurant.page.order.show', compact('order', 'restaurantId'));
     }
+
     public function accept($id)
     {
         $order = Order::findOrFail($id);
@@ -59,7 +63,7 @@ class OrderController extends Controller
     public function ready($id)
     {
         $order = Order::findOrFail($id);
-        $order->status = 'Chế  biến xong , chờ shipper đến nhận ';
+        $order->status = 'Chế biến xong ,chờ shipper đến nhận ';
         $order->save();
 
         return back()->with('success', 'Đơn đã sẵn sàng cho shipper.');

@@ -11,6 +11,12 @@
 <body>
     @include('Shipper.share.header')
     <main class="main__content_wrapper">
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
       @yield('content')
     </main>
 

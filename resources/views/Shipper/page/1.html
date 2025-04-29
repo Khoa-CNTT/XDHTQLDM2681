@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vị trí người dùng</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+
+<body>
+    <h1>Vị trí của bạn</h1>
+    <div id="map" style="height: 400px;"></div>
+    <div id="coordinates">
+        <p>Vĩ độ: <span id="latitude"></span></p>
+        <p>Kinh độ: <span id="longitude"></span></p>
+    </div>
+
+    <script>
+        // Kiểm tra nếu trình duyệt hỗ trợ Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                // Hiển thị vị trí trên màn hình
+                document.getElementById('latitude').textContent = latitude;
+                document.getElementById('longitude').textContent = longitude;
+
+                // Khởi tạo bản đồ và hiển thị vị trí
+                const map = L.map('map').setView([latitude, longitude], 13);
+
+                // Thêm tile layer vào bản đồ (dùng OpenStreetMap)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                // Đặt vị trí người dùng trên bản đồ
+                L.marker([latitude, longitude]).addTo(map)
+                    .bindPopup('Bạn đang ở đây').openPopup();
+
+            }, function (error) {
+                alert("Không thể lấy vị trí của bạn: " + error.message);
+            });
+        } else {
+            alert("Trình duyệt của bạn không hỗ trợ Geolocation.");
+        }
+    </script>
+</body>
+
+</html>

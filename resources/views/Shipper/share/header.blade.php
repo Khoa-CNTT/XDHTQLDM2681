@@ -12,25 +12,39 @@
 
             <div class="collapse navbar-collapse d-none d-lg-block">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Trang chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/shipper/home">Trang chủ</a></li>
                 </ul>
 
-                <div class="dropdown ms-3">
-                    <img src="assets/img/logo/logo.jpg" class="rounded-circle shadow-sm" width="50" height="50" id="userDropdown" data-bs-toggle="dropdown">
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li class="dropdown-header">Nguyễn Văn A - 7733</li>
-                        <li class="dropdown-item d-flex justify-content-between">
-                            <span>🚀 Trạng thái hoạt động</span>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="toggleStatus">
-                            </div>
-                        </li>
-                        <li><a class="dropdown-item" href="#">📦 Đơn hàng</a></li>
-                        <li><a class="dropdown-item" href="#">📜 Lịch sử đơn hàng</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#">🔴 Đăng xuất</a></li>
-                    </ul>
-                </div>
+                @php
+$shipper = Auth::guard('driver_auth')->user();
+                @endphp
+
+                @if($shipper)
+                    <div class="dropdown ms-3">
+                        <img src="{{ asset($shipper->avatar ?? 'assets/img/logo/logo.jpg') }}" class="rounded-circle shadow-sm" width="50"
+                            height="50" id="userDropdown" data-bs-toggle="dropdown" style="object-fit: cover;">
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="dropdown-header">
+                                {{ $shipper->fullname ?? 'Shipper' }}
+                            </li>
+                            <li class="dropdown-item d-flex justify-content-between">
+                                <span>🚀 Trạng thái hoạt động</span>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="toggleStatus" {{ $shipper->is_active ? 'checked' : '' }}>
+                                </div>
+                            </li>
+                            <li><a class="dropdown-item" href="{{ route('shipper.orders') }}">📦 Đơn hàng</a></li>
+                            <li><a class="dropdown-item" href="{{ route('shipper.order_history') }}">📜 Lịch sử đơn hàng</a></li>
+                            <li><a class="dropdown-item" href="{{ route('shipper.profile') }}">Thông tin cá nhân</a></li>
+                            <li><a class="dropdown-item" href="{{ route('shipper.changePassword') }}">Đổi mật khẩu</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{{ route('shipper.logout') }}">🔴 Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                @endif
+
             </div>
         </div>
     </nav>

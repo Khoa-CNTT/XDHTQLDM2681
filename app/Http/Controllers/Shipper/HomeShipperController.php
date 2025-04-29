@@ -7,16 +7,43 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
 class HomeShipperController extends Controller
 {
-    public function homeshipper()
+    public function homeshipper(Request $request)
     {
-        $shipper = Auth::guard('driver_auth')->user(); // Sử dụng đúng guard
-         //dd($shipper);
+        $shipper = Auth::guard('driver_auth')->user();
 
+        $now = Carbon::now();
 
-        return view('Shipper.page.index', compact('shipper'));
+        // Các mốc thời gian
+        $timeFilters = [
+            '1_day'   => $now->copy()->subDay(),
+            '3_days'  => $now->copy()->subDays(3),
+            '1_week'  => $now->copy()->subWeek(),
+            '1_month' => $now->copy()->subMonth(),
+            '1_year'  => $now->copy()->subYear(),
+        ];
+
+        $statistics = [];
+
+        foreach ($timeFilters as $key => $startDate) {
+            $orders = Order::where('driver_id', $shipper->id)
+                ->where('status', 'Đã thanh toán')
+                ->get();
+
+            $totalOrders = $orders->count();
+            $totalIncome = $orders->sum(function ($order) {
+                return $order->delivery_fee * 0.8;
+            });
+
+            $statistics[$key] = [
+                'total_orders' => $totalOrders,
+                'total_income' => $totalIncome,
+            ];
+        }
+
+        return view('Shipper.page.index', compact('shipper', 'statistics'));
     }
 
 
@@ -42,7 +69,7 @@ class HomeShipperController extends Controller
         return response()->json(['message' => 'Không nhận được vị trí từ trình duyệt'], 400);
     }
 
-    $radius = 100; // km
+    $radius = 50; // km
 
     // Lấy các nhà hàng + vị trí trong phạm vi
     $nearbyRestaurants = DB::table('locations')
@@ -67,8 +94,8 @@ class HomeShipperController extends Controller
 
     // Lấy các đơn hàng thuộc những nhà hàng gần đó
     $orders = Order::whereIn('restaurant_id', $restaurantIds)
-        ->whereNull('driver_id')
-        //->where('status', 'pending')
+        //->whereNull('driver_id')
+        ->where('status', 'Chế biến xong ,chờ shipper đến nhận')
         ->with([
             'orderDetails.menuItem',
             'user.location',
