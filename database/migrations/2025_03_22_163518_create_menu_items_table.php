@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('Status')->default(true);
             $table->string('description');
             $table->timestamps();
+            $table->boolean('approved')->default(false);
         });
     }
 

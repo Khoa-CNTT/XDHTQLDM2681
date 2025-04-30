@@ -14,18 +14,17 @@ class HomeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $restaurants_item = Restaurant::get();
-        $results = MenuItem::all();
-        $products = MenuItem::take(3)->get();
-        $food_like = MenuItem::skip(4)->take(4)->get();
+{
+    $restaurants_item = Restaurant::get();
+    $results = MenuItem::where('approved', true)->get();
+    $products = MenuItem::where('approved', true)->take(3)->get();
+    $food_like = MenuItem::where('approved', true)->skip(4)->take(4)->get();
+    $decilious_foods = MenuItem::with('restaurant.locations')->where('approved', true)->skip(1)->take(12)->get();
+    $categories = Category::all();
 
-        $decilious_foods = MenuItem::with('restaurant.locations')->skip(1)->take(12)->get();
+    return view('Client.page.home', compact('restaurants_item', 'results', 'categories', 'products', 'food_like', 'decilious_foods'));
+}
 
-        $categories = Category::all();
-
-        return view('Client.page.home', compact('restaurants_item', 'results', 'categories', 'products', 'food_like', 'decilious_foods'));
-    }
 
 
 

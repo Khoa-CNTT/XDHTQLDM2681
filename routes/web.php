@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
+use App\Http\Controllers\Admin\MenuItemController as AdminMenuItemController;
 use App\Http\Controllers\Admin\ShipperController as AdminShipperController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
@@ -123,7 +124,11 @@ Route::group(
             Route::post("/deleteAll", [AdminCategoryController::class, "destroyAll"])->name("deleteAll");
             Route::post("/checkSlug", [AdminCategoryController::class, "checkSlug"])->name("checkSlug");
         });
+        Route::group(["prefix" => "/food"], function () {
+            Route::get("/index", [AdminMenuItemController::class, "index"])->name("index");
+            Route::post('/approve-menu-item/{id}', [AdminMenuItemController::class, 'approve'])->name('menu_items.approve');
 
+        });
         //crud roles
         Route::resource('roles', RoleController::class);
         //crud

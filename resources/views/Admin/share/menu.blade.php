@@ -58,10 +58,17 @@
 
 
             <li class="nav-item dropdown">
+
                 <a href="{{route('admin.pending_drivers')}}" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
                     </div>
                     <div class="menu-title">Quản lý người giao hàng</div>
+
+                <a href="/admin/food/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                    <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
+                    </div>
+                    <div class="menu-title">Quản lý món</div>
+
                 </a>
             </li>
             <li class="nav-item dropdown">

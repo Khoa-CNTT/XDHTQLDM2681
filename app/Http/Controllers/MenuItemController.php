@@ -19,7 +19,8 @@ class MenuItemController extends Controller
         $maxPrice = $request->input('max_price');
         $district = $request->input('district');
 
-        $resultsQuery = MenuItem::query();
+        $resultsQuery = MenuItem::where('approved', true);
+
 
         if ($minPrice && $maxPrice) {
             $resultsQuery->whereBetween('Price', [(float)$minPrice, (float)$maxPrice]);
@@ -51,7 +52,7 @@ class MenuItemController extends Controller
 
         $results = $resultsQuery->paginate(13);
         $restaurants_item = Restaurant::get();
-        $products = MenuItem::take(4)->get();
+        $products = MenuItem::where('approved', true)->take(4)->get();
         $categories = Category::all();
 
 
@@ -86,7 +87,9 @@ class MenuItemController extends Controller
 
     $sort = $request->input('sort');
 
-    $resultsQuery = MenuItem::where('restaurant_id', $id);
+    $resultsQuery = MenuItem::where('restaurant_id', $id)
+                        ->where('approved', true);
+
 
     if ($category_id) {
         $resultsQuery->where('category_id', $category_id);
@@ -129,7 +132,7 @@ class MenuItemController extends Controller
         $maxPrice = $request->input('max_price');
         $district = $request->input('district');
 
-        $resultsQuery = MenuItem::query();
+        $resultsQuery = MenuItem::where('approved', true);
 
         // Lọc theo quận
         if (!empty($district)) {
@@ -176,7 +179,8 @@ class MenuItemController extends Controller
         // Dữ liệu phụ
         $restaurants_item = Restaurant::get();
         $categories = Category::take(5)->get();
-        $products = MenuItem::take(4)->get();
+        $products = MenuItem::where('approved', true)->take(4)->get();
+
 
         // Gợi ý món ăn liên quan
         $relatedItems = [];
@@ -202,11 +206,15 @@ class MenuItemController extends Controller
     $category = Category::findOrFail($id);
 
     // Đổi từ get() sang paginate()
-    $results = MenuItem::where('category_id', $id)->paginate(12);
+    $results = MenuItem::where('category_id', $id)
+                   ->where('approved', true)
+                   ->paginate(12);
+
 
     // Dữ liệu phụ (tùy bạn có dùng không)
     $restaurants_item = Restaurant::get();
-    $products = MenuItem::take(4)->get();
+    $products = MenuItem::where('approved', true)->take(4)->get();
+
 
     $relatedItems = [];
     if ($products->count() > 0) {

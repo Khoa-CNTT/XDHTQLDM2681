@@ -37,7 +37,7 @@
         <div class="col-8">
             <div class="card border-primary border-bottom border-3 border-0">
                 <div class="card-hedaer">
-                    Danh sách danh mụ<!--  -->
+                    Danh sách danh mục<!--  -->
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered">
