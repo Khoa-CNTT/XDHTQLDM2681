@@ -12,6 +12,8 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -137,10 +139,45 @@ class OrderController extends Controller
     {
         $user = Auth::user();
         $cart = Cart::with(['cartItems.menuItem'])->where('user_id', $user->id)->first();
+        $location = $user->location;
 
+        $userChanged = false;
+        if ($request->username && $request->username !== $user->username) {
+            $user->username = $request->username;
+            $userChanged = true;
+        }
+        if ($request->PhoneNumber && $request->PhoneNumber !== $user->PhoneNumber) {
+            $user->PhoneNumber = $request->PhoneNumber;
+            $userChanged = true;
+        }
+        if ($userChanged) $user->save();
 
+        $locationChanged = false;
+        foreach (['City', 'District', 'Ward', 'Address'] as $field) {
+            if ($request->$field && $request->$field !== $location->$field) {
+                $location->$field = $request->$field;
+                $locationChanged = true;
+            }
+        }
 
-        $location = Location::find($user->location_id);
+        if ($locationChanged) {
+            $fullAddress = "{$location->Address}, {$location->Ward}, {$location->District}, {$location->City}";
+            try {
+                $res = Http::withHeaders(['User-Agent' => 'CallFood/1.0'])->get('https://nominatim.openstreetmap.org/search', [
+                    'q' => $fullAddress,
+                    'format' => 'json',
+                    'limit' => 1
+                ]);
+                if ($res->successful() && $data = $res->json()[0] ?? null) {
+                    $location->Latitude = $data['lat'];
+                    $location->Longitude = $data['lon'];
+                }
+            } catch (\Exception $e) {
+                Log::error('Lỗi lấy tọa độ: ' . $e->getMessage());
+            }
+            $location->save();
+        }
+
         $lat = $location->Latitude ?? null;
         $lon = $location->Longitude ?? null;
 
@@ -149,7 +186,6 @@ class OrderController extends Controller
         });
 
         DB::beginTransaction();
-
         try {
             foreach ($itemsByRestaurant as $restaurantId => $items) {
                 $restaurantLocation = Location::where('restaurant_id', $restaurantId)->first();
@@ -166,18 +202,11 @@ class OrderController extends Controller
                 $extraFeePerKm = 5000;
                 $maxBaseKm = 3;
 
-                if ($distance <= $maxBaseKm) {
-                    $shippingFee = $baseFee;
-                } else {
-                    $extraDistance = ceil($distance - $maxBaseKm);
-                    $shippingFee = $baseFee + ($extraDistance * $extraFeePerKm);
-                }
+                $shippingFee = $distance <= $maxBaseKm
+                    ? $baseFee
+                    : $baseFee + (ceil($distance - $maxBaseKm) * $extraFeePerKm);
 
-                $productTotal = 0;
-                foreach ($items as $item) {
-                    $productTotal += $item->cart_quantity * $item->cart_price;
-                }
-
+                $productTotal = collect($items)->sum(fn($item) => $item->cart_quantity * $item->cart_price);
                 $finalTotal = $productTotal + $shippingFee;
 
                 $order = Order::create([
@@ -200,15 +229,13 @@ class OrderController extends Controller
                         'sell_price' => $cartItem->cart_price,
                     ]);
 
-                    // Cập nhật số lượng món
                     $menuItem = $cartItem->menuItem;
-
                     if ($menuItem->Quantity >= $cartItem->cart_quantity) {
                         $menuItem->Quantity -= $cartItem->cart_quantity;
                         $menuItem->save();
                     } else {
                         DB::rollBack();
-                        return redirect()->route('client.cart.index')->with('error', 'Số lượng món ăn không đủ!');
+                        return redirect()->route('cart.index')->with('error', 'Số lượng món ăn không đủ!');
                     }
                 }
 
@@ -219,26 +246,41 @@ class OrderController extends Controller
             $cart->delete();
 
             DB::commit();
-            return redirect()->route('client.orders.list')->with('success', 'Đặt hàng thành công!');
+            return redirect()->route('order.tracking')->with('success', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('client.cart.index')->with('error', 'Có lỗi xảy ra khi đặt hàng: ' . $e->getMessage());
+            Log::error('Lỗi khi đặt hàng: ' . $e->getMessage());
+            return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra khi đặt hàng: ' . $e->getMessage());
         }
     }
-
-
-
-
-
-
-
-
-
-
-    public function historyorder()
+    public function ordertracking()
     {
-        return view('Client.page.Order.history_order');
+        $user = Auth::user();
+        $orders = Order::with(['restaurant', 'orderDetails.menuItem'])
+            ->where('user_id', $user->id)
+            ->orderBy('order_date', 'desc')
+            ->get();
+
+        return view('client.page.order.tracking', compact('orders'));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function historyOrder()
+    {
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+        return view('Client.page.Order.history_order', compact('orders'));
+    }
+
 
 
     /**

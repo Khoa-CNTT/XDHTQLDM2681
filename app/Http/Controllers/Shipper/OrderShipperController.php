@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Shipper;
 
+use App\Events\OrderOnTheWay;
+use App\Events\OrderPaid;
 use App\Events\ShipperAcceptedOrder;
 use App\Events\ShipperLocationUpdated;
 use App\Http\Controllers\Controller;
@@ -20,15 +22,14 @@ class OrderShipperController extends Controller
     public function orderhistoryshipper()
     {
         $shipper = auth('driver_auth')->user();
-        $orders = Order::where('driver_id', $shipper->id)  // Lọc theo driver (shipper hiện tại)
+        $orders = Order::where('driver_id', $shipper->id)
             ->whereIn('status', ['Đã thanh toán', 'Đã từ chối', 'Đã nhận', 'Đã đến điểm lấy, đang giao cho khách'])  // Lọc trạng thái
-            ->get();  // Lấy tất cả các đơn hàng
+            ->get();
 
         return view('Shipper.page.orderhistory', compact('orders'));
     }
     public function detailHistory($orderId)
     {
-        // Lấy chi tiết đơn hàng theo orderId
         $order = Order::with(['user', 'driver', 'orderDetails.menuItem'])->findOrFail($orderId);
 
         return view('Shipper.page.detailhistory', compact('order'));
@@ -60,7 +61,6 @@ class OrderShipperController extends Controller
             return response()->json(['message' => 'Đơn hàng đã được nhận bởi shipper khác'], 400);
         }
 
-        // Cập nhật trạng thái đơn hàng
         $order->status = 'Đã nhận';
         $order->driver_id = $shipper->id;
         $order->save();
@@ -79,7 +79,6 @@ class OrderShipperController extends Controller
             ));
         }
 
-        // Lấy toạ độ nhà hàng
         $location = $restaurant->locations->first();
 
         $latitude = $shipper->latitude;
@@ -144,39 +143,46 @@ class OrderShipperController extends Controller
     // Đang đến điểm lấy
     public function onTheWay($orderId)
     {
-        // Lấy đơn hàng với id tương ứng
+
         $order = Order::where('id', $orderId)
             ->where('is_cancel', false)
             ->first();
 
 
 
-        // Cập nhật trạng thái đơn hàng
+
         $order->status = 'Đã đến điểm lấy, đang giao cho khách';
         $order->save();
+        event(new OrderOnTheWay($order));
 
         return response()->json(['message' => 'Đơn hàng đang trên đường đến điểm lấy'], 200);
     }
-    // OrderController.php
+
+
     public function updatePaymentStatus($id)
     {
         $order = Order::where('id', $id)
-            ->where('status', 'Đã đến điểm lấy, đang giao cho khách')
-            ->orWhere('status', 'Đã nhận')
+            ->where(function ($query) {
+                $query->where('status', 'Đã đến điểm lấy, đang giao cho khách')
+                    ->orWhere('status', 'Đã nhận');
+            })
             ->where('is_cancel', false)
             ->first();
-
 
         if (!$order) {
             return response()->json(['message' => 'Không thể cập nhật. Đơn hàng chưa đến điểm lấy hoặc đã bị hủy.'], 400);
         }
 
         $order->is_payment = true;
-         $order->status= "Đã thanh toán";
+        $order->status = "Đã thanh toán";
         $order->save();
+
+        // Phát event tới khách và nhà hàng
+        event(new OrderPaid($order));
 
         return response()->json(['message' => 'Cập nhật thanh toán thành công']);
     }
+
     public function profile()
     {
         $shipper = Auth::guard('driver_auth')->user();

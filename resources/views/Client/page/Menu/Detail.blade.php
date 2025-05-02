@@ -281,8 +281,8 @@
                                         <ul class="product__tab--one product__details--tab d-flex mb-30">
                                             <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">Mô
                                                 tả</li>
-                                            
-                                            
+
+
                                         </ul>
                                         <div class="product__details--tab__inner border-radius-10">
                                             <div class="tab_content">
@@ -291,22 +291,22 @@
                                                         <div class="product__tab--content__step mb-30">
                                                             <a href="{{ route('restaurant.menu', ['id' => $menuItem->restaurant->id]) }}">
                                                                 <div class="d-flex align-items-center gap-2">
-                                                                    <img src="{{ asset('/image/logo/' . $menuItem->restaurant->logo) }}" 
+                                                                    <img src="{{ asset('/image/logo/' . $menuItem->restaurant->logo) }}"
                                                                          style="width: 40px; height: 40px; object-fit: cover; border-radius: 20%;">
-                                                                    <h2 class="product__tab--content__title h4 mb-0">Nhà hàng : {{ $menuItem->restaurant->name }}</h2>       
-                                                                </div>      
+                                                                    <h2 class="product__tab--content__title h4 mb-0">Nhà hàng : {{ $menuItem->restaurant->name }}</h2>
+                                                                </div>
                                                             </a>
                                                             <p class="product__tab--content__desc">Mô tả:<br>{!! $menuItem->description !!}</p>
                                                         </div>
 
                                                     </div>
                                                 </div>
-                                        </div>  
-                                        </div>  
+                                        </div>
+                                        </div>
 
 
-                                        <ul class="product__tab--one product__details--tab d-flex mb-30" style="margin-top: 20px;">                                          
-                                            <li class="product__details--tab__list active">Đánh giá</li>                
+                                        <ul class="product__tab--one product__details--tab d-flex mb-30" style="margin-top: 20px;">
+                                            <li class="product__details--tab__list active">Đánh giá</li>
                                         </ul>
                                         <div class="product__details--tab__inner border-radius-10">
                                             <div class="tab_content">
@@ -373,7 +373,7 @@
                                                                 </ul>
                                                                 <span class="reviews__summary--caption">Based on 2 reviews</span>
                                                             </div>
-                                                            
+
                                                         </div>
                                                         <div class="reviews__comment--area">
                                                             <div class="reviews__comment--list d-flex">
@@ -622,7 +622,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                                 <div id="information" class="tab_pane">
@@ -655,9 +655,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                            
-                                        
+
+
+
                                         {{-- mô tả đã xóa 2 thẻ div --}}
                                     </div>
                                 </div>
@@ -2325,7 +2325,7 @@
                         <!-- End product section -->
 
                         <!-- Start shipping section -->
-                       
+
                         <!-- End shipping section -->
                     </main>
 @endsection

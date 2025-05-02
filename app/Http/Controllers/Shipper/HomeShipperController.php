@@ -89,23 +89,29 @@ class HomeShipperController extends Controller
         ->having('distance', '<=', $radius)
         ->get();
 
-    // Lấy danh sách ID nhà hàng
     $restaurantIds = $nearbyRestaurants->pluck('id');
 
-    // Lấy các đơn hàng thuộc những nhà hàng gần đó
-    $orders = Order::whereIn('restaurant_id', $restaurantIds)
-        //->whereNull('driver_id')
-        ->where('status', 'Chế biến xong ,chờ shipper đến nhận')
-        ->with([
-            'orderDetails.menuItem',
-            'user.location',
-            'restaurant.locations' // nếu có quan hệ Eloquent
-        ])
-        ->orderBy('order_date', 'desc')
-        ->get();
+        $orders = Order::whereIn('restaurant_id', $restaurantIds)
+            ->where('is_cancel', 0)
+            ->where('status', '!=', 'đã thanh toán')
+            ->where('status', '!=', 'đã từ chối')
+            ->whereIn('status', [
+            'Chế biến xong ,chờ shipper đến nhận ',
+                'Đã nhận',
+            'Đã đến điểm lấy, đang giao cho khách',
+                'Đã thanh toán'
+            ])
+            ->with([
+                'orderDetails.menuItem',
+                'user.location',
+                'restaurant.locations'
+            ])
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-    // Thêm dữ liệu nhà hàng gần vào mỗi đơn hàng
-    $orders->transform(function ($order) use ($nearbyRestaurants) {
+
+        // Thêm dữ liệu nhà hàng gần vào mỗi đơn hàng
+        $orders->transform(function ($order) use ($nearbyRestaurants) {
         $restaurantInfo = $nearbyRestaurants->firstWhere('id', $order->restaurant_id);
         $order->restaurant_info = $restaurantInfo;
         return $order;

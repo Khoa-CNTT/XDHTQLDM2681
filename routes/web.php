@@ -87,11 +87,10 @@ Route::get('/nearby', [DriverController::class, 'Nearby'])->name('nearby.index')
 
 
 Route::group(
-    ["prefix" => "/client",
-    "middleware" => ['auth.custom']],
+    ["prefix" => "/client",],
     function () {
         //giỏ hàng
-        Route::get('/cart', [CartController::class, "index"])->name('cart.index');;
+        Route::get('/cart', [CartController::class, "index"])->name('cart.index');
         Route::get('cart/add/{menuItemId}', [CartController::class, 'addToCart'])->name('cart.add');
         Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
         Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
@@ -99,10 +98,11 @@ Route::group(
 
         Route::get('/checkout', [OrderController::class, "index"]);
         Route::post('/checkout-order', [OrderController::class, 'checkout'])->name('checkout');
+        Route::get('/Order-Tracking', [OrderController::class, "ordertracking"])->name('order.tracking');
 
         Route::get('/history-order', [OrderController::class, "historyorder"]);
         //setting account
-        Route::get('/dashboard', [AccountController::class, "dashboard"]);
+        Route::get('/dashboard', [AccountController::class, "dashboard"])->name('client.dashboard');
         Route::get('/address', [AccountController::class, "address"]);
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
@@ -145,8 +145,15 @@ Route::group(
         });
         Route::get('/thong-ke', [ThongkeController::class, "index"]);
     }
-);
+)->middleware('admin');
 
+//đăng ký nhà hàng
+Route::get('/restaurant/register', [ResRegisterController::class, "resRegister"]);
+Route::post('/restaurant/register-restaurant', [SellController::class, 'store'])->name('restaurant.store');
+
+//đăng nhập
+Route::get('/restaurant/login', [AccountRestaurantController::class, "login"])->name('login.restaurant');
+Route::post('/restaurant/actionlogin', [AccountRestaurantController::class, 'actionlogin'])->name('restaurant.actionlogin');
 Route::group(
     ["prefix" => "/restaurant"],
     function(){
@@ -157,13 +164,8 @@ Route::group(
         Route::post('/restaurant/toggle-status', [DashboardController::class, 'toggleStatus'])->name('restaurant.toggle.status');
 
 
-        // đăng ký nhà hàng
-        Route::get('/register',[ResRegisterController::class,"resRegister"]);
-        Route::post('/register-restaurant', [SellController::class, 'store'])->name('restaurant.store');
         Route::get('/admin/restaurants', [SellController::class, 'pendingRestaurants'])->name('admin.restaurants');
-        //đăng nhập
-        Route::get('/login', [AccountRestaurantController::class, "login"])->name('login.restaurant');
-        Route::post('/actionlogin', [AccountRestaurantController::class, 'actionlogin'])->name('restaurant.actionlogin');
+
 
         //thêm món
         Route::resource('menu_items', MenuController::class);
@@ -176,39 +178,39 @@ Route::group(
         Route::post('/order/{id}/shipping', [RestaurantorderController::class, 'shipping'])->name('restaurant.order.shipping');
     }
 
-);
+)->middleware('restaurant');
+
+Route::get('/shipper/verify-otp', [AccountShipperController::class, 'showOTPForm'])->name('verify.otp');
+Route::post('/shipper/verify-otp', [AccountShipperController::class, 'verifyOTP'])->name('verify.otp.submit');
+Route::get('/shipper/login', [AccountShipperController::class, "loginshipper"])->name('login.shipper');
+Route::get('/register', [AccountShipperController::class, "registershipper"]);
+Route::post('/shipper/actionregister', [AccountShipperController::class, "actionregistershipper"])->name("driver.register");
+Route::post('/shipper/actionlogin', [AccountShipperController::class, "actionloginshipper"])->name('shipper.login');
+Route::get('/shipper/logout-shipper', [AccountShipperController::class, "logoutshipper"])->name('shipper.logout');
 
 
 //shipper
-Route::group(
-    ["prefix" => "/shipper",], // Áp dụng middleware ở đây
+Route::middleware(['shipper'])->group(
     function () {
-        Route::post('/update-status', [HomeShipperController::class, 'updateStatus'])->name('shipper.updateStatus');
-        Route::post('/nearby', [HomeShipperController::class, 'getNearbyOrders'])->name('shipper.nearby');
-        Route::get('/home', [HomeShipperController::class, "homeshipper"]);
+        Route::post('/shipper/update-status', [HomeShipperController::class, 'updateStatus'])->name('shipper.updateStatus');
+        Route::post('/shipper/nearby', [HomeShipperController::class, 'getNearbyOrders'])->name('shipper.nearby');
+        Route::get('/shipper/home', [HomeShipperController::class, "homeshipper"]);
 
-        Route::get('/verify-otp', [AccountShipperController::class, 'showOTPForm'])->name('verify.otp');
-        Route::post('/verify-otp', [AccountShipperController::class, 'verifyOTP'])->name('verify.otp.submit');
-        Route::get('/login', [AccountShipperController::class, "loginshipper"])->name('login.shipper');
-        Route::get('/register', [AccountShipperController::class, "registershipper"]);
-        Route::post('/actionregister', [AccountShipperController::class, "actionregistershipper"])->name("driver.register");
-        Route::post('/actionlogin', [AccountShipperController::class, "actionloginshipper"])->name('shipper.login');
-        Route::get('/logout-shipper', [AccountShipperController::class, "logoutshipper"])->name('shipper.logout');
 
-        Route::get('/order', [OrderShipperController::class, "ordershipper"])->name('shipper.orders');
-        Route::post('order/accept/{orderId}', [OrderShipperController::class, 'acceptOrder']);
-        Route::post('order/cancel/{orderId}', [OrderShipperController::class, 'cancelOrder']);
-        Route::post('order/on-the-way/{orderId}', [OrderShipperController::class, 'onTheWay']);
-        Route::post('/location/update/{orderId}', [OrderShipperController::class, 'updateShipperLocation']);
-        Route::post('/order/update-payment/{id}', [OrderShipperController::class, 'updatePaymentStatus']);
+        Route::get('/shipper/order', [OrderShipperController::class, "ordershipper"])->name('shipper.orders');
+        Route::post('/shipper/order/accept/{orderId}', [OrderShipperController::class, 'acceptOrder']);
+        Route::post('/shipper/order/cancel/{orderId}', [OrderShipperController::class, 'cancelOrder']);
+        Route::post('/shipper/order/on-the-way/{orderId}', [OrderShipperController::class, 'onTheWay']);
+        Route::post('/shipper/location/update/{orderId}', [OrderShipperController::class, 'updateShipperLocation']);
+        Route::post('/shipper/order/update-payment/{id}', [OrderShipperController::class, 'updatePaymentStatus']);
 
-        Route::get('/order-history', [OrderShipperController::class, "orderhistoryshipper"])->name('shipper.order_history');
-        Route::get('/order-history-detail/{orderId}', [OrderShipperController::class, "detailhistory"])->name('order.history.detail');
+        Route::get('/shipper/order-history', [OrderShipperController::class, "orderhistoryshipper"])->name('shipper.order_history');
+        Route::get('/shipper/order-history-detail/{orderId}', [OrderShipperController::class, "detailhistory"])->name('order.history.detail');
 
         // cập nhật thông tin
-        Route::get('/profile', [OrderShipperController::class, 'profile'])->name('shipper.profile');
-        Route::post('/profile/update', [OrderShipperController::class, 'updateProfile'])->name('shipper.profile.update');
-        Route::get('/change-password', [OrderShipperController::class, 'changePassword'])->name('shipper.changePassword');
-        Route::post('/update-password', [OrderShipperController::class, 'updatePassword'])->name('shipper.updatePassword');
+        Route::get('/shipper/profile', [OrderShipperController::class, 'profile'])->name('shipper.profile');
+        Route::post('/shipper/profile/update', [OrderShipperController::class, 'updateProfile'])->name('shipper.profile.update');
+        Route::get('/shipper/change-password', [OrderShipperController::class, 'changePassword'])->name('shipper.changePassword');
+        Route::post('/shipper/update-password', [OrderShipperController::class, 'updatePassword'])->name('shipper.updatePassword');
     }
 );

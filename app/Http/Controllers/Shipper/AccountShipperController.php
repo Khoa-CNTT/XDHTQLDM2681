@@ -8,9 +8,9 @@ use App\Http\Requests\RegisterShipperRequest;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Mail\OTPMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ShipperRegistrationNotification;
 
 

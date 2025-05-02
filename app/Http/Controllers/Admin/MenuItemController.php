@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use App\Mail\MenuItemApproved;
 use App\Models\Restaurant;
 use App\Models\MenuItem;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
 
 class MenuItemController extends Controller
 {
@@ -21,29 +24,34 @@ class MenuItemController extends Controller
 
     return view('Admin.page.MenuItem.index', compact('restaurants', 'menuItems', 'allMenuItems'));
 }
-public function approve($id)
-{
-    $menuItem = MenuItem::find($id);
-    
-    // Kiểm tra món ăn có tồn tại không
-    if (!$menuItem) {
-        return response()->json(['message' => 'Món ăn không tồn tại!'], 400);
+
+    public function approve($id)
+    {
+        $menuItem = MenuItem::find($id);
+
+        if (!$menuItem) {
+            return response()->json(['message' => 'Món ăn không tồn tại!'], 400);
+        }
+
+        if ($menuItem->approved == true) {
+            return response()->json(['message' => 'Món ăn đã được phê duyệt rồi!'], 400);
+        }
+
+        $menuItem->approved = true;
+        $menuItem->save();
+
+        $restaurant = Restaurant::find($menuItem->restaurant_id);
+
+        if ($restaurant) {
+            Mail::to($restaurant->email)->send(new MenuItemApproved($menuItem));
+        }
+
+        // Trả về phản hồi thành công
+        return response()->json(['message' => 'Món ăn đã được phê duyệt và thông báo đã được gửi!'], 200);
     }
-
-    // Kiểm tra nếu món ăn đã được phê duyệt
-    if ($menuItem->approved) {
-        return response()->json(['message' => 'Món ăn đã được phê duyệt rồi!'], 400);
-    }
-
-    // Thực hiện phê duyệt món ăn
-    $menuItem->approved = true;
-    $menuItem->save();
-
-    // Trả về phản hồi thành công
-    return response()->json(['message' => 'Món ăn đã được phê duyệt!'], 200);
 }
 
 
 
 
-}
+

@@ -241,7 +241,7 @@
                 // console.log("Final Form Data to be sent:", formData);
 
                 $.ajax({
-                    url: '/restaurant/register-restaurant',  // Update with your backend endpoint
+                   url: '/restaurant/register-restaurant',  // Update with your backend endpoint
                     type: 'POST',
                     data: formData,
                     contentType: false,
@@ -249,17 +249,29 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function (response) {
-                        // Handle success (e.g., show a success message or redirect)
-                        // alert('Đăng ký thành công!');
-                        // console.log("Success response:", response);
-                         Swal.fire({
-                            icon: 'success',
-                            title: 'Đăng ký thành công!',
-                            text: 'Vui lòng chờ xét duyệt trước khi tài khoản được kích hoạt.',
-                            confirmButtonText: 'OK'
+                    beforeSend: function () {
+                        // Hiển thị thông báo "Đang xử lý..." khi bấm nút
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Đang xử lý...',
+                            text: 'Vui lòng chờ trong giây lát',
+                            allowOutsideClick: false,
+                            didOpen: () => {
+                                Swal.showLoading(); // Hiển thị spinner
+                            }
                         });
                     },
+                    success: function (response) {
+                        // Khi đăng ký thành công, thông báo thành công
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Đăng ký thành công!',
+                            text: 'Cảm ơn bạn đã đăng ký.',
+                            confirmButtonText: 'OK'
+                        });
+                        // Có thể thực hiện thêm các hành động khác như chuyển hướng, làm mới trang, v.v.
+                    },
+
                   error: function (xhr, status, error) {
     // Kiểm tra lỗi từ server (các lỗi validation)
     if (xhr.status === 422) {

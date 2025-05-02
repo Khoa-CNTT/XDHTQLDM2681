@@ -16,12 +16,12 @@ class CheckShipperPermission
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::guard('driver_auth')->check()) {
-            if (Auth::guard('driver_auth')->user()->is_approved == 0) {
-                return redirect()->route('shipper.home')->with('error', 'Bạn không đủ quyền vào trang này');
+        if (!Auth::guard('driver_auth')->check()) {
+            if ($request->routeIs('login.shipper') || $request->routeIs('login.shipper')) {
+                return $next($request); // Cho phép vào trang login
             }
-        } else {
-            return redirect()->route('shipper.login')->with('error', 'Vui lòng đăng nhập để truy cập');
+
+            return redirect()->route('login.shipper')->with('error', 'Vui lòng đăng nhập để truy cập');
         }
 
         return $next($request);

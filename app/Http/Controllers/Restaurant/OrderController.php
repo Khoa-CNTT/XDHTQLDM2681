@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Restaurant;
 
+use App\Events\OrderAccepted;
+use App\Events\OrderReady;
+use App\Events\OrderRejected;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Restaurant;
@@ -47,8 +50,11 @@ class OrderController extends Controller
         $order->status = 'đang chuẩn bị';
         $order->save();
 
+        broadcast(new OrderAccepted($order)); // Gửi sự kiện
+
         return back()->with('success', 'Đã nhận đơn!');
     }
+
 
     public function reject($id)
     {
@@ -56,6 +62,7 @@ class OrderController extends Controller
         $order->status = 'đã từ chối';
         $order->is_cancel = true;
         $order->save();
+        broadcast(new OrderRejected($order));
 
         return back()->with('success', 'Đã từ chối đơn hàng.');
     }
@@ -65,7 +72,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->status = 'Chế biến xong ,chờ shipper đến nhận ';
         $order->save();
-
+        broadcast(new OrderReady($order))->toOthers();
         return back()->with('success', 'Đơn đã sẵn sàng cho shipper.');
     }
     public function shipping($id)

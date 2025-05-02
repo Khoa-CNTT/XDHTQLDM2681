@@ -22,7 +22,7 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Thành Phố</label>
-                    <select name="vehicle_type" class="form-select">
+                    <select name="address" class="form-select">
                         <option value="Đà nẵng">Đà nẵng</option>
 
                     </select>

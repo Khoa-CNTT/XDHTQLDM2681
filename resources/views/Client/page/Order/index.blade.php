@@ -204,31 +204,29 @@
                                             <div class="col-lg-6 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5"
-                                                            placeholder="Tên (không bắt buộc)" type="text"
-                                                            value="{{ $userInfo['name'] }}">
+                                                        <input class="checkout__input--field border-radius-5" name="username" {{-- Đặt tên biến --}}
+                                                            placeholder="Tên (không bắt buộc)" type="text" value="{{ $userInfo['name'] }}">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5"
-                                                            placeholder="Số điện thoại" type="text"
-                                                            value="{{ $userInfo['phone'] }}">
+                                                        <input class="checkout__input--field border-radius-5" name="PhoneNumber" placeholder="Số điện thoại"
+                                                            type="text" value="{{ $userInfo['phone'] }}">
                                                     </label>
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5"
-                                                            placeholder="Địa chỉ" type="text"
+                                                        <input class="checkout__input--field border-radius-5" name="Address" placeholder="Địa chỉ" type="text"
                                                             value="{{ $userInfo['address'] }}">
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
                                 </div>

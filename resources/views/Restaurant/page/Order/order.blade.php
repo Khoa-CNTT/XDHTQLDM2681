@@ -87,7 +87,6 @@
         const channel = pusher.subscribe('restaurant.{{ $restaurantId }}');
 
         channel.bind('OrderPlaced', function (data) {
-            console.log('Có đơn hàng mới:', data.order);
 
             // Thêm vào danh sách thông báo
             const list = document.getElementById("notification-list");
@@ -110,6 +109,7 @@
             // Tự động ẩn sau 5 giây
             setTimeout(() => {
                 myModal.hide();
+                window.location.reload();
             }, 5000);
         });
     </script>
