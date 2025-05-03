@@ -21,6 +21,7 @@ class Order extends Model
         'delivery_fee',
         'note',
         'requested_delivery_datetime',
+        'payment_method'
     ];
     public function user()
     {

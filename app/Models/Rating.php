@@ -10,7 +10,12 @@ class Rating extends Model
     protected $fillable = [
         'order_id',
         'comment',
-        'cust_driver_rating',
-        'cust_restaurant_rating',
+        'rating',
     ];
+
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

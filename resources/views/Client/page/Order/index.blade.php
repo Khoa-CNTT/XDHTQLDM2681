@@ -315,11 +315,27 @@
                             </tfoot>
                         </table>
                     </div>
+                    <!-- Thêm vào trước nút submit -->
+                    <div class="checkout__payment--method mb-4">
+                        <h3 class="section__header--title h4">Phương thức thanh toán</h3>
+                        <label class="d-block mb-2">
+                            <input type="radio" name="payment_method" value="cod" checked>
+                            Thanh toán khi nhận hàng
+                        </label>
+                        <label class="d-block">
+                            <input type="radio" name="payment_method" value="vnpay">
+                            Thanh toán VNPay
+                        </label>
+                    </div>
+
+                    <!-- Nút thanh toán -->
+                    <button type="submit" class="btn btn-primary">Đặt hàng</button>
+
 
                 </aside>
 
 
-                <button type="submit" class="btn btn-success">Thanh toán</button>
+
 
 
             </div>

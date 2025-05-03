@@ -18,6 +18,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OrderController;
 
 
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Restaurant\DashboardController;
 use App\Http\Controllers\Restaurant\MenuController;
 use App\Http\Controllers\Restaurant\ResRegister;
@@ -27,6 +28,7 @@ use App\Http\Controllers\Restaurant\OrderController as  RestaurantorderControlle
 use App\Http\Controllers\RestaurantController;
 
 
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ThongkeController;
 use App\Http\Controllers\Shipper\HomeShipperController;
@@ -100,6 +102,10 @@ Route::group(
         Route::post('/checkout-order', [OrderController::class, 'checkout'])->name('checkout');
         Route::get('/Order-Tracking', [OrderController::class, "ordertracking"])->name('order.tracking');
 
+        // Định nghĩa route cho trang thanh toán VNPAY
+        Route::get('/payment/vnpay/{amount}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
+        Route::get('/vnpay/callback', [PaymentController::class, 'vnpayCallback'])->name('payment.vnpay.callback');
+
         Route::get('/history-order', [OrderController::class, "historyorder"]);
         //setting account
         Route::get('/dashboard', [AccountController::class, "dashboard"])->name('client.dashboard');
@@ -107,6 +113,7 @@ Route::group(
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
         Route::post('/account/location/update', [AccountController::class, 'update'])->name('location.update');
+        Route::post('/review/submit', [ReviewController::class, 'submitReview']);
     });
 
 //admin

@@ -141,6 +141,8 @@ class OrderController extends Controller
         $cart = Cart::with(['cartItems.menuItem'])->where('user_id', $user->id)->first();
         $location = $user->location;
 
+        $paymentMethod = $request->input('payment_method', 'cod'); // Mặc định là COD
+
         $userChanged = false;
         if ($request->username && $request->username !== $user->username) {
             $user->username = $request->username;
@@ -152,31 +154,32 @@ class OrderController extends Controller
         }
         if ($userChanged) $user->save();
 
-        $locationChanged = false;
-        foreach (['City', 'District', 'Ward', 'Address'] as $field) {
-            if ($request->$field && $request->$field !== $location->$field) {
-                $location->$field = $request->$field;
-                $locationChanged = true;
-            }
-        }
+        // Cập nhật địa chỉ nếu thay đổi
+        // $locationChanged = false;
+        // foreach (['City', 'District', 'Ward', 'Address'] as $field) {
+        //     if ($request->$field && $request->$field !== $location->$field) {
+        //         $location->$field = $request->$field;
+        //         $locationChanged = true;
+        //     }
+        // }
 
-        if ($locationChanged) {
-            $fullAddress = "{$location->Address}, {$location->Ward}, {$location->District}, {$location->City}";
-            try {
-                $res = Http::withHeaders(['User-Agent' => 'CallFood/1.0'])->get('https://nominatim.openstreetmap.org/search', [
-                    'q' => $fullAddress,
-                    'format' => 'json',
-                    'limit' => 1
-                ]);
-                if ($res->successful() && $data = $res->json()[0] ?? null) {
-                    $location->Latitude = $data['lat'];
-                    $location->Longitude = $data['lon'];
-                }
-            } catch (\Exception $e) {
-                Log::error('Lỗi lấy tọa độ: ' . $e->getMessage());
-            }
-            $location->save();
-        }
+        // if ($locationChanged) {
+        //     $fullAddress = "{$location->Address}, {$location->Ward}, {$location->District}, {$location->City}";
+        //     try {
+        //         $res = Http::withHeaders(['User-Agent' => 'CallFood/1.0'])->get('https://nominatim.openstreetmap.org/search', [
+        //             'q' => $fullAddress,
+        //             'format' => 'json',
+        //             'limit' => 1
+        //         ]);
+        //         if ($res->successful() && $data = $res->json()[0] ?? null) {
+        //             $location->Latitude = $data['lat'];
+        //             $location->Longitude = $data['lon'];
+        //         }
+        //     } catch (\Exception $e) {
+        //         Log::error('Lỗi lấy tọa độ: ' . $e->getMessage());
+        //     }
+        //     $location->save();
+        // }
 
         $lat = $location->Latitude ?? null;
         $lon = $location->Longitude ?? null;
@@ -187,6 +190,8 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
+            $orderIds = [];
+
             foreach ($itemsByRestaurant as $restaurantId => $items) {
                 $restaurantLocation = Location::where('restaurant_id', $restaurantId)->first();
                 $restaurantLat = $restaurantLocation->Latitude ?? 0;
@@ -214,12 +219,15 @@ class OrderController extends Controller
                     'restaurant_id' => $restaurantId,
                     'driver_id' => null,
                     'total_amount' => $finalTotal,
-                    'is_payment' => false,
+                    'is_payment' => $paymentMethod === 'cod', // true nếu COD, false nếu VNPay
                     'status' => 'xác nhận món',
                     'order_date' => now(),
                     'delivery_fee' => $shippingFee,
                     'note' => null,
+                    'payment_method' => $paymentMethod, // lưu COD hoặc VNPAY
                 ]);
+
+                $orderIds[] = $order->id;
 
                 foreach ($items as $cartItem) {
                     OrderDetail::create([
@@ -246,6 +254,15 @@ class OrderController extends Controller
             $cart->delete();
 
             DB::commit();
+
+            if ($paymentMethod === 'vnpay') {
+                session(['vnpay_order_ids' => $orderIds]);
+
+                $totalAmount = Order::whereIn('id', $orderIds)->sum('total_amount');
+
+                return redirect()->route('payment.vnpay', ['amount' => $totalAmount]);
+            }
+
             return redirect()->route('order.tracking')->with('success', 'Đặt hàng thành công!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -253,6 +270,7 @@ class OrderController extends Controller
             return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra khi đặt hàng: ' . $e->getMessage());
         }
     }
+
     public function ordertracking()
     {
         $user = Auth::user();

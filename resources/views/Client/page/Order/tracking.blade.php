@@ -92,7 +92,8 @@
 
 
 
-                channel.bind('order.paid', function (data) {
+              channel.bind('order.paid', function (data) {
+                  console.log(data);
                     Swal.fire({
                         icon: 'success',
                         title: 'Cảm ơn bạn!',
@@ -101,14 +102,93 @@
                         timer: 3000,
                         timerProgressBar: true,
                         willClose: () => {
-                            location.reload();  // Reload trang sau khi thông báo ẩn đi
+                            window.location.reload();  // Reload trang sau khi thông báo ẩn đi
                         }
                     });
+
+
+                    showReviewModal(data.order.id);  // Hiển thị modal đánh giá ngay khi thanh toán thành công
                 });
 
-
-
-
+                function showReviewModal(orderId) {
+                        Swal.fire({
+                            title: 'Đánh giá đơn hàng',
+                            html: `
+            <style>
+                .swal2-popup.custom-wide {
+                    width: 66vw !important;
+                    max-width: 66vw !important;
+                }
+                #star-rating span {
+                    cursor: pointer;
+                    font-size: 2.5rem;
+                    transition: color 0.2s;
+                }
+                #star-rating span:hover,
+                #star-rating span:hover ~ span {
+                    color: #ffc107;
+                }
+            </style>
+            <div id="star-rating" style="color: #ccc; text-align: center;">
+                <span data-value="1">&#9733;</span>
+                <span data-value="2">&#9733;</span>
+                <span data-value="3">&#9733;</span>
+                <span data-value="4">&#9733;</span>
+                <span data-value="5">&#9733;</span>
+            </div>
+            <textarea id="comment" class="form-control mt-3" placeholder="Nhận xét (tuỳ chọn)"></textarea>
+        `,
+                            customClass: {
+                                popup: 'custom-wide'
+                            },
+                            confirmButtonText: 'Gửi đánh giá',
+                            didOpen: () => {
+                                const stars = document.querySelectorAll('#star-rating span');
+                                stars.forEach(star => {
+                                    star.addEventListener('click', () => {
+                                        const value = parseInt(star.getAttribute('data-value'));
+                                        stars.forEach(s => {
+                                            s.style.color = parseInt(s.getAttribute('data-value')) <= value ? '#ffc107' : '#ccc';
+                                        });
+                                        document.getElementById('star-rating').setAttribute('data-selected', value);
+                                    });
+                                });
+                            },
+                            preConfirm: () => {
+                                const rating = document.getElementById('star-rating').getAttribute('data-selected');
+                                const comment = document.getElementById('comment').value;
+                                if (!rating) {
+                                    Swal.showValidationMessage('Vui lòng chọn số sao đánh giá.');
+                                    return false;
+                                }
+                                return { rating, comment };
+                            }
+                        }).then(result => {
+                            if (result.isConfirmed) {
+                                fetch('/client/review/submit', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                    },
+                                    body: JSON.stringify({
+                                        order_id: orderId,
+                                        rating: result.value.rating,
+                                        comment: result.value.comment
+                                    })
+                                })
+                                    .then(res => res.json())
+                                    .then(response => {
+                                        Swal.fire('Cảm ơn!', 'Đánh giá của bạn đã được gửi.', 'success').then(() => {
+                                            location.reload(); // Reload nếu cần
+                                        });
+                                    })
+                                    .catch(err => {
+                                        Swal.fire('Lỗi', 'Không thể gửi đánh giá. Vui lòng thử lại sau.', 'error');
+                                    });
+                            }
+                        });
+                    }
 
     </script>
 
