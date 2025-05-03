@@ -9,13 +9,12 @@ class Offers extends Model
     protected $table = "offers";
 
     protected $fillable = [
-        'City',
-        'District',
-        'Ward',
-        'Address',
-        'Latitude',
-        'Longitude',
-        'restaurant_id',
-
+        'title',
+        'image',
+        'discount_value',
+        'start_date',
+        'end_date',
+        'status',
+        'description',
     ];
 }

@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController;
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItemController;
 use App\Http\Controllers\Admin\ShipperController as AdminShipperController;
+use App\Http\Controllers\Admin\OfferController as AdminOfferController;
+
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -135,6 +137,14 @@ Route::group(
             Route::get("/index", [AdminMenuItemController::class, "index"])->name("index");
             Route::post('/approve-menu-item/{id}', [AdminMenuItemController::class, 'approve'])->name('menu_items.approve');
 
+        });
+        Route::group(["prefix" => "/offer"], function (){
+            Route::get("/index",[AdminOfferController::class, "index"])->name("offer.index");
+            Route::post("/store",[AdminOfferController::class, "store"])->name("offer.store");
+            Route::get("/edit/{id}",[AdminOfferController::class, "edit"])->name("offer.edit");
+            Route::post('/update', [AdminOfferController::class, 'update'])->name('offer.update');
+            Route::delete("/delete/{id}",[AdminOfferController::class, "delete"])->name("offer.delete");
+            Route::post('/change-status/{id}', [AdminOfferController::class, 'changeStatus'])->name('offer.changeStatus');
         });
         //crud roles
         Route::resource('roles', RoleController::class);

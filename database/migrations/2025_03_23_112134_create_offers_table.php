@@ -18,6 +18,8 @@ return new class extends Migration
             $table->dateTime('end_date');
             $table->boolean('status');
             $table->string('description')->nullable();
+            $table->string('title');
+            $table->string('image');
             $table->timestamps();
         });
     }
