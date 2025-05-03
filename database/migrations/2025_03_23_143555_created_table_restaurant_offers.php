@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('restaurant_id');
             $table->integer('offer_id');
-
-
             $table->timestamps();
         });
     }

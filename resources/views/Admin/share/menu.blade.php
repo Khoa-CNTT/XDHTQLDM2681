@@ -65,10 +65,10 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/customer/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/offer/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
                     </div>
-                    <div class="menu-title">Khách hàng</div>
+                    <div class="menu-title">Quản lý khuyến mãi</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
