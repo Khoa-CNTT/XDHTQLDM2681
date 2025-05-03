@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class OfferController extends Controller
 {
-    public function index()  
+    public function index()
     {
         // $offers = Offers::with('roles')->get();
         $offers = Offers::all();
@@ -31,7 +31,7 @@ class OfferController extends Controller
         // Nếu có file hình ảnh, tiến hành lưu ảnh
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/image/foods');
+            $imagePath = $request->file('image')->store('public/image/offer');
         }
 
         // Tạo đối tượng offer với các giá trị đã được validate
@@ -63,14 +63,14 @@ class OfferController extends Controller
     $offer->status = $request->input('status');
 
     if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('public/image/foods');
+        $imagePath = $request->file('image')->store('public/image/offer');
         $offer->image = $imagePath;
     }
 
     $offer->save();
 
     return redirect()->route('offer.index')->with('success', 'Khuyến mãi đã được cập nhật');
-    } 
+    }
     public function delete($id)
     {
     // Tìm khuyến mãi theo ID
