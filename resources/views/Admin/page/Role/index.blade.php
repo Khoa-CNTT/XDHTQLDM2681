@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover align-middle text-center">
+                        <table id="myTable" class="table table-bordered table-hover align-middle text-center">
                             <thead class="table-secondary">
                                 <tr>
                                     <th scope="col">Tên quyền</th>

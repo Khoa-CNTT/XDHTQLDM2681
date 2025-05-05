@@ -384,7 +384,7 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item" href="/admin/logout"><i
+                    <li><a class="dropdown-item" href="/account/logout"><i
                                 class='bx bx-log-out-circle'></i><span>Logout</span></a>
                     </li>
                 </ul>

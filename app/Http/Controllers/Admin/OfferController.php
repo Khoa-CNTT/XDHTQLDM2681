@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateOfferRequest;
+use App\Http\Requests\UpdateOfferRequest;
 use App\Models\Offers;
+use App\Models\Restaurant;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -11,87 +14,73 @@ class OfferController extends Controller
 {
     public function index()
     {
-        // $offers = Offers::with('roles')->get();
-        $offers = Offers::all();
-        return view('Admin.page.Offer.index',compact('offers'));
-    }
-    public function store(Request $request)
-    {
-        // Kiểm tra validation
-        $request->validate([
-            'title' => 'required|string',
-            'discount_value' => 'required|numeric',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
-            'status' => 'required|boolean',
-            'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,bmp,tiff|max:10240',
-        ]);
+        $offers = Offers::with('restaurants')->paginate(10);
 
-        // Nếu có file hình ảnh, tiến hành lưu ảnh
-        $imagePath = null;
+        return view('Admin.page.Offer.index', compact('offers'));
+    }
+
+    public function create()
+    {
+        $restaurants = Restaurant::all();
+        return view('Admin.page.Offer.create', compact('restaurants'));
+    }
+
+    public function store(CreateOfferRequest $request)
+    {
+
+        $data=$request->all();
+        //dd($data);
+
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('public/image/offer');
+            $data['image'] = $request->file('image')->store('offers', 'public');
         }
 
-        // Tạo đối tượng offer với các giá trị đã được validate
-        $offer = Offers::create([
-            'title' => $request->input('title'),
-            'discount_value' => $request->input('discount_value'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date'),
-            'status' => $request->boolean('status'),
-            'description' => $request->input('description'),
-            'image' => $imagePath,
-        ]);
 
-        return redirect()->route('offer.index')->with('success', 'Khuyến mãi đã được tạo');
+        $offer = Offers::create($data);
+        //dd($offer);
+
+        if (!$data['is_global'] && $request->filled('restaurant_ids')) {
+            $offer->restaurants()->sync($data['restaurant_ids']);
+        }
+
+        return redirect()->route('offers.index')->with('success', 'Tạo khuyến mãi thành công');
     }
-    public function edit($id)
+
+    public function edit(Offers $offer)
     {
-        $offer = Offers::findOrFail($id);
-        return response()->json($offer);
+        $restaurants = Restaurant::all();
+        $selectedRestaurants = $offer->restaurants->pluck('id')->toArray();
+        return view('Admin.page.Offer.edit', compact('offer', 'restaurants', 'selectedRestaurants'));
     }
-    public function update(Request $request)
+
+    public function update(UpdateOfferRequest $request, Offers $offer)
     {
-    $offer = Offers::findOrFail($request->input('offer_id'));
-    $offer->title = $request->input('title');
-    $offer->discount_value = $request->input('discount_value');
-    $offer->start_date = $request->input('start_date');
-    $offer->end_date = $request->input('end_date');
-    $offer->description = $request->input('description');
-    $offer->status = $request->input('status');
 
-    if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('public/image/offer');
-        $offer->image = $imagePath;
+        $data = $request->all();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('offers', 'public');
+        }
+
+        $offer->update($data);
+
+        if (!$data['is_global']) {
+            $offer->restaurants()->sync($data['restaurant_ids'] ?? []);
+        } else {
+            $offer->restaurants()->detach();
+        }
+
+        return redirect()->route('offers.index')->with('success', 'Cập nhật thành công');
     }
 
-    $offer->save();
-
-    return redirect()->route('offer.index')->with('success', 'Khuyến mãi đã được cập nhật');
-    }
-    public function delete($id)
+    public function destroy(Offers $offer)
     {
-    // Tìm khuyến mãi theo ID
-    $offer = Offers::findOrFail($id);
-
-    // Xóa khuyến mãi
-    $offer->delete();
-
-    // Quay lại danh sách với thông báo thành công
-    return redirect()->route('offer.index')->with('success', 'Khuyến mãi đã được xóa');
+        $offer->delete();
+        return redirect()->route('offers.index')->with('success', 'Đã xoá khuyến mãi');
     }
-    public function changeStatus($id)
+    public function show(Offers $offer)
     {
-    $offer = Offers::findOrFail($id);
-    $offer->status = !$offer->status; // Đảo trạng thái
-    $offer->save();
-
-    return response()->json([
-        'status' => $offer->status,
-        'message' => 'Trạng thái đã được cập nhật',
-    ]);
+        return view('admin.offers.show', compact('offer'));
     }
 
 }

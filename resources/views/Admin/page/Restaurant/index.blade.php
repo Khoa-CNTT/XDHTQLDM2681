@@ -3,7 +3,7 @@
     <div class="container py-4">
         <h1 class="mb-4">📋 Danh sách nhà hàng</h1>
         <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover align-middle text-center">
+            <table id="myTable" class="table table-bordered table-striped table-hover align-middle text-center">
                 <thead class="table-dark">
                     <tr>
                         <th>#</th>

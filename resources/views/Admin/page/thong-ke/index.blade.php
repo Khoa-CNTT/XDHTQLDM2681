@@ -1,106 +1,104 @@
 @extends('Admin.share.master')
 @section('noi_dung')
-    <div id="app" class="container mt-5">
-        <h1 class="text-center mb-4">Thống kê doanh thu</h1>
 
-        <!-- Tổng doanh thu và tổng số lượng -->
         <div class="row mb-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Sales</h5>
-                        <p class="card-text fs-4">@{{ totalSale | currency }}</p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <h5>Đơn (tổng):</h5>
+                <p>{{ $totalOrders }} đơn</p>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Quantity Sold</h5>
-                        <p class="card-text fs-4">@{{ totalQuantity }}</p>
-                    </div>
-                </div>
+            <div class="col-md-4">
+                <h5>Doanh thu (tổng):</h5>
+                <p>{{ number_format($totalRevenue, 0, ',', '.') }} VNĐ</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Thời gian giao trung bình:</h5>
+                <p>{{ round($avgDeliveryTime, 2) }} phút</p>
             </div>
         </div>
 
-        <!-- Tổng lợi nhuận -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Profit</h5>
-                        <p class="card-text fs-4">@{{ totalProfit | currency }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row mb-4">
+        <div class="col-md-3"><strong>Ngày <small>{{ \Carbon\Carbon::today()->format('d/m/Y') }}</small>:</strong> {{ $dailyOrders }} đơn /
+            {{ number_format($dailyRevenue, 0, ',', '.') }} VNĐ <br>
 
-        <!-- Thống kê theo món ăn -->
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Food Sales Details</h5>
-                        <table class="table table-bordered">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>Food Name</th>
-                                    <th>Total Quantity Sold</th>
-                                    <th>Total Sales</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="food in foodDetails" :key="food . title">
-                                    <td>@{{ food . title }}</td>
-                                    <td>@{{ food . total_quantity }}</td>
-                                    <td>@{{ (food . total_sale) | currency }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
         </div>
+        <div class="col-md-3"><strong>Tháng <small>{{ \Carbon\Carbon::now()->format('m/Y') }}</small>:</strong> {{ $monthlyOrders }} đơn /
+            {{ number_format($monthlyRevenue, 0, ',', '.') }} VNĐ <br>
+
+        </div>
+        <div class="col-md-3"><strong>Năm <small>{{ \Carbon\Carbon::now()->format('Y') }}</small>:</strong> {{ $yearlyOrders }} đơn /
+            {{ number_format($yearlyRevenue, 0, ',', '.') }} VNĐ <br>
+
+        </div>
+        <div class="col-md-3"><strong>Tỷ lệ huỷ:</strong> {{ $cancelRate }}%</div>
     </div>
+
+
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <h6>Tổng số Khách hàng:</h6>{{ $totalCustomers }}
+            </div>
+            <div class="col-md-4">
+                <h6>Tổng số Nhà hàng được phê duyệt:</h6>{{ $totalRestaurants }}
+            </div>
+            <div class="col-md-4">
+                <h6>Tổng số Tài xế đc phê duyệt:</h6>{{ $totalDrivers }}
+            </div>
+        </div>
+
+
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <h5>Top 5 món ăn bán chạy nhất</h5>
+                <ul>@foreach($topMenuItems as $item)<li>{{ $item->menuItem->Title_items }} ({{ $item->total }})</li>@endforeach
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Top 5 nhà hàng hoạt động nhiều nhất</h5>
+                <ul>@foreach($topRestaurants as $r)<li>{{ $r->restaurant->name }} ({{ $r->total }})</li>@endforeach</ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Top 5 tài xế giao nhiều đơn nhất</h5>
+                <ul>@foreach($topDrivers as $d)<li>{{ $d->driver->name }} ({{ $d->total }})</li>@endforeach</ul>
+            </div>
+        </div>
+        <form method="GET" action="{{ route('admin.dashboard') }}" class="row g-3 mb-4">
+            <div class="col-auto">
+                <label>Từ ngày:</label>
+                <input type="date" name="from_date" class="form-control" value="{{ request('from_date') }}">
+            </div>
+            <div class="col-auto">
+                <label>Đến ngày:</label>
+                <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}">
+            </div>
+            <div class="col-auto align-self-end">
+                <button type="submit" class="btn btn-primary">Thống kê</button>
+            </div>
+        </form>
+
+        <div class="alert alert-info">
+            Thống kê từ {{ $from->format('d/m/Y') }} đến {{ $to->format('d/m/Y') }}
+        </div>
+        <canvas id="orderChart"></canvas>
 @endsection
-{{-- @section('js')
-    <script>
-        new Vue({
-            el: '#app',
-            data: {
-                totalSale: 0,
-                totalQuantity: 0,
-                totalProfit: 0,
-                foodDetails: []
-            },
-            filters: {
-                currency(value) {
-                    return new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                    }).format(value);
-                }
-            },
-            mounted() {
-                this.fetchData();
-            },
-            methods: {
-                fetchData() {
-                    axios.get('/admin/staticis/total')
-                        .then(res => {
-                            this.totalSale = res.data.total_sale;
 
 
-                            this.totalQuantity = res.data.total_quantity;
-                            this.totalProfit = res.data.total_profit;
-                            this.foodDetails = res.data.customer;
-                            //console.log(     this.foodDetails);
-                        })
-                        .catch(error => {
-                            console.error("Error fetching data:", error);
-                        });
-                }
-            }
-        });
-    </script>
-@endsection --}}
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('orderChart').getContext('2d');
+    const data = @json($chartData);
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map(d => d.date),
+            datasets: [
+                { label: 'Đơn hàng', data: data.map(d => d.orders), borderColor: 'blue', fill: false },
+                { label: 'Doanh thu', data: data.map(d => d.revenue), borderColor: 'green', fill: false }
+            ]
+        },
+        options: { responsive: true }
+    });
+</script>
+@endsection
+

@@ -153,15 +153,15 @@
                     `;
                     } else if (status === "Đã nhận") {
                         actionButtons = `
-                        <button class="btn btn-info" id="onTheWayBtn" style="display:inline-block;" onclick="onTheWay(${order.id})">Đang đến điểm lấy</button>
+                        <button class="btn btn-info" id="onTheWayBtn" style="display:inline-block;" onclick="onTheWay(${order.id})">Đã đến điểm lấy</button>
                     `;
                     } else if (status === "Đã đến điểm lấy, đang giao cho khách") {
 
                             actionButtons = `
-                            <button class="btn btn-primary" id="paymentBtn" onclick="updatePaymentStatus(${order.id})">Cập nhật thanh toán</button>
+                            <button class="btn btn-primary" id="paymentBtn" onclick="updatePaymentStatus(${order.id})">Cập nhật đơn hàng</button>
                         `;
-                   } else if (status === "Đã thanh toán") {
-                     actionButtons = `<p class="btn btn-warning">Đã thanh toán thành công!</p>`;
+                   } else if (status === "Đã giao thành công") {
+                     actionButtons = `<p class="btn btn-warning">Đã thanh toán và  thành công!</p>`;
 
                     } else if (status === "Đã từ chối") {
                         if (order.is_payment) {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\RestaurantController as AdminRestaurantController
 use App\Http\Controllers\Admin\MenuItemController as AdminMenuItemController;
 use App\Http\Controllers\Admin\ShipperController as AdminShipperController;
 use App\Http\Controllers\Admin\OfferController as AdminOfferController;
+use App\Http\Controllers\Admin\RatingController as AdminRatingController;
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
@@ -100,18 +101,19 @@ Route::group(
         Route::delete('/cart/remove/{cartItemId}', [CartController::class, 'removeFromCart'])->name('cart.remove');
         Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 
-        Route::get('/checkout', [OrderController::class, "index"]);
+        Route::get('/checkout', [OrderController::class, "index"])->name('checkout.index');
         Route::post('/checkout-order', [OrderController::class, 'checkout'])->name('checkout');
         Route::get('/Order-Tracking', [OrderController::class, "ordertracking"])->name('order.tracking');
-
+        Route::patch('/order/{order}/cancel', [OrderController::class, 'cancel'])
+            ->name('order.cancel');
         // Định nghĩa route cho trang thanh toán VNPAY
         Route::get('/payment/vnpay/{amount}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
         Route::get('/vnpay/callback', [PaymentController::class, 'vnpayCallback'])->name('payment.vnpay.callback');
 
-        Route::get('/history-order', [OrderController::class, "historyorder"]);
+        Route::get('/history-order', [OrderController::class, "historyorder"])->name('order.history');
         //setting account
         Route::get('/dashboard', [AccountController::class, "dashboard"])->name('client.dashboard');
-        Route::get('/address', [AccountController::class, "address"]);
+        Route::get('/address', [AccountController::class, "address"])->name('client.address');
         Route::get('/information', [AccountController::class, "information"])->name('account.information');
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
         Route::post('/account/location/update', [AccountController::class, 'update'])->name('location.update');
@@ -122,6 +124,12 @@ Route::group(
 Route::group(
     ["prefix" => "/admin"],
     function () {
+
+
+        Route::get('ratings', [AdminRatingController::class, 'index'])->name('admin.ratings.index');
+        Route::post('ratings/{rating}/approve', [AdminRatingController::class, 'approve'])->name('admin.ratings.approve');
+        Route::post('ratings/{rating}/hide', [AdminRatingController::class, 'hide'])->name('admin.ratings.hide');
+        Route::delete('ratings/{rating}', [AdminRatingController::class, 'destroy'])->name('admin.ratings.destroy');
         Route::group(["prefix" => "/category"], function () {
             Route::get("/index", [AdminCategoryController::class, "index"])->name("index");
             Route::get("/data", [AdminCategoryController::class, "getdata"])->name("data");
@@ -138,14 +146,7 @@ Route::group(
             Route::post('/approve-menu-item/{id}', [AdminMenuItemController::class, 'approve'])->name('menu_items.approve');
 
         });
-        Route::group(["prefix" => "/offer"], function (){
-            Route::get("/index",[AdminOfferController::class, "index"])->name("offer.index");
-            Route::post("/store",[AdminOfferController::class, "store"])->name("offer.store");
-            Route::get("/edit/{id}",[AdminOfferController::class, "edit"])->name("offer.edit");
-            Route::post('/update', [AdminOfferController::class, 'update'])->name('offer.update');
-            Route::delete("/delete/{id}",[AdminOfferController::class, "delete"])->name("offer.delete");
-            Route::post('/change-status/{id}', [AdminOfferController::class, 'changeStatus'])->name('offer.changeStatus');
-        });
+        Route::resource('offers', App\Http\Controllers\Admin\OfferController::class);
         //crud roles
         Route::resource('roles', RoleController::class);
         //crud
@@ -160,9 +161,11 @@ Route::group(
             Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
         });
-        Route::get('/thong-ke', [ThongkeController::class, "index"]);
+        Route::get('/thong-ke', [ThongkeController::class, "index"])->name('admin.dashboard');
     }
 )->middleware('admin');
+
+
 
 //đăng ký nhà hàng
 Route::get('/restaurant/register', [ResRegisterController::class, "resRegister"]);
@@ -174,6 +177,8 @@ Route::post('/restaurant/actionlogin', [AccountRestaurantController::class, 'act
 Route::group(
     ["prefix" => "/restaurant"],
     function(){
+        Route::get('/reports/chart', [DashboardController::class, 'index'])->name('reports.chart');
+
         //thông tin nhà hàng
         Route::get('/info', [DashboardController::class, "getRestaurantInfo"])->name('restaurant.info');
         Route::get('/edit', [DashboardController::class, "EditRestaurantInfo"])->name('restaurant.edit');
@@ -197,10 +202,12 @@ Route::group(
 
 )->middleware('restaurant');
 
+
+
 Route::get('/shipper/verify-otp', [AccountShipperController::class, 'showOTPForm'])->name('verify.otp');
 Route::post('/shipper/verify-otp', [AccountShipperController::class, 'verifyOTP'])->name('verify.otp.submit');
 Route::get('/shipper/login', [AccountShipperController::class, "loginshipper"])->name('login.shipper');
-Route::get('/register', [AccountShipperController::class, "registershipper"]);
+Route::get('/shipper/register', [AccountShipperController::class, "registershipper"]);
 Route::post('/shipper/actionregister', [AccountShipperController::class, "actionregistershipper"])->name("driver.register");
 Route::post('/shipper/actionlogin', [AccountShipperController::class, "actionloginshipper"])->name('shipper.login');
 Route::get('/shipper/logout-shipper', [AccountShipperController::class, "logoutshipper"])->name('shipper.logout');

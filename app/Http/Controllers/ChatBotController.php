@@ -103,7 +103,6 @@ class ChatBotController extends Controller
     {
         $restaurant = Restaurant::findOrFail($restaurant_id);
 
-        // Lấy tin nhắn từ session
         $chatKey = "chat_messages_$restaurant_id";
         $messages = session()->get($chatKey, []);  // Lấy tất cả tin nhắn
 

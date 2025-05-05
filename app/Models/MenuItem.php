@@ -29,6 +29,18 @@ class MenuItem extends Model
         return $this->belongsTo(Category::class, 'category_id');
     }
 
+    public function ratings()
+    {
+        return $this->hasManyThrough(
+            Rating::class,
+            OrderDetail::class,
+            'menu_item_id',
+            'order_id',
+            'id',
+            'order_id'
+        );
+    }
+
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');

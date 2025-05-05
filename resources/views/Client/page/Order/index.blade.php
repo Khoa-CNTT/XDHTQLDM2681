@@ -158,7 +158,7 @@
                                     <svg class="readcrumb__chevron-icon" ...></svg>
                                 </li>
                                 <li class="breadcrumb__item breadcrumb__item--blank d-flex align-items-center">
-                                    <a class="breadcrumb__link" href="{{ route('cart.index') }}">Giao hàng</a>
+                                    <a class="breadcrumb__link" href="{{ route('client.address') }}">Giao hàng</a>
                                     <svg class="readcrumb__chevron-icon" ...></svg>
                                 </li>
                                 <li class="breadcrumb__item breadcrumb__item--blank">
@@ -178,53 +178,52 @@
                                     <h2 class="section__header--title h3">Địa chỉ giao hàng trực tiếp</h2>
                                 </div>
                                 <div class="checkout__content--step__inner3 border-radius-5">
-                                    <div class="checkout__address--content__header">
-                                        <div class="shipping__contact--box__list">
-                                            <div class="shipping__radio--input">
-                                                <input class="shipping__radio--input__field" id="radiobox"
-                                                    name="checkmethod" type="radio">
-                                            </div>
-                                            <label class="shipping__radio--label" for="radiobox">
-                                                <span class="shipping__radio--label__primary">Giống địa chỉ giao hàng</span>
-                                            </label>
+                                    <div class="checkout__address--content__header d-flex justify-content-between align-items-center">
+                                        <div class="shipping__contact--box__list d-flex align-items-center">
+
+                                            <label class="shipping__radio--label ms-2" for="radiobox2">
+                                                <a href="{{ route('client.address') }}" > <span class="shipping__radio--label__primary">Dùng địa chỉ giao hàng khác</span>
+                                                </a>
+                                                </label>
                                         </div>
-                                        <div class="shipping__contact--box__list">
-                                            <div class="shipping__radio--input">
-                                                <input class="shipping__radio--input__field" id="radiobox2"
-                                                    name="checkmethod" type="radio">
-                                            </div>
-                                            <label class="shipping__radio--label" for="radiobox2">
-                                                <span class="shipping__radio--label__primary">Dùng địa chỉ thanh toán
-                                                    khác</span>
-                                            </label>
-                                        </div>
+
                                     </div>
+
                                     <div class="checkout__content--input__box--wrapper">
                                         <div class="row">
                                             <div class="col-lg-6 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5" name="username" {{-- Đặt tên biến --}}
-                                                            placeholder="Tên (không bắt buộc)" type="text" value="{{ $userInfo['name'] }}">
+                                                        <input class="checkout__input--field border-radius-5" name="username" placeholder="Tên (không bắt buộc)"
+                                                            type="text" value="{{ old('username', $userInfo['name']) }}">
                                                     </label>
+                                                    @error('username')
+                                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-6 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
                                                         <input class="checkout__input--field border-radius-5" name="PhoneNumber" placeholder="Số điện thoại"
-                                                            type="text" value="{{ $userInfo['phone'] }}">
+                                                            type="text" value="{{ old('PhoneNumber', $userInfo['phone']) }}">
                                                     </label>
+                                                    @error('PhoneNumber')
+                                                        <div class="text-danger mt-1">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
+
                                             <div class="col-12 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5" name="Address" placeholder="Địa chỉ" type="text"
-                                                            value="{{ $userInfo['address'] }}">
+                                                        <input class="checkout__input--field border-radius-5" name="Address" type="text"
+                                                            value="{{ $userInfo['address'] }}" readonly>
                                                     </label>
                                                 </div>
                                             </div>
+
                                         </div>
 
                                     </div>

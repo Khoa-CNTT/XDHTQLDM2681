@@ -174,7 +174,7 @@ class OrderShipperController extends Controller
         }
 
         $order->is_payment = true;
-        $order->status = "Đã thanh toán";
+        $order->status = "Đã giao thành công";
         $order->save();
 
         // Phát event tới khách và nhà hàng

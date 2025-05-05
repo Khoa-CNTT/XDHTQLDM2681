@@ -1,36 +1,57 @@
 @extends('Client.Share.master')
 
 @section('content')
-            <div class="container">
-                <h2 class="my-4">Theo dõi đơn hàng của bạn</h2>
+        <div class="container">
+            <h2 class="my-4">Theo dõi đơn hàng của bạn</h2>
 
-                @if($orders->isEmpty())
-                    <p>Chưa có đơn hàng nào để theo dõi.</p>
-                @else
-                    @foreach($orders as $order)
-                        <div class="card mb-3" data-order-id="{{ $order->id }}">
-                            <div class="card-header">
-                                <strong>Đơn hàng #{{ $order->id }}</strong> - Tại nhà hàng: {{ $order->restaurant->name }}
-                            </div>
-                            <div class="card-body">
-                                <p><strong>Trạng thái:</strong> <span class="order-status text-success">{{ $order->status }}</span></p>
-                                <p><strong>Ngày đặt:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
-                                <p><strong>Phí giao hàng:</strong> {{ number_format($order->delivery_fee) }} đ</p>
-                                <p><strong>Tổng tiền:</strong> {{ number_format($order->total_amount) }} đ</p>
-                                <h5 class="mt-3">Chi tiết đơn hàng:</h5>
-                                <ul class="list-group">
-                                    @foreach($order->orderDetails as $detail)
-                                        <li class="list-group-item">
-                                            {{ $detail->menuItem->Title_items }} ({{ $detail->quantity_ordered }} x
-                                            {{ number_format($detail->sell_price) }} đ)
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
+            @if($orders->isEmpty())
+                <p>Chưa có đơn hàng nào để theo dõi.</p>
+            @else
+                @foreach($orders as $order)
+                    <div class="card mb-3" id="order-{{ $order->id }}">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <strong>Đơn hàng #{{ $order->id }}</strong>
+                            {{-- Hiển thị nút Hủy khi status cho phép --}}
+                            @if(
+                                    in_array($order->status, [
+                                        'xác nhận món',
+                                    ])
+                                )
+                                <form action="{{ route('order.cancel', $order) }}" method="POST"
+                                    onsubmit="return confirm('Bạn có chắc muốn hủy đơn?');">
+                                    @csrf
+                                    @method('PATCH')
+                                    <button class="btn btn-outline-danger btn-sm">Hủy đơn</button>
+                                </form>
+                            @endif
                         </div>
-                    @endforeach
-                @endif
-            </div>
+                        <div class="card-body">
+                            <p>
+                                <strong>Trạng thái:</strong>
+                                <span class="order-status
+                                            {{ $order->status == 'Đã nhận' || $order->status == 'Đã đến điểm lấy, đang giao cho khách'
+                    ? 'text-primary' : 'text-success' }}">
+                                    {{ $order->status }}
+                                </span>
+                            </p>
+                            <p><strong>Ngày đặt:</strong> {{ $order->created_at->format('d/m/Y H:i') }}</p>
+                            <p><strong>Phí giao hàng:</strong> {{ number_format($order->delivery_fee) }} đ</p>
+                            <p><strong>Tổng tiền:</strong> {{ number_format($order->total_amount) }} đ</p>
+                            <h5 class="mt-3">Chi tiết đơn hàng:</h5>
+                            <ul class="list-group">
+                                @foreach($order->orderDetails as $detail)
+                                    <li class="list-group-item">
+                                        {{ $detail->menuItem->Title_items }}
+                                        ({{ $detail->quantity_ordered }} x {{ number_format($detail->sell_price) }} đ)
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endforeach
+            @endif
+        </div>
+
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
        <script>
@@ -71,7 +92,7 @@
                 timer: 3000,
                 timerProgressBar: true,
                 willClose: () => {
-                    window.location.reload();
+                     window.location.href = "{{ route('order.history') }}";
                 }
             });
         });
@@ -180,7 +201,7 @@
                                     .then(res => res.json())
                                     .then(response => {
                                         Swal.fire('Cảm ơn!', 'Đánh giá của bạn đã được gửi.', 'success').then(() => {
-                                            location.reload(); // Reload nếu cần
+                                            window.location.href = "{{ route('order.history') }}"; // Reload nếu cần
                                         });
                                     })
                                     .catch(err => {

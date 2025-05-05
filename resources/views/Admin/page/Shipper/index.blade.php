@@ -13,7 +13,7 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
+                    <table id="myTable" class="table table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>Họ Tên</th>

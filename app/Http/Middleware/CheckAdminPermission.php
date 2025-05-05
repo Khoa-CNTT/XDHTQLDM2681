@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class RedirectIfAdmin
+class CheckAdminPermission
 {
     /**
      * Handle an incoming request.
@@ -17,18 +17,15 @@ class RedirectIfAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('web')->check()) {
-            // Nếu chưa đăng nhập → redirect đến trang login cho tài khoản (admin, shipper)
             return redirect('/account/login')->with('error', 'Vui lòng đăng nhập để tiếp tục.');
         }
 
         $user = Auth::guard('web')->user();
 
-        $isAdmin = $user->roles()->where('name', 'admin')->exists();
-
-        if ($isAdmin) {
-            return redirect('/admin/restaurant/index');
+        if (!$user->roles()->where('name', 'admin')->exists()) {
+            return redirect('/account/login')->with('error', 'Bạn không có quyền truy cập trang quản trị.');
         }
 
-        return $next($request); // Nếu không phải admin, tiếp tục request
+        return $next($request);
     }
 }

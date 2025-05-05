@@ -40,7 +40,7 @@
                     Danh sách danh mục<!--  -->
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered">
+                    <table id="myTable" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th class="text-center">

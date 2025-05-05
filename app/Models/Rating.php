@@ -11,6 +11,7 @@ class Rating extends Model
         'order_id',
         'comment',
         'rating',
+        'is_approved '
     ];
 
 

@@ -94,7 +94,7 @@
 
                 <div class="mb-3">
                     <label for="description" class="form-label">📝 Mô tả</label>
-                    <textarea name="description" id="description" class="form-control" rows="3">{{ old('description') }}</textarea>
+                    <textarea   name="description" id="description" class="form-control" rows="3">{{ old('description') }}</textarea>
                     @error('description')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror

@@ -66,23 +66,30 @@ class CartController extends Controller
 
     public function removeFromCart($cartItemId)
     {
-        // Kiểm tra người dùng đã đăng nhập chưa
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xóa sản phẩm.');
+            return redirect()->route('login')
+                ->with('error', 'Bạn cần đăng nhập để xóa sản phẩm.');
         }
 
-        // Tìm món trong giỏ hàng của người dùng
         $cartItem = CartItem::find($cartItemId);
 
-        if ($cartItem) {
-            // Xóa món khỏi giỏ hàng
-            $cartItem->delete();
-
-            return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
+        if (! $cartItem) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Không tìm thấy sản phẩm để xóa!');
         }
 
-        return redirect()->route('cart.index')->with('error', 'Không tìm thấy sản phẩm để xóa!');
+        $cart = $cartItem->cart;
+
+        $cartItem->delete();
+
+        if ($cart && $cart->cartItems()->count() === 0) {
+            $cart->delete();
+        }
+
+        return redirect()->route('cart.index')
+            ->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
     }
+
 
     public function clearCart(Request $request)
     {
@@ -110,15 +117,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        // 1. Kiểm tra đăng nhập
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xem giỏ hàng.');
         }
 
-        // 2. Lấy user ID hiện tại
         $userId = Auth::id();
 
-        // 3. Lấy giỏ hàng theo user
         $cart = Cart::with('cartItems.menuItem')->where('user_id', $userId)->first();
         return view('Client.page.Cart.index', compact('cart'));
     }

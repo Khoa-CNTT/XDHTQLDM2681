@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\OrderCreated;
+use App\Http\Requests\CheckoutRequest;
 use App\Models\Cart;
 use App\Models\Location;
 use App\Models\MenuItem;
@@ -120,7 +121,8 @@ class OrderController extends Controller
         }
 
         // Tổng thời gian phục vụ
-        $totalServiceTime = $maxPrepTime + $maxDeliveryTime;
+        $totalServiceTime = $maxPrepTime + $maxDeliveryTime + 10;
+
 
 
 
@@ -135,7 +137,7 @@ class OrderController extends Controller
         ));
 
     }
-    public function checkout(Request $request)
+    public function checkout(CheckoutRequest $request)
     {
         $user = Auth::user();
         $cart = Cart::with(['cartItems.menuItem'])->where('user_id', $user->id)->first();
@@ -154,32 +156,7 @@ class OrderController extends Controller
         }
         if ($userChanged) $user->save();
 
-        // Cập nhật địa chỉ nếu thay đổi
-        // $locationChanged = false;
-        // foreach (['City', 'District', 'Ward', 'Address'] as $field) {
-        //     if ($request->$field && $request->$field !== $location->$field) {
-        //         $location->$field = $request->$field;
-        //         $locationChanged = true;
-        //     }
-        // }
 
-        // if ($locationChanged) {
-        //     $fullAddress = "{$location->Address}, {$location->Ward}, {$location->District}, {$location->City}";
-        //     try {
-        //         $res = Http::withHeaders(['User-Agent' => 'CallFood/1.0'])->get('https://nominatim.openstreetmap.org/search', [
-        //             'q' => $fullAddress,
-        //             'format' => 'json',
-        //             'limit' => 1
-        //         ]);
-        //         if ($res->successful() && $data = $res->json()[0] ?? null) {
-        //             $location->Latitude = $data['lat'];
-        //             $location->Longitude = $data['lon'];
-        //         }
-        //     } catch (\Exception $e) {
-        //         Log::error('Lỗi lấy tọa độ: ' . $e->getMessage());
-        //     }
-        //     $location->save();
-        // }
 
         $lat = $location->Latitude ?? null;
         $lon = $location->Longitude ?? null;
@@ -214,6 +191,17 @@ class OrderController extends Controller
                 $productTotal = collect($items)->sum(fn($item) => $item->cart_quantity * $item->cart_price);
                 $finalTotal = $productTotal + $shippingFee;
 
+
+                $maxPrepTime = $items->max(function ($item) {
+                    return $item->menuItem->preparation_time ?? 0;
+                });
+
+                // Tính thời gian giao hàng theo khoảng cách (với tốc độ 30km/h)
+                $deliveryTime = ceil(($distance / 30) * 60);
+
+                // Tổng thời gian phục vụ = chuẩn bị + giao hàng + 10 phút buffer
+                $totalServiceTime = $maxPrepTime + $deliveryTime + 10;
+
                 $order = Order::create([
                     'user_id' => $user->id,
                     'restaurant_id' => $restaurantId,
@@ -224,6 +212,7 @@ class OrderController extends Controller
                     'order_date' => now(),
                     'delivery_fee' => $shippingFee,
                     'note' => null,
+                    'requested_delivery_datetime' => now()->addMinutes($totalServiceTime),
                     'payment_method' => $paymentMethod, // lưu COD hoặc VNPAY
                 ]);
 
@@ -276,6 +265,12 @@ class OrderController extends Controller
         $user = Auth::user();
         $orders = Order::with(['restaurant', 'orderDetails.menuItem'])
             ->where('user_id', $user->id)
+            ->whereIn('status', [
+                'xác nhận món',
+            'Chế biến xong ,chờ shipper đến nhận ',
+            'Đã nhận',
+            'Đã đến điểm lấy, đang giao cho khách',
+        ])
             ->orderBy('order_date', 'desc')
             ->get();
 
@@ -298,6 +293,17 @@ class OrderController extends Controller
         $orders = Order::where('user_id', auth()->user()->id)->get();
         return view('Client.page.Order.history_order', compact('orders'));
     }
+    public function cancel(Order $order)
+    {
+        if ($order->status === 'xác nhận món') {
+            $order->update(['status' => 'Đã từ chối', 'is_cancel' => true]);
+
+            return back()->with('success', 'Đơn hàng đã được hủy.');
+        }
+
+        return back()->with('error', 'Không thể hủy đơn ở trạng thái này.');
+    }
+
 
 
 

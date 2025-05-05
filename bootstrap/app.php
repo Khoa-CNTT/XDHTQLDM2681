@@ -13,7 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
         'shipper' => \App\Http\Middleware\CheckShipperPermission::class,
-        'admin' => \App\Http\Middleware\RedirectIfAdmin::class,
+        'admin ' => \App\Http\Middleware\CheckAdminPermission::class,
         'restaurant' => \App\Http\Middleware\TenMiddleware::class,
     ]);
     })

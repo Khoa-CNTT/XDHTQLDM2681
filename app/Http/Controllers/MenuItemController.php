@@ -73,13 +73,40 @@ class MenuItemController extends Controller
 
     public function detail($id)
     {
-        $menuItem = MenuItem::with(['category', 'restaurant.locations']) // eager load đến location
-            ->where('id', $id)
-            ->firstOrFail();
-        //return response()->json($menuItem);
+        $menuItem = MenuItem::with([
+            'category',
+            'restaurant.locations',
+            'ratings.order.user'
+        ])->where('id', $id)->firstOrFail();
+        $mostCommonRating = $menuItem->ratings
+            ->groupBy('rating')
+            ->map(function ($group) {
+                return count($group);
+            })
+            ->sortDesc()
+            ->keys()
+            ->first();
 
-        return view('Client.page.Menu.detail', compact('menuItem'));
+
+
+        $sameCategoryItems = MenuItem::where('category_id', $menuItem->category_id)
+            ->where('id', '!=', $menuItem->id)
+            ->limit(4)
+            ->get();
+
+
+        $sideDishCategory = Category::where('title', 'like', '%nước uống%')->first(); // linh hoạt hơn là dùng ID cứng
+
+        $sideDishes = [];
+        if ($sideDishCategory) {
+            $sideDishes = MenuItem::where('category_id', $sideDishCategory->id)
+                ->limit(4)
+                ->get();
+        }
+
+        return view('Client.page.Menu.detail', compact('menuItem', 'sameCategoryItems', 'sideDishes', 'mostCommonRating'));
     }
+
 
     public function homeres(Request $request, $id, $category_id = null)
 {

@@ -18,7 +18,7 @@
             <main class="col-md-9">
                 <h4 class="text-primary mb-3">Danh sách món ăn</h4>
                 <div class="table-responsive">
-                    <table id="danhSachMonAn" class="table table-bordered text-center align-middle">
+                    <table id="danhSachMonAn" id="myTable" class="table table-bordered text-center align-middle">
                         <thead class="table-light">
                             <tr>
                                 <th>Mã món</th>
