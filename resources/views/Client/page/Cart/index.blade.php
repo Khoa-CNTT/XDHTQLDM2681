@@ -8,7 +8,7 @@
                 <div class="row row-cols-1">
                     <div class="col">
                         <div class="breadcrumb__content text-center">
-                            <h1 class="breadcrumb__content--title text-white mb-25">giỏ hàng</h1>
+                            <h1 class="breadcrumb__content--title text-white mb-25">Giỏ hàng</h1>
                             <ul class="breadcrumb__content--menu d-flex justify-content-center">
                                 <li class="breadcrumb__content--menu__items"><a class="text-white"
                                         href="/">Trang chủ</a></li>
@@ -26,7 +26,7 @@
         <section class="cart__section section--padding">
             <div class="container-fluid">
                 <div class="cart__section--inner">
-                        <h2 class="cart__title mb-40">giỏ hàng</h2>
+                        <h2 class="cart__title mb-40">Giỏ hàng</h2>
                         <div class="row">
                             <div class="col-lg-8">
                                 @if($cart && $cart->cartItems->count())
@@ -69,17 +69,16 @@
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td class="cart__table--body__list">
-                                                                                                <span class="cart__price">{{ number_format($item->cart_price) }} đ</span>
-                                                                                            </td>
+    <span class="cart__price">{{ number_format($item->cart_price) }} đ</span>
+</td>
                                                                                             <td class="cart__table--body__list">
                                                                                                 <div class="quantity__box">
                                                                                                     <button type="button"
                                                                                                         class="quantity__value quickview__value--quantity decrease"
                                                                                                         aria-label="quantity value" value="Decrease Value">-</button>
                                                                                                     <label>
-                                                                                                        <input type="number"
-                                                                                                            class="quantity__number quickview__value--number" value="{{ $item->cart_quantity }}" data-id="{{ $item->menu_item_id }}"
-                                                                                                            data-counter="">
+                                                                                                    <input type="number" class="quantity__number quickview__value--number" value="{{ $item->cart_quantity }}" data-id="{{ $item->menu_item_id }}" data-counter="">
+
                                                                                                     </label>
                                                                                                     <button type="button"
                                                                                                         class="quantity__value quickview__value--quantity increase"
@@ -87,8 +86,8 @@
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td class="cart__table--body__list">
-                                                                                                <span class="cart__price end">{{ number_format($item->cart_price * $item->cart_quantity) }} đ</span>
-                                                                                            </td>
+    <span class="cart__price end">{{ number_format($item->cart_price * $item->cart_quantity) }} đ</span>
+</td>
                                                                                         </tr>
                                                                                     @endforeach
 
@@ -2401,8 +2400,71 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+            <script>
+document.querySelectorAll('.decrease').forEach(button => {
+    button.addEventListener('click', function() {
+        let inputField = this.parentElement.querySelector('.quantity__number');
+        let currentValue = parseInt(inputField.value);
+        if (currentValue > 0) {
+            inputField.value = currentValue - 1;  // Giảm số lượng
+            updateCart(inputField);  // Cập nhật giỏ hàng
+            updateTotal(inputField); // Cập nhật thành tiền
+        }
+    });
+});
+
+// Sự kiện cho nút tăng số lượng
+document.querySelectorAll('.increase').forEach(button => {
+    button.addEventListener('click', function() {
+        let inputField = this.parentElement.querySelector('.quantity__number');
+        let currentValue = parseInt(inputField.value);
+        inputField.value = currentValue + 1;  // Tăng số lượng
+        updateCart(inputField);  // Cập nhật giỏ hàng
+        updateTotal(inputField); // Cập nhật thành tiền
+    });
+});
+
+// Hàm cập nhật giỏ hàng (có thể sử dụng AJAX để gửi dữ liệu về server)
+function updateCart(inputField) {
+    let cartItemId = inputField.getAttribute('data-id'); // ID sản phẩm
+    let newQuantity = inputField.value;
+
+    // Gửi AJAX request để cập nhật giỏ hàng
+    $.ajax({
+        url: '{{ route('cart.update') }}',  // Đường dẫn đến controller
+        type: 'POST',
+        data: {
+            _token: '{{ csrf_token() }}',  // CSRF token
+            cartItemId: cartItemId,  // ID sản phẩm
+            quantity: newQuantity      // Số lượng mới
+        },
+        success: function(response) {
+            console.log("Giỏ hàng đã được cập nhật.");
+        },
+        error: function(xhr, status, error) {
+            console.error("Error: " + error);
+        }
+    });
+}
+
+// Hàm cập nhật thành tiền khi số lượng thay đổi
+function updateTotal(inputField) {
+    // Lấy giá của sản phẩm
+    let price = parseFloat(inputField.closest('tr').querySelector('.cart__price').textContent.replace(' đ', '').replace(',', ''));
+    // Lấy số lượng từ input
+    let quantity = parseInt(inputField.value);
+    
+    // Tính toán thành tiền
+    let total = price * quantity;
+    
+    // Cập nhật lại giá trị thành tiền
+    let totalElement = inputField.closest('tr').querySelector('.cart__price.end');
+    totalElement.textContent = new Intl.NumberFormat('vi-VN').format(total) + " đ";
+}
+</script>
 
            <script>
+            
             $(document).ready(function () {
         $('.cart-update').on('click', function () {
             var cartItems = [];
@@ -2463,5 +2525,6 @@
     });
 
            </script>
+           
 
 @endsection
