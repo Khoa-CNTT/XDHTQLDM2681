@@ -218,6 +218,7 @@ Route::middleware(['shipper'])->group(
     function () {
         Route::post('/shipper/update-status', [HomeShipperController::class, 'updateStatus'])->name('shipper.updateStatus');
         Route::post('/shipper/nearby', [HomeShipperController::class, 'getNearbyOrders'])->name('shipper.nearby');
+        Route::get('/shipper-registration-status', [HomeShipperController::class, "status'"])->name('shipper.registration.status');
         Route::get('/shipper/home', [HomeShipperController::class, "homeshipper"]);
 
 

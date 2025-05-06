@@ -13,6 +13,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\UserLoginRequest;
 use App\Http\Requests\ResisterUserRequest;
 use App\Models\Account;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,8 @@ class AccountController extends Controller
     }
     public function dashboard()
     {
-        return view("Client.page.Account.Dashboard");
+        $orders = Order::where('user_id', auth()->user()->id)->get();
+        return view("Client.page.Account.Dashboard", compact('orders'));
     }
     public function address()
     {

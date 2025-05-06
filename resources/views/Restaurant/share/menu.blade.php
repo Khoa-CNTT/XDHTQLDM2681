@@ -43,10 +43,10 @@
 
 
             <li class="nav-item dropdown">
-                <a href="/admin/supplier/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/restaurant/chat" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
                     </div>
-                    <div class="menu-title">Nhà Cung Cấp</div>
+                    <div class="menu-title">Nhận Thông báo Tin nhắn từ khách hàng</div>
                 </a>
             </li>
             <li class="nav-item dropdown">

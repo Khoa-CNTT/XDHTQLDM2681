@@ -10,7 +10,7 @@
 
         <!-- Bộ lọc -->
         <div class="btn-group d-flex mb-4" role="group">
-            <button class="btn btn-success" onclick="filterOrders('Đã thanh toán')">Đã giao thành công</button>
+            <button class="btn btn-success" onclick="filterOrders('Đã giao thành công')">Đã giao thành công</button>
             <button class="btn btn-warning" onclick="filterOrders('Đang đến điểm lấy, đang giao cho khách')">Đang giao</button>
             <button class="btn btn-danger" onclick="filterOrders('Đã từ chối')">Đã hủy</button>
             <button class="btn btn-secondary" onclick="filterOrders('all')">Tất cả</button>
@@ -25,7 +25,7 @@
                             <h5 class="card-title">
                                 🆔 Đơn hàng #{{ $order->id }}
                                 <span class="badge
-                                    @if($order->status == 'Đã thanh toán') bg-success
+                                    @if($order->status == 'Đã giao thành công') bg-success
                                     @elseif($order->status == 'Đã từ chối') bg-danger
                                     @elseif($order->status == 'Đã nhận') bg-info
                                     @elseif($order->status == 'Đang đến điểm lấy, đang giao cho khách') bg-warning text-dark
