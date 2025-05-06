@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="checkout__page--area">
-        <form action="{{ route('checkout') }}" method="POST">
+        <form id="checkoutForm" action="{{ route('checkout') }}" method="POST">
             @csrf
         <div class="container">
             <div class="checkout__page--inner d-flex">
@@ -341,4 +341,19 @@
         </div>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('checkoutForm').addEventListener('submit', function (e) {
+            // Hiển thị Swal khi submit
+            Swal.fire({
+                title: 'Đang xử lý đơn hàng...',
+                text: 'Vui lòng không đóng trình duyệt.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        });
+    </script>
 @endsection

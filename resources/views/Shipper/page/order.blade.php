@@ -469,25 +469,29 @@
                 }
 
                 function updatePaymentStatus(orderId) {
-                    fetch(`/shipper/order/update-payment/${orderId}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        }
-                    })
-                        .then(res => res.json())
-                        .then(data => {
-                            Swal.fire({
-                                title: 'Thông báo',
-                                text: data.message,
-                                icon: 'info',
-                                confirmButtonText: 'OK'
-                            });
-                            window.location.reload();
+                        fetch(`/shipper/order/update-payment/${orderId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
                         })
-                        .catch(err => console.error(err));
-                }
+                            .then(res => res.json())
+                            .then(data => {
+                                Swal.fire({
+                                    title: 'Thông báo',
+                                    text: data.message,
+                                    icon: 'info',
+                                    showConfirmButton: false,
+                                    timer: 5000,
+                                    timerProgressBar: true
+                                }).then(() => {
+                                    window.location.reload();
+                                });
+                            })
+                            .catch(err => console.error(err));
+                    }
+
 
 
                 document.addEventListener("DOMContentLoaded", () => {

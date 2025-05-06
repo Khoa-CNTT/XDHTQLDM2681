@@ -109,7 +109,7 @@ class AccountShipperController extends Controller
             // Xóa OTP và dữ liệu đăng ký trong session sau khi xác thực thành công
             Session::forget(['otp', 'register_data']);
 
-            return redirect()->route('login.shipper')->with('success', 'Xác thực thành công! Tài khoản của bạn đã được tạo. Mật khẩu mặc định là 123456.');
+            return redirect()->route('shipper.registration.status')->with('success', 'Xác thực thành công!Vui lòng chờ phê duyệt!');
         }
 
         return back()->with('error', 'Mã OTP không đúng, vui lòng thử lại.');

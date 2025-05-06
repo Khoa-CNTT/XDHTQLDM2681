@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 class HomeShipperController extends Controller
 {
+    public function status(){
+        return view('Shipper.page.Notice.status');
+    }
     public function homeshipper(Request $request)
     {
         $shipper = Auth::guard('driver_auth')->user();

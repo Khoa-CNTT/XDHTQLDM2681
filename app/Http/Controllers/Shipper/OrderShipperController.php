@@ -23,7 +23,7 @@ class OrderShipperController extends Controller
     {
         $shipper = auth('driver_auth')->user();
         $orders = Order::where('driver_id', $shipper->id)
-            ->whereIn('status', ['Đã thanh toán', 'Đã từ chối', 'Đã nhận', 'Đã đến điểm lấy, đang giao cho khách'])  // Lọc trạng thái
+            ->whereIn('status', ['Đã giao thành công', 'Đã từ chối', 'Đã nhận', 'Đã đến điểm lấy, đang giao cho khách'])  // Lọc trạng thái
             ->get();
 
         return view('Shipper.page.orderhistory', compact('orders'));

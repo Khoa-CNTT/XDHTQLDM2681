@@ -1,80 +1,74 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Giao diện nhà hàng</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 20px;
-        }
+    @extends('Restaurant.Share.master')
+    @section('noi_dung')
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f8f9fa;
+                padding: 20px;
+            }
 
-        #chat-box {
-            border: 1px solid #ccc;
-            height: 400px;
-            overflow-y: scroll;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-        }
+            #chat-box {
+                border: 1px solid #ccc;
+                height: 400px;
+                overflow-y: scroll;
+                padding: 10px;
+                margin-bottom: 10px;
+                background-color: #fff;
+                border-radius: 10px;
+            }
 
-        .message {
-            max-width: 60%;
-            padding: 10px 15px;
-            border-radius: 15px;
-            margin: 8px 0;
-            clear: both;
-            word-wrap: break-word;
-        }
+            .message {
+                max-width: 60%;
+                padding: 10px 15px;
+                border-radius: 15px;
+                margin: 8px 0;
+                clear: both;
+                word-wrap: break-word;
+            }
 
-        .customer {
-            background-color: #dcf8c6;
-            float: right;
-            text-align: right;
-            border-bottom-right-radius: 0;
-        }
+            .customer {
+                background-color: #dcf8c6;
+                float: right;
+                text-align: right;
+                border-bottom-right-radius: 0;
+            }
 
-        .restaurant {
-            background-color: #e2e2e2;
-            float: left;
-            text-align: left;
-            border-bottom-left-radius: 0;
-        }
+            .restaurant {
+                background-color: #e2e2e2;
+                float: left;
+                text-align: left;
+                border-bottom-left-radius: 0;
+            }
 
-        #chat-form {
-            display: flex;
-            gap: 10px;
-        }
+            #chat-form {
+                display: flex;
+                gap: 10px;
+            }
 
-        #message {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-        }
+            #message {
+                flex: 1;
+                padding: 10px;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 8px;
+            }
 
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+            button {
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+            }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
+            button:hover {
+                background-color: #45a049;
+            }
+        </style>
 
-<body>
     <h2>Giao diện nhà hàng</h2>
 
 <div id="chat-box">
@@ -164,6 +158,4 @@
     });
 </script>
 
-</body>
-
-</html>
+@endsection

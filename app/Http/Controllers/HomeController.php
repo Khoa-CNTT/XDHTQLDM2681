@@ -17,31 +17,23 @@ class HomeController extends Controller
 {
 
     $restaurants_item = Restaurant::get();
-     $results = MenuItem::where('approved', true)->get();
-    // $products = MenuItem::where('approved', true)->take(3)->get();
-    // $food_like = MenuItem::where('approved', true)->skip(4)->take(4)->get();
-    // $decilious_foods = MenuItem::with('restaurant.locations')->where('approved', true)->skip(1)->take(12)->get();
-    $categories = Category::all();
-        // $results = MenuItem::select('menu_items.*')
-        //     ->join('order_details', 'menu_items.id', '=', 'order_details.menu_item_id')
-        //     ->where('menu_items.approved', true)
-        //     ->selectRaw('SUM(order_details.quantity_ordered) as total_ordered')
-        //     ->groupBy('menu_items.id')
-        //     ->orderByDesc('total_ordered')
-        //     ->take(5)
-        //     ->get();
+        $results = MenuItem::where('approved', true)->take(12)->get(); // Hoặc lấy toàn bộ nếu muốn
+        $categories = Category::with(['menuItems' => function ($query) {
+            $query->where('approved', true);
+        }])->get();
+
 
         // Món ăn được đánh giá cao nhất
         $products = MenuItem::where('approved', true)
             ->withAvg('ratings', 'rating')
             ->orderByDesc('ratings_avg_rating')
-            ->take(5)
+            ->take(7)
             ->get();
 
         // Món đang giảm giá
         $food_like = MenuItem::where('approved', true)
             ->whereColumn('OldPrice', '>', 'Price')
-            ->take(5)
+            ->take(7)
             ->get();
 
         // Món ăn đặc sắc ngẫu nhiên (hoặc bạn muốn lấy theo vị trí địa lý,…)

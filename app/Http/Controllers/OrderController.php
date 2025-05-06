@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OrderCanceledByCustomer;
 use App\Events\OrderCreated;
 use App\Http\Requests\CheckoutRequest;
 use App\Models\Cart;
@@ -267,6 +268,7 @@ class OrderController extends Controller
             ->where('user_id', $user->id)
             ->whereIn('status', [
                 'xác nhận món',
+            'đang chuẩn bị',
             'Chế biến xong ,chờ shipper đến nhận ',
             'Đã nhận',
             'Đã đến điểm lấy, đang giao cho khách',
@@ -295,14 +297,27 @@ class OrderController extends Controller
     }
     public function cancel(Order $order)
     {
-        if ($order->status === 'xác nhận món') {
-            $order->update(['status' => 'Đã từ chối', 'is_cancel' => true]);
+        $notCancellableStatuses = [
+            'xác nhận món',
+            'Chế biến xong ,chờ shipper đến nhận',
+            'Đã nhận',
+            'Đã đến điểm lấy, đang giao cho khách',
+        ];
 
-            return back()->with('success', 'Đơn hàng đã được hủy.');
+        if (in_array($order->status, $notCancellableStatuses)) {
+            return back()->with('error', 'Không thể hủy đơn ở trạng thái hiện tại.');
         }
 
-        return back()->with('error', 'Không thể hủy đơn ở trạng thái này.');
+        $order->update([
+            'status' => 'Đã từ chối',
+            'is_cancel' => true,
+        ]);
+
+        event(new OrderCanceledByCustomer($order->restaurant_id, $order->id));
+
+        return back()->with('success', 'Đơn hàng đã được hủy.');
     }
+
 
 
 

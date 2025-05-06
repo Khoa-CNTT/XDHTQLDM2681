@@ -56,7 +56,7 @@ class RestaurantController extends Controller
 
         // Lưu chi nhánh duy nhất của nhà hàng
         $fullAddress = $request->detailedAddress . ', ' . $request->phuong . ', ' . $request->quan . ', ' . $request->tinh;
-
+         //dd($fullAddress);
         $lat = null;
         $lon = null;
 
@@ -70,6 +70,7 @@ class RestaurantController extends Controller
             ]);
 
             $data = $response->json();
+            //dd($data);
 
             if ($response->successful() && !empty($data)) {
                 $lat = $data[0]['lat'] ?? null;

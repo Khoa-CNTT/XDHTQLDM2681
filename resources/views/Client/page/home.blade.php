@@ -63,102 +63,38 @@
                     <span class="section__heading--subtitle">Thực Đơn Gần Đây</span>
                     <h2 class="section__heading--maintitle">THỰC ĐƠN MỚI NHẤT</h2>
                 </div>
-                <ul class="product__tab--one product__tab--btn d-flex justify-content-center mb-35">
-                    <li class="product__tab--btn__list active" data-toggle="tab" data-target="#product_all">All</li>
-                    @foreach ($categories as $category) <!-- Lặp qua biến $categories -->
-                        <li class="product__tab--btn__list" data-toggle="tab" data-target="#product_{{$category->id}}">
-                            {{$category->title}} <!-- Đảm bảo rằng bạn đang truy cập đúng thuộc tính của $category -->
-                        </li>
-                    @endforeach
-
-
-                </ul>
+            <ul class="product__tab--one product__tab--btn d-flex justify-content-center mb-35">
+                <li class="product__tab--btn__list active" data-toggle="tab" data-target="#product_all">All</li>
+                @foreach ($categories as $category)
+                    <li class="product__tab--btn__list" data-toggle="tab" data-target="#product_{{$category->id}}">
+                        {{ $category->title }}
+                    </li>
+                @endforeach
+            </ul>
                 <div class="tab_content">
-                    <div id="product_all" class="tab_pane active show">
+                <div id="product_all" class="tab_pane active show">
+                    <div class="product__section--inner">
+                        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n28">
+                            @foreach($results as $result)
+                                @include('components.menu-item', ['item' => $result])
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Món ăn theo từng danh mục -->
+                @foreach ($categories as $category)
+                    <div id="product_{{$category->id}}" class="tab_pane">
                         <div class="product__section--inner">
                             <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n28">
-                                @foreach($results as $result)
-                                                                        <div class="col md-28">
-                                                                            <div class="product__items ">
-                                                                                <div class="product__items--thumbnail">
-                                                                                    <a class="product__items--link"
-                                       href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
-                                        <img class="product__items--img product__primary--img"
-                                             src="{{ asset('public/image/foods/' . $result->Image) }}"
-                                             alt="product-img"
-                                             style="width: 250px; height: 170px; object-fit: cover;">
-                                        <img class="product__items--img product__secondary--img"
-                                             src="{{ asset('public/image/foods/' . $result->Image) }}"
-                                             alt="product-img"
-                                             style="width: 200px; height: 200px; object-fit: cover;">
-                                    </a>
-
-                                                                                    <div class="product__badge">
-                                                                                        <span class="product__badge--items sale">Đang bán</span>
-                                                                                    </div>
-                                                                                    <ul class="product__items--action">
-                                                                                        <li class="product__items--action__list">
-                                                                                            <a class="product__items--action__btn" href="wishlist.html">
-                                                                                                <svg class="product__items--action__btn--svg"
-                                                                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                                                                    <path
-                                                                                                        d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
-                                                                                                        fill="none" stroke="currentColor" stroke-linecap="round"
-                                                                                                        stroke-linejoin="round" stroke-width="32" />
-                                                                                                </svg>
-                                                                                                <span class="visually-hidden">Wishlist</span>
-                                                                                            </a>
-                                                                                        </li>
-                                                                                        <li class="product__items--action__list">
-                                                                                            <a class="product__items--action__btn" data-open="modal1"
-                                                                                                href="javascript:void(0)">
-                                                                                                <svg class="product__items--action__btn--svg"
-                                                                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                                                                    <path
-                                                                                                        d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                                                                                        fill="none" stroke="currentColor" stroke-miterlimit="10"
-                                                                                                        stroke-width="32" />
-                                                                                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                                                                        stroke-miterlimit="10" stroke-width="32"
-                                                                                                        d="M338.29 338.29L448 448" />
-                                                                                                </svg>
-                                                                                                <span class="visually-hidden">Quick View</span>
-                                                                                            </a>
-                                                                                        </li>
-                                                                                        <li class="product__items--action__list">
-                                                                                            <a class="product__items--action__btn" href="compare.html">
-                                                                                                <svg class="product__items--action__btn--svg"
-                                                                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                                                                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                                                                        stroke-linejoin="round" stroke-width="32"
-                                                                                                        d="M400 304l48 48-48 48M400 112l48 48-48 48M64 352h85.19a80 80 0 0066.56-35.62L256 256" />
-                                                                                                    <path
-                                                                                                        d="M64 160h85.19a80 80 0 0166.56 35.62l80.5 120.76A80 80 0 00362.81 352H416M416 160h-53.19a80 80 0 00-66.56 35.62L288 208"
-                                                                                                        fill="none" stroke="currentColor" stroke-linecap="round"
-                                                                                                        stroke-linejoin="round" stroke-width="32" />
-                                                                                                </svg>
-                                                                                                <span class="visually-hidden">Compare</span>
-                                                                                            </a>
-                                                                                        </li>
-                                                                                    </ul>
-                                                                                </div>
-                                                                                <div class="product__items--content text-center">
-                                                                                    <a href="{{ route('cart.add', $result->id) }}" class="add__to--cart__btn">+ Thêm vào
-                                                                                        giỏ</a>
-                                                                                    <h3 class="product__items--content__title h4"><a
-                                                                                            href="product-details.html">{{$result->Title_items}}</a></h3>
-                                                                                    <div class="product__items--price">
-                                                                                    {{ number_format($result->Price, 0, ',', '.') }} đ
-                                                                                        <span class="old__price">{{ number_format($result->OldPrice, 0, ',', '.') }} đ</span>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                @foreach ($category->menuItems as $item)
+                                    @include('components.menu-item', ['item' => $item])
                                 @endforeach
-
                             </div>
                         </div>
                     </div>
+                @endforeach
+
                     <div id="product_fresh" class="tab_pane">
                         <div class="product__section--inner">
                             <div class="row row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n28">
@@ -3002,7 +2938,7 @@
                                         </h3>
                                         <div class="product__items--price">
                                         <span class="current__price">{{ number_format($food->Price, 0, ',', '.') }}₫</span>
-                                            <span class="old__price">$68.00</span>
+                                            <span class="old__price">{{ number_format($food->OldPrice, 0, ',', '.') }} đ</span>
                                         </div>
                                         <div class="product__items--sold__stocks d-flex justify-content-between">
                                             <span class="product__items--sold__stocks--text">

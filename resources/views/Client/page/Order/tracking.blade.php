@@ -13,10 +13,10 @@
                             <strong>Đơn hàng #{{ $order->id }}</strong>
                             {{-- Hiển thị nút Hủy khi status cho phép --}}
                             @if(
-                                    in_array($order->status, [
-                                        'xác nhận món',
-                                    ])
-                                )
+            in_array($order->status, [
+                'xác nhận món',
+            ])
+        )
                                 <form action="{{ route('order.cancel', $order) }}" method="POST"
                                     onsubmit="return confirm('Bạn có chắc muốn hủy đơn?');">
                                     @csrf
@@ -30,7 +30,7 @@
                                 <strong>Trạng thái:</strong>
                                 <span class="order-status
                                             {{ $order->status == 'Đã nhận' || $order->status == 'Đã đến điểm lấy, đang giao cho khách'
-                    ? 'text-primary' : 'text-success' }}">
+            ? 'text-primary' : 'text-success' }}">
                                     {{ $order->status }}
                                 </span>
                             </p>
@@ -54,6 +54,33 @@
 
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
             <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+
+            @if (session('success'))
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Thành công!',
+                        text: '{{ session('success') }}',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                    });
+                </script>
+            @endif
+
+            @if (session('error'))
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Lỗi!',
+                        text: '{{ session('error') }}',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                    });
+                </script>
+            @endif
+
        <script>
         //console.log("Pusher script loaded ✅");
 
@@ -120,7 +147,7 @@
                         title: 'Cảm ơn bạn!',
                         text: 'Đơn hàng đã được thanh toán thành công.',
                         showConfirmButton: false,
-                        timer: 3000,
+                        timer: 5000,
                         timerProgressBar: true,
                         willClose: () => {
                             window.location.reload();  // Reload trang sau khi thông báo ẩn đi
