@@ -276,7 +276,7 @@ class OrderController extends Controller
             ->orderBy('order_date', 'desc')
             ->get();
 
-        return view('client.page.order.tracking', compact('orders'));
+        return view('Client.page.Order.tracking', compact('orders'));
     }
 
 

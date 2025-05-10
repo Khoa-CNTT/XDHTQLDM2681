@@ -3,43 +3,44 @@
         <div class="shipping__section2--inner shipping__style3--inner d-flex justify-content-between">
             <div class="shipping__items2 d-flex align-items-center">
                 <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping1.png" alt="shipping img">
+                    <img class="display-block" src="/image/other/shipping1.png" alt="Hình ảnh giao hàng">
                 </div>
                 <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Shipping</h2>
-                    <p class="shipping__items2--content__desc">From handpicked sellers</p>
+                    <h2 class="shipping__items2--content__title h3">Giao hàng</h2>
+                    <p class="shipping__items2--content__desc">Từ những người bán được chọn lọc</p>
                 </div>
             </div>
             <div class="shipping__items2 d-flex align-items-center">
                 <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping2.png" alt="shipping img">
+                    <img class="display-block" src="/image/other/shipping2.png" alt="Hình ảnh thanh toán">
                 </div>
                 <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Payment</h2>
+                    <h2 class="shipping__items2--content__title h3">Thanh toán</h2>
                     <p class="shipping__items2--content__desc">Visa, Paypal, Master</p>
                 </div>
             </div>
             <div class="shipping__items2 d-flex align-items-center">
                 <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping3.png" alt="shipping img">
+                    <img class="display-block" src="/image/other/shipping3.png" alt="Hình ảnh đổi trả">
                 </div>
                 <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Return</h2>
-                    <p class="shipping__items2--content__desc">30 day guarantee</p>
+                    <h2 class="shipping__items2--content__title h3">Đổi trả</h2>
+                    <p class="shipping__items2--content__desc">Đảm bảo hoàn tiền trong 30 ngày</p>
                 </div>
             </div>
             <div class="shipping__items2 d-flex align-items-center">
                 <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping4.png" alt="shipping img">
+                    <img class="display-block" src="/image/other/shipping4.png" alt="Hình ảnh hỗ trợ">
                 </div>
                 <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Support</h2>
-                    <p class="shipping__items2--content__desc">Support every time</p>
+                    <h2 class="shipping__items2--content__title h3">Hỗ trợ</h2>
+                    <p class="shipping__items2--content__desc">Hỗ trợ mọi lúc</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 <footer class="footer__section footer__bg">
     <div class="container">
         <div class="footer__top">
@@ -56,7 +57,7 @@
                             </button>
                         </h3>
                         <div class="footer__widget--inner">
-                            <a class="footer__widget--logo" href="index.html"><img src="/assets/img/logo/nav-log.png"
+                            <a class="footer__widget--logo"  href="/"><img  style="height:80px;" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg"
                                     alt="footer-logo"></a>
                             <p class="footer__widget--desc m-0">Sự đa dạng của các thực đơn có sẵn tại hệ thống của chúng tôi tại thời điểm này là rất lớn, nhưng chúng tôi vẫn tiếp tục mở rộng các loại của chúng tôi.</p>
                             <ul class="footer__widget--social d-flex">

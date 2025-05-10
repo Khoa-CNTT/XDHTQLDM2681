@@ -12,7 +12,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-3 col-form-label">Tìm đường đến nhà hàng:</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="to" placeholder="Nhập tên nhà hàng hoặc địa chỉ">
+                    <input type="text" class="form-control" style="height:40px;" id="to" placeholder="Nhập tên nhà hàng hoặc địa chỉ">
                 </div>
                 <div class="col-sm-3">
                     <button class="btn btn-primary w-100" onclick="findRoute()">Chỉ đường</button>
@@ -167,7 +167,7 @@
                                                     <div class="product__grid--items--thumbnail">
                                                         <a class="product__items--link" href="{{ route('menu.item.detail', $item->id) }}">
                                                             <img class="product__grid--items__img product__primary--img"
-                                                                 src="{{ asset('public/image/foods/' . $item->Image) }}" alt="categories-img"> {{ $item->Title_items }}>
+                                                                 src="{{ asset('public/public/image/foods/' . $item->Image) }}" alt="categories-img"> {{ $item->Title_items }}>
                                                         </a>
                                                     </div>
                                                     <div class="product__grid--items--content">
@@ -222,10 +222,10 @@
                                                                     <div class="product__items--thumbnail">
                                                                         <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $result->id])}}">
                                                                             <img class="product__items--img product__primary--img"
-                                                                                src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img"
+                                                                                src="{{asset('public/public/image/foods/' . $result->Image) }}" alt="product-img"
                                                                                 style="width: 250px; height: 170px; object-fit: cover;">
                                                                             <img class="product__items--img product__secondary--img"
-                                                                                src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img"
+                                                                                src="{{asset('public/public/image/foods/' . $result->Image) }}" alt="product-img"
                                                                                 style="width: 250px; height: 170px; object-fit: cover;">
                                                                         </a>
                                                                         <div class="product__badge">

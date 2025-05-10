@@ -1,155 +1,80 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nhà hàng gần bạn</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Gộp đơn hàng theo tuyến đường thực tế</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
-            height: 500px;
+            height: 600px;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="container my-4">
-        <h2 class="mb-4">🏠 Nhà hàng gần bạn</h2>
+    <h2>Gộp đơn hàng theo tuyến đường thực tế</h2>
+    <div id="map"></div>
 
-        <div class="mb-3 row">
-            <label class="col-sm-3 col-form-label">Tìm đường đến nhà hàng:</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" id="to" placeholder="Nhập tên nhà hàng hoặc địa chỉ">
-            </div>
-            <div class="col-sm-3">
-                <button class="btn btn-primary w-100" onclick="findRoute()">Chỉ đường</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="map" class="mb-4"></div>
-
-    <div class="container">
-        <ul id="restaurant-list" class="list-group mb-3"></ul>
-        <div id="info" class="alert alert-info" role="alert" style="display: none;"></div>
-    </div>
-
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        let userLat, userLon;
-        let map;
-        let routeLine;
+        const map = L.map('map').setView([10.762622, 106.660172], 13);
 
-        const apiKey = "5b3ce3597851110001cf624837f237df11b94468a2914dfa163ddf4f";
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-        function initMap(lat, lon) {
-            map = L.map('map').setView([lat, lon], 14);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-            L.marker([lat, lon]).addTo(map).bindPopup("📍 Vị trí của bạn").openPopup();
-        }
+        const nhaHangs = [
+            { name: "Nhà hàng A", lat: 10.762622, lng: 106.660172 },
+            { name: "Nhà hàng B", lat: 10.7635, lng: 106.6615 },
+            { name: "Nhà hàng C", lat: 10.758, lng: 106.656 },
+            { name: "Nhà hàng D", lat: 10.770, lng: 106.670 } // xa hơn
+        ];
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                userLat = position.coords.latitude;
-                userLon = position.coords.longitude;
+        const khachHang = { lat: 10.775, lng: 106.68 };
 
-                initMap(userLat, userLon);
+        nhaHangs.forEach(nh => {
+            L.marker([nh.lat, nh.lng]).addTo(map).bindPopup(nh.name);
+        });
 
-                // Gọi API từ server để lấy danh sách nhà hàng gần đó
-                fetch(`/restaurants/nearby?lat=${userLat}&lon=${userLon}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        const list = document.getElementById("restaurant-list");
-                        const info = document.getElementById("info");
-                        list.innerHTML = "";
-                        info.innerHTML = "";
-                        info.style.display = "block";
+        L.marker([khachHang.lat, khachHang.lng]).addTo(map).bindPopup("Khách hàng");
 
-                        if (data.length === 0) {
-                            info.className = "alert alert-warning";
-                            info.innerText = "⚠️ Không tìm thấy nhà hàng nào gần bạn.";
-                            return;
-                        }
+        // Gọi OpenRouteService API để lấy tuyến đường thực tế
+        const orsApiKey = "5b3ce3597851110001cf624837f237df11b94468a2914dfa163ddf4f"; // 🔑 Bạn cần đăng ký ở: https://openrouteservice.org/dev/#/signup
+        const from = nhaHangs[0];
+        const to = khachHang;
 
-                        info.className = "alert alert-info";
-                        info.innerText = `🔍 Tìm thấy ${data.length} nhà hàng gần bạn.`;
-
-                        data.forEach(r => {
-                            L.marker([r.Latitude, r.Longitude])
-                                .addTo(map)
-                                .bindPopup(`<b>${r.name}</b><br>${r.Address} - ${r.Ward} - ${r.District} - ${r.City}`);
-
-                            const item = document.createElement("li");
-                            item.className = "list-group-item";
-                            item.innerText = `${r.name} - ${r.distance.toFixed(2)} km`;
-                            list.appendChild(item);
-                        });
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        alert("Lỗi khi tải danh sách nhà hàng.");
-                    });
-            });
-        } else {
-            alert("Trình duyệt không hỗ trợ định vị.");
-        }
-
-        async function geocode(address) {
-            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`;
-            const res = await fetch(url);
-            const data = await res.json();
-            if (data && data.length > 0) {
-                return [parseFloat(data[0].lon), parseFloat(data[0].lat)];
-            }
-            throw new Error("Không tìm thấy tọa độ cho địa chỉ: " + address);
-        }
-
-        async function findRoute() {
-            const toAddress = document.getElementById("to").value;
-            if (!toAddress) {
-                alert("❌ Vui lòng nhập tên nhà hàng hoặc địa chỉ.");
-                return;
-            }
-
-            try {
-                const fromCoord = [userLon, userLat];
-                const toCoord = await geocode(toAddress);
-
-                const url = `https://api.openrouteservice.org/v2/directions/driving-car/geojson`;
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Authorization": apiKey,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ coordinates: [fromCoord, toCoord] })
-                });
-
-                const result = await res.json();
-                const route = result.features?.[0];
-                if (!route) throw new Error("Không tìm thấy tuyến đường.");
-
-                const coords = route.geometry.coordinates.map(c => [c[1], c[0]]);
-                if (routeLine) map.removeLayer(routeLine);
-                routeLine = L.polyline(coords, { color: 'blue' }).addTo(map);
+        fetch(`https://api.openrouteservice.org/v2/directions/driving-car?api_key=${orsApiKey}&start=${from.lng},${from.lat}&end=${to.lng},${to.lat}`)
+            .then(response => response.json())
+            .then(data => {
+                const coords = data.features[0].geometry.coordinates.map(c => [c[1], c[0]]);
+                const routeLine = L.polyline(coords, { color: 'blue' }).addTo(map);
                 map.fitBounds(routeLine.getBounds());
 
-                const distanceKm = route.properties.summary.distance / 1000;
-                const durationMin = route.properties.summary.duration / 60;
-                const info = document.getElementById("info");
-                info.style.display = "block";
-                info.className = "alert alert-success";
-                info.innerText = `📏 Khoảng cách: ${distanceKm.toFixed(2)} km – ⏱️ Thời gian: ${durationMin.toFixed(1)} phút`;
+                // Highlight các nhà hàng gần tuyến đường
+                nhaHangs.forEach(nh => {
+                    const isNear = coords.some(p => getDistance(nh.lat, nh.lng, p[0], p[1]) < 300);
+                    if (isNear) {
+                        L.circle([nh.lat, nh.lng], { radius: 100, color: 'green' }).addTo(map);
+                    }
+                });
+            });
 
-            } catch (err) {
-                console.error(err);
-                alert("❌ " + err.message);
-            }
+        // Hàm tính khoảng cách giữa 2 tọa độ
+        function getDistance(lat1, lon1, lat2, lon2) {
+            var R = 6371000;
+            var dLat = (lat2 - lat1) * Math.PI / 180;
+            var dLon = (lon2 - lon1) * Math.PI / 180;
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
         }
     </script>
+
 </body>
 
 </html>

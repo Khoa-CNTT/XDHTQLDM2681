@@ -1,15 +1,4 @@
-<!-- Hộp thoại chat -->
-<div class="chat-box" id="chatbot-box">
-    <div class="chat-header">
-        <span>💬 Chat với Nhân viên</span>
-        <button id="chat-close-btn" style="border: none; background: none; font-size: 18px;">✖</button>
-    </div>
-    <div class="chat-content" id="chat-messages"></div>
-    <div style="display: flex; padding: 10px;">
-        <input type="text" id="chat-input" placeholder="Nhập câu hỏi..." />
-        <button id="chat-send-btn">Gửi</button>
-    </div>
-</div>
+
 
 <!-- CSS -->
 <style>
@@ -89,7 +78,18 @@
     }
 </style>
 
-<!-- jQuery + JS -->
+<div class="chat-box" id="chatbot-box">
+    <div class="chat-header">
+        <span>💬 Chat với Nhân viên</span>
+        <button id="chat-close-btn" style="border: none; background: none; font-size: 18px;">✖</button>
+    </div>
+    <div class="chat-content" id="chat-messages"></div>
+    <div style="display: flex; padding: 10px;">
+        <input type="text" id="chat-input" placeholder="Nhập câu hỏi..." />
+        <button id="chat-send-btn">Gửi</button>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function toggleChat() {
@@ -121,7 +121,7 @@
         // Gửi tin nhắn
         $("#chat-send-btn").click(function () {
             let msg = $("#chat-input").val().trim();
-            if (!msg) return;
+            if (!msg) return;  // Kiểm tra tin nhắn trống
 
             $("#chat-input").val("");
             $("#chat-messages").append(`<div class="chat-message"><b>Bạn:</b> ${msg}</div>`);
@@ -142,14 +142,16 @@
                     $("#chat-messages").append(`<div class="chat-message"><b>Lỗi:</b> Không thể kết nối với hệ thống.</div>`);
                 }
             });
-
         });
 
         // Gửi khi nhấn Enter
         $("#chat-input").keypress(function (e) {
             if (e.which === 13) {
-                $("#chat-send-btn").click();
-                return false;
+                let msg = $(this).val().trim();
+                if (msg) {
+                    $("#chat-send-btn").click();
+                }
+                return false;  // Ngừng hành động mặc định của Enter
             }
         });
     });

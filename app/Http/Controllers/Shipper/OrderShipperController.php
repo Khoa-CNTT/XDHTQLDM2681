@@ -186,7 +186,7 @@ class OrderShipperController extends Controller
     public function profile()
     {
         $shipper = Auth::guard('driver_auth')->user();
-        return view('Shipper.page.profile.index', compact('shipper'));
+        return view('Shipper.page.Profile.index', compact('shipper'));
     }
 
     public function updateProfile(Request $request)

@@ -2,11 +2,29 @@
     <div class="header__topbar bg__primary">
         <div class="container">
             <div class="header__topbar--inner d-flex align-items-center justify-content-center">
-                <div class="header__shipping">
-                    <p class="header__shipping--text text-white"><img class="header__shipping--icon"
-                            src="/assets/img/icon/car.png" alt="header-shipping-img"> <a href="/restaurant/login">Nhà hàng</a> <a href="/shipper/login" class="m-1"><img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">Người giao hàng</a></p>
+            <div class="header__shipping">
+                <p class="header__shipping--text text-white">
+                    <img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">
 
-                </div>
+                    {{-- Nhà hàng --}}
+                    @if (auth()->guard('web')->check())
+                        <a href="/restaurant/menu_items">Nhà hàng</a>
+                    @else
+                        <a href="/restaurant/register">Nhà hàng</a>
+                    @endif
+
+                    {{-- Người giao hàng --}}
+                    <a class="m-1">
+                        <img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">
+                        @if (auth()->guard('driver_auth')->check())
+                            <a href="/shipper/home">Người giao hàng</a>
+                        @else
+                            <a href="/shipper/register">Người giao hàng</a>
+                        @endif
+                    </a>
+                </p>
+            </div>
+
                 <div class="header__topbar--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
             </div>
         </div>
@@ -26,7 +44,7 @@
                 </div>
                 <div class="main__logo">
                     <h1 class="main__logo--title"><a class="main__logo--link" href="/"><img
-                                class="main__logo--img" src="/assets/img/logo/nav-log.png" alt="logo-img"></a></h1>
+                                class="main__logo--img" style="height:60px;" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" alt="logo-img"></a></h1>
                 </div>
                 <div class="header__search--widget d-none d-lg-block header__sticky--none">
                     <div class="d-flex header__search--form" action="#">
@@ -85,52 +103,9 @@
                                 </a>
 
                             </li>
+
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="blog.html">Blog
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="blog.html"
-                                            class="header__sub--menu__link">Blog Grid</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-details.html"
-                                            class="header__sub--menu__link">Blog Details</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-left-sidebar.html"
-                                            class="header__sub--menu__link">Blog Left Sidebar</a></li>
-                                    <li class="header__sub--menu__items"><a href="blog-right-sidebar.html"
-                                            class="header__sub--menu__link">Blog Right Sidebar</a></li>
-                                </ul>
-                            </li>
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="#">Trang
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                    </svg>
-                                </a>
-                                <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="about.html"
-                                            class="header__sub--menu__link">About Us</a></li>
-                                    <li class="header__sub--menu__items"><a href="contact.html"
-                                            class="header__sub--menu__link">Contact Us</a></li>
-                                    <li class="header__sub--menu__items"><a href="cart.html"
-                                            class="header__sub--menu__link">Cart Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="portfolio.html"
-                                            class="header__sub--menu__link">Portfolio Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="wishlist.html"
-                                            class="header__sub--menu__link">Wishlist Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="login.html"
-                                            class="header__sub--menu__link">Login Page</a></li>
-                                    <li class="header__sub--menu__items"><a href="404.html"
-                                            class="header__sub--menu__link">Error Page</a></li>
-                                </ul>
-                            </li>
-                            <li class="header__menu--items">
-                                <a class="header__menu--link" href="contact.html">Liên hệ </a>
+                                <a class="header__menu--link" href="#">Liên hệ </a>
                             </li>
                         </ul>
                     </nav>
@@ -344,76 +319,15 @@
 
                                     </ul>
                                 </li>
+
                                 <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="blog.html">Blog
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                            width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </a>
-                                    <ul class="header__sub--menu">
-                                        <li class="header__sub--menu__items"><a href="blog.html"
-                                                class="header__sub--menu__link">Blog Grid</a></li>
-                                        <li class="header__sub--menu__items"><a href="blog-details.html"
-                                                class="header__sub--menu__link">Blog Details</a></li>
-                                        <li class="header__sub--menu__items"><a href="blog-left-sidebar.html"
-                                                class="header__sub--menu__link">Blog Left Sidebar</a></li>
-                                        <li class="header__sub--menu__items"><a href="blog-right-sidebar.html"
-                                                class="header__sub--menu__link">Blog Right Sidebar</a></li>
-                                    </ul>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="#">Trang
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                            width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
-                                    </a>
-                                    <ul class="header__sub--menu">
-                                        <li class="header__sub--menu__items"><a href="about.html"
-                                                class="header__sub--menu__link">About Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="contact.html"
-                                                class="header__sub--menu__link">Contact Us</a></li>
-                                        <li class="header__sub--menu__items"><a href="cart.html"
-                                                class="header__sub--menu__link">Cart Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="portfolio.html"
-                                                class="header__sub--menu__link">Portfolio Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="wishlist.html"
-                                                class="header__sub--menu__link">Wishlist Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="login.html"
-                                                class="header__sub--menu__link">Login Page</a></li>
-                                        <li class="header__sub--menu__items"><a href="404.html"
-                                                class="header__sub--menu__link">Error Page</a></li>
-                                    </ul>
-                                </li>
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="contact.html">Liên hệ </a>
+                                    <a class="header__menu--link text-white" href="#">Liên hệ </a>
                                 </li>
                             </ul>
                         </nav>
                     </div>
                     <div class="header__right--info d-flex align-items-center">
-                        <div class="account__currency">
-                            <a class="account__currency--link text-white" href="javascript:void(0)">
-                                <img src="/assets/img/icon/usd-icon.png" alt="currency">
-                                <span>USD</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9.797" height="6.05"
-                                    viewBox="0 0 9.797 6.05">
-                                    <path d="M14.646,8.59,10.9,12.329,7.151,8.59,6,9.741l4.9,4.9,4.9-4.9Z"
-                                        transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                </svg>
-                            </a>
-                            <div class="dropdown__currency">
-                                <ul>
-                                    <li class="currency__items"><a class="currency__text" href="#">CAD</a></li>
-                                    <li class="currency__items"><a class="currency__text" href="#">CNY</a></li>
-                                    <li class="currency__items"><a class="currency__text" href="#">EUR</a></li>
-                                    <li class="currency__items"><a class="currency__text" href="#">GBP</a></li>
-                                </ul>
-                            </div>
-                        </div>
+
                         <div class="suport__contact d-flex align-items-center">
                             <svg class="suport__contact--icon text-white" xmlns="http://www.w3.org/2000/svg"
                                 width="36.725" height="36.743" viewBox="0 0 36.725 36.743">
@@ -423,7 +337,7 @@
                             </svg>
                             <p class="suport__contact--text text-white">
                                 <span class="suport__text--24">Hổ trợ 24/7</span>
-                                <a class="suport__contact--number" href="tel:09786542214">076 305 8366</a>
+                                <a class="suport__contact--number" href="tel:09786542214">0905 807 623</a>
                             </p>
                         </div>
                     </div>
@@ -456,7 +370,7 @@
             @foreach ($cartItems as $item)
                 <div class="minicart__product--items d-flex">
                     <div class="minicart__thumb">
-                        <a href="#"><img src="{{ asset('public/image/foods/' . $item->menuItem->Image) }}" alt="{{$item->menuItem->Title_items}}"></a>
+                        <a href="#"><img src="{{ asset('public/public/image/foods/' . $item->menuItem->Image) }}" alt="{{$item->menuItem->Title_items}}"></a>
                     </div>
                     <div class="minicart__text">
                         <h4 class="minicart__subtitle"><a href="#">{{ $item->menuItem->Title_items }}</a></h4>
@@ -494,7 +408,7 @@
         </div>
         <div class="minicart__button d-flex justify-content-center">
             <a class="btn minicart__button--link" href="{{ route('cart.index') }}">Xem giỏ hàng</a>
-            <a class="btn minicart__button--link" href="{{ route('checkout') }}">Đặt đơn</a>
+            <a class="btn minicart__button--link" href="{{ route('checkout.index') }}">Đặt đơn</a>
         </div>
     @endif
 </div>

@@ -51,6 +51,9 @@ class MenuItemController extends Controller
         }
 
         $results = $resultsQuery->paginate(13);
+        foreach ($results as $item) {
+            $item->most_common_rating = $item->mostCommonRating();
+        }
         $restaurants_item = Restaurant::get();
         $products = MenuItem::where('approved', true)->take(4)->get();
         $categories = Category::all();
@@ -65,7 +68,7 @@ class MenuItemController extends Controller
                 ->get();
         }
 
-        // Trả về view với các dữ liệu cần thiết
+
         return view('Client.page.Menu.index', compact('restaurants_item', 'results', 'categories', 'products', 'relatedItems'));
     }
 
@@ -104,7 +107,7 @@ class MenuItemController extends Controller
                 ->get();
         }
 
-        return view('Client.page.Menu.detail', compact('menuItem', 'sameCategoryItems', 'sideDishes', 'mostCommonRating'));
+        return view('Client.page.Menu.Detail', compact('menuItem', 'sameCategoryItems', 'sideDishes', 'mostCommonRating'));
     }
 
 
@@ -137,16 +140,22 @@ class MenuItemController extends Controller
             break;
     }
 
-    $results = $resultsQuery->get();
+        $totalItems = $resultsQuery->count();
 
-    $categories = Category::whereIn('id', function ($query) use ($id) {
+    $results = $resultsQuery->paginate(12);
+        foreach ($results as $item) {
+            $item->most_common_rating = $item->mostCommonRating();
+        }
+
+
+        $categories = Category::whereIn('id', function ($query) use ($id) {
         $query->select('category_id')
               ->from('menu_items')
               ->where('restaurant_id', $id)
               ->groupBy('category_id');
     })->get();
 
-    return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'categories', 'category_id'));
+    return view('Client.page.Menu.homeres', compact('restaurant', 'results', 'categories', 'category_id', 'totalItems'));
 }
 
 
@@ -236,6 +245,9 @@ class MenuItemController extends Controller
     $results = MenuItem::where('category_id', $id)
                    ->where('approved', true)
                    ->paginate(12);
+        foreach ($results as $item) {
+            $item->most_common_rating = $item->mostCommonRating();
+        }
 
 
     // Dữ liệu phụ (tùy bạn có dùng không)

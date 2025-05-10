@@ -11,7 +11,7 @@ class RatingController extends Controller
     public function index()
     {
         $ratings = Rating::with(['order.user', 'order.menu_items'])->paginate(20);
-        return view('Admin.page.ratings.index', compact('ratings'));
+        return view('Admin.page.Ratings.index', compact('ratings'));
     }
 
     public function approve(Rating $rating)

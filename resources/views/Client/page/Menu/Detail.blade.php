@@ -89,14 +89,14 @@
                                                                                     style="width: 100%; height: 100%; overflow: hidden; border-radius: 10px;">
                                                                                     <a class="product__media--preview__items--link glightbox"
                                                                                         data-gallery="product-media-preview"
-                                                                                        href="{{ asset('public/image/foods/' . $menuItem->Image) }}"><img
+                                                                                        href="{{ asset('public/public/image/foods/' . $menuItem->Image) }}"><img
                                                                                             class="product__media--preview__items--img"
-                                                                                            src="{{ asset('public/image/foods/' . $menuItem->Image) }}"
+                                                                                            src="{{ asset('public/public/image/foods/' . $menuItem->Image) }}"
                                                                                             alt="product-media-img"
                                                                                             style="width: 100%; height: 100%; object-fit: cover;"></a>
                                                                                     <div class="product__media--view__icon">
                                                                                         <a class="product__media--view__icon--link glightbox"
-                                                                                            href="{{ asset('public/image/foods/' . $menuItem->Image) }}"
+                                                                                            href="{{ asset('public/public/image/foods/' . $menuItem->Image) }}"
                                                                                             data-gallery="product-media-preview">
                                                                                             <svg class="product__items--action__btn--svg"
                                                                                                 xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443"
@@ -128,7 +128,7 @@
                                                                                 data-swiper-slide-index="1">
                                                                                 <div class="product__media--nav__items">
                                                                                     <img class="product__media--nav__items--img"
-                                                                                        src="{{ asset('public/image/foods/' . $menuItem->Image) }}"
+                                                                                        src="{{ asset('public/public/image/foods/' . $menuItem->Image) }}"
                                                                                         alt="product-nav-img">
                                                                                 </div>
                                                                             </div>
@@ -167,7 +167,6 @@
                                                                                 @endfor
                                                                             </ul>
 
-                                                                            <span class="product__items--rating__count--number">(24)</span>
                                                                         </div>
                                                                         <p><a href="{{ route('restaurant.menu', ['id' => $menuItem->restaurant->id]) }}">
                                                                                 <h2 class="product__tab--content__title h4 mb-0">Nhà hàng :
@@ -361,9 +360,9 @@
                                                                         <div class="product__items--thumbnail">
                                                                             <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $item->id]) }}">
                                                                                 <img class="product__items--img product__primary--img"
-                                                                                    src="{{ asset('/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
+                                                                                    src="{{ asset('/public/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
                                                                                 <img class="product__items--img product__secondary--img"
-                                                                                    src="{{ asset('/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
+                                                                                    src="{{ asset('/public/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
                                                                             </a>
                                                                         </div>
                                                                         <div class="product__items--content product__items2--content text-center">
@@ -374,9 +373,7 @@
                                                                             <div class="product__items--price">
                                                                                 <span class="current__price">{{ number_format($item->Price) }} đ</span>
                                                                             </div>
-                                                                            <div class="product__items--rating d-flex justify-content-center align-items-center">
-                                                                                <span class="product__items--rating__count--number">({{ $item->rating ?? 0 }})</span>
-                                                                            </div>
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -404,9 +401,9 @@
                                                                             <div class="product__items--thumbnail">
                                                                                 <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $item->id]) }}">
                                                                                     <img class="product__items--img product__primary--img"
-                                                                                        src="{{ asset('/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
+                                                                                        src="{{ asset('/public/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
                                                                                     <img class="product__items--img product__secondary--img"
-                                                                                        src="{{ asset('/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
+                                                                                        src="{{ asset('/public/public/image/foods/' . $item->Image) }}" alt="{{ $item->Title_items }}">
                                                                                 </a>
                                                                             </div>
                                                                             <div class="product__items--content product__items2--content text-center">

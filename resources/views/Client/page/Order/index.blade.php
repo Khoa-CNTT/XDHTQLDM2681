@@ -246,7 +246,7 @@
                                                 <div class="product__image two d-flex align-items-center">
                                                     <div class="product__thumbnail border-radius-5">
                                                         <a href="#"><img class="border-radius-5"
-                                                                src="{{ asset('public/image/foods/' . $item->menuItem->Image) }}"
+                                                                src="{{ asset('public/public/image/foods/' . $item->menuItem->Image) }}"
                                                                 alt="cart-product"></a>
                                                         <span class="product__thumbnail--quantity">{{ $item->cart_quantity }}</span>
                                                     </div>

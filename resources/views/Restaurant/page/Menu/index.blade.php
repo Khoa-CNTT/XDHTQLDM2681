@@ -26,7 +26,7 @@
                             <tr class="text-center">
                                 <td>
                                     @if($menuItem->Image)
-                                        <img src="{{ asset('public/image/foods/' . $menuItem->Image) }}" alt="Ảnh món ăn" width="60" height="60"
+                                        <img src="{{ asset('public/public/image/foods/' . $menuItem->Image) }}" alt="Ảnh món ăn" width="60" height="60"
                                             class="rounded-circle shadow-sm">
                                     @else
                                         <span class="text-muted fst-italic">Không có</span>

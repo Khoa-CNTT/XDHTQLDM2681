@@ -131,7 +131,7 @@ class CartController extends Controller
     {
         // 1. Kiểm tra đăng nhập
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
+            return redirect()->route('login.index')->with('error', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         }
 
         $menuItem = MenuItem::find($menuItemId);

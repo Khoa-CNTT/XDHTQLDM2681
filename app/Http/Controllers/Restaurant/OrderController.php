@@ -27,7 +27,7 @@ class OrderController extends Controller
 
 
 
-            return view('restaurant.page.order.order', [
+            return view('Restaurant.page.Order.order', [
                 'orders' => $orders,
                 'restaurantId' => $restaurantId
             ]);
@@ -41,7 +41,7 @@ class OrderController extends Controller
 
         $restaurantId = $order->restaurant_id;
 
-        return view('restaurant.page.order.show', compact('order', 'restaurantId'));
+        return view('Restaurant.page.Order.show', compact('order', 'restaurantId'));
     }
 
     public function accept($id)

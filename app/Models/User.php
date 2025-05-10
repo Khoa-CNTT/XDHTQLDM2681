@@ -37,6 +37,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Location::class, 'location_id');
     }
+    public function preferences()
+    {
+        return $this->hasOne(UserPrences::class);
+    }
 
 
     /**

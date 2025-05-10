@@ -3,10 +3,10 @@
         <div class="product__items--thumbnail">
             <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $item->id]) }}">
                 <img class="product__items--img product__primary--img"
-                    src="{{ asset('public/image/foods/' . $item->Image) }}" alt="product-img"
+                    src="{{ asset('public/public/image/foods/' . $item->Image) }}" alt="product-img"
                     style="width: 250px; height: 170px; object-fit: cover;">
                 <img class="product__items--img product__secondary--img"
-                    src="{{ asset('public/image/foods/' . $item->Image) }}" alt="product-img"
+                    src="{{ asset('public/public/image/foods/' . $item->Image) }}" alt="product-img"
                     style="width: 200px; height: 200px; object-fit: cover;">
             </a>
             <div class="product__badge">

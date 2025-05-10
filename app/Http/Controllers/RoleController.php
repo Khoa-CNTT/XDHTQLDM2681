@@ -10,12 +10,12 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('admin.page.role.index', compact('roles'));
+        return view('Admin.page.Role.index', compact('roles'));
     }
 
     public function create()
     {
-        return view('admin.page.role.create');
+        return view('Admin.page.Role.create');
     }
 
     public function store(Request $request)
@@ -31,7 +31,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::findOrFail($id);
-        return view('admin.page.role.edit', compact('role'));
+        return view('Admin.page.Role.edit', compact('role'));
     }
 
     public function update(Request $request, $id)

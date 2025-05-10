@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Grocee - Organic Food HTML Template</title>
+    <title>Call Food</title>
     <meta name="description" content="Morden Bootstrap HTML5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Thêm CSS cho toastr -->

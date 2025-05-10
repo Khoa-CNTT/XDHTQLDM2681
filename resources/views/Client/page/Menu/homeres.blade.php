@@ -76,7 +76,8 @@
                         <h2 class="restaurant__name text-uppercase font-weight-bold mb-1">
                             Nhà hàng : {{ $restaurant->name }}
                         </h2>
-                        <p class="status text-muted mb-2">Cửa hàng có 30 món</p>
+                    <p class="status text-muted mb-2">Cửa hàng có {{ $totalItems }} món</p>
+
                         <div class="restaurant__actions d-flex gap-2">
                             <button class="btn btn-danger px-3 py-1">Yêu Thích</button>
                             <button class="btn btn-outline-dark px-3 py-1">+ Theo Dõi</button>
@@ -265,26 +266,25 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="product__view--mode__list product__view--search d-xl-block d-none ">
-                            <form class="product__view--search__form" action="#">
+                        <div class="product__view--mode__list product__view--search d-xl-block d-none">
+                            <form class="product__view--search__form" action="{{ route('menu-items.search') }}" method="GET">
                                 <label>
-                                    <input class="product__view--search__input border-0" placeholder="Search by"
-                                        type="text">
+                                    <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
                                 </label>
                                 <button class="product__view--search__btn" aria-label="search btn" type="submit">
-                                    <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg"
-                                        width="22.51" height="20.443" viewBox="0 0 512 512">
-                                        <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                            fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32">
-                                        </path>
-                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                            stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path>
+                                    <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                        height="20.443" viewBox="0 0 512 512">
+                                        <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
+                                            d="M338.29 338.29L448 448"></path>
                                     </svg>
                                 </button>
                             </form>
                         </div>
                     </div>
-                    <p class="product__showing--count">Showing 1–9 of 21 results</p>
+                    <p class="product__showing--count">Hiển thị từ {{ $results->firstItem() }} đến {{ $results->lastItem() }} trong tổng số {{ $results->total() }} kết quả
+                    </p>
                 </div>
                 <div class="row">
                     <div class="col-xl-3 col-lg-4">
@@ -316,150 +316,101 @@
                                             class="row row-cols-xxl-5 row-cols-xl-4 row-cols-lg-3 row-cols-md-3 row-cols-sm-3 row-cols-2 mb--n30">
                                             <!-- menu  -->
                                             @foreach ($results as $result)
-                                            <div class="col mb-30">
-                                                <div class="product__items product__items2">
-                                                    <div class="product__items--thumbnail">
-                                                        <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $result->id])}}">
-                                                            <img class="product__items--img product__primary--img"
-                                                                src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img" style="width: 250px; height: 170px; object-fit: cover;">
-                                                            <img class="product__items--img product__secondary--img"
-                                                                src="{{asset('public/image/foods/' . $result->Image) }}" alt="product-img" style="width: 250px; height: 170px; object-fit: cover;">
-                                                        </a>
-                                                        <div class="product__badge">
-                                                            <span class="product__badge--items sale">Sale</span>
-                                                        </div>
-                                                        <ul class="product__items--action">
-                                                            <li class="product__items--action__list">
-                                                                <a class="product__items--action__btn" href="wishlist.html">
-                                                                    <svg class="product__items--action__btn--svg"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        viewBox="0 0 512 512">
+                                                                                                <div class="col mb-30">
+                                                                                                    <div class="product__items product__items2">
+                                                                                                        <div class="product__items--thumbnail">
+                                                                                                            <a class="product__items--link" href="{{ route('menu.item.detail', ['id' => $result->id])}}">
+                                                                                                                <img class="product__items--img product__primary--img"
+                                                                                                                    src="{{asset('public/public/image/foods/' . $result->Image) }}" alt="product-img" style="width: 250px; height: 170px; object-fit: cover;">
+                                                                                                                <img class="product__items--img product__secondary--img"
+                                                                                                                    src="{{asset('public/public/image/foods/' . $result->Image) }}" alt="product-img" style="width: 250px; height: 170px; object-fit: cover;">
+                                                                                                            </a>
+                                                                                                            <div class="product__badge">
+                                                                                                                <span class="product__badge--items sale">Sale</span>
+                                                                                                            </div>
+                                                                                                            <ul class="product__items--action">
+                                                                                                                <li class="product__items--action__list">
+                                                                                                                    <a class="product__items--action__btn" href="wishlist.html">
+                                                                                                                        <svg class="product__items--action__btn--svg"
+                                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                                            viewBox="0 0 512 512">
+                                                                                                                            <path
+                                                                                                                                d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
+                                                                                                                                fill="none" stroke="currentColor"
+                                                                                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                stroke-width="32"></path>
+                                                                                                                        </svg>
+                                                                                                                        <span class="visually-hidden">Wishlist</span>
+                                                                                                                    </a>
+                                                                                                                </li>
+                                                                                                                <li class="product__items--action__list">
+                                                                                                                    <a class="product__items--action__btn" data-open="modal1"
+                                                                                                                        href="javascript:void(0)">
+                                                                                                                        <svg class="product__items--action__btn--svg"
+                                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                                            viewBox="0 0 512 512">
+                                                                                                                            <path
+                                                                                                                                d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
+                                                                                                                                fill="none" stroke="currentColor"
+                                                                                                                                stroke-miterlimit="10" stroke-width="32"></path>
+                                                                                                                            <path fill="none" stroke="currentColor"
+                                                                                                                                stroke-linecap="round" stroke-miterlimit="10"
+                                                                                                                                stroke-width="32" d="M338.29 338.29L448 448">
+                                                                                                                            </path>
+                                                                                                                        </svg>
+                                                                                                                        <span class="visually-hidden">Quick View</span>
+                                                                                                                    </a>
+                                                                                                                </li>
+                                                                                                                <li class="product__items--action__list">
+                                                                                                                    <a class="product__items--action__btn" href="compare.html">
+                                                                                                                        <svg class="product__items--action__btn--svg"
+                                                                                                                            xmlns="http://www.w3.org/2000/svg"
+                                                                                                                            viewBox="0 0 512 512">
+                                                                                                                            <path fill="none" stroke="currentColor"
+                                                                                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                stroke-width="32"
+                                                                                                                                d="M400 304l48 48-48 48M400 112l48 48-48 48M64 352h85.19a80 80 0 0066.56-35.62L256 256">
+                                                                                                                            </path>
+                                                                                                                            <path
+                                                                                                                                d="M64 160h85.19a80 80 0 0166.56 35.62l80.5 120.76A80 80 0 00362.81 352H416M416 160h-53.19a80 80 0 00-66.56 35.62L288 208"
+                                                                                                                                fill="none" stroke="currentColor"
+                                                                                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                                                                                stroke-width="32"></path>
+                                                                                                                        </svg>
+                                                                                                                        <span class="visually-hidden">Compare</span>
+                                                                                                                    </a>
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </div>
+                                                                                                        <div
+                                                                                                            class="product__items--content product__items2--content text-center">
+                                                                                                            <a class="add__to--cart__btn" href=  "{{ route('cart.add', $result->id) }}">+ Add to cart</a>
+                                                                                                            <h3 class="product__items--content__title h4"><a
+                                                                                                                    href="product-details.html">{{$result->Title_items}}</a></h3>
+                                                                                                            <div class="product__items--price">
+                                                                                                            <span class="current__price">{{ number_format($result->Price, 0, ',', '.') }}đ</span>
+                                                                                                            <span class="old__price">{{ number_format($result->OldPrice, 0, ',', '.') }}đ</span>
+
+                                                                                                            </div>
+                                                <div class="product__items--rating d-flex justify-content-center align-items-center">
+                                                    <ul class="d-flex">
+                                                        @for ($i = 1; $i <= 5; $i++)
+                                                            <li class="product__items--rating__list">
+                                                                <span class="product__items--rating__icon {{ $i <= $result->most_common_rating ? '' : 'text-muted' }}">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="10.105" height="9.732" viewBox="0 0 10.105 9.732">
                                                                         <path
-                                                                            d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z"
-                                                                            fill="none" stroke="currentColor"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            stroke-width="32"></path>
+                                                                            d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
+                                                                            fill="currentColor" />
                                                                     </svg>
-                                                                    <span class="visually-hidden">Wishlist</span>
-                                                                </a>
+                                                                </span>
                                                             </li>
-                                                            <li class="product__items--action__list">
-                                                                <a class="product__items--action__btn" data-open="modal1"
-                                                                    href="javascript:void(0)">
-                                                                    <svg class="product__items--action__btn--svg"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        viewBox="0 0 512 512">
-                                                                        <path
-                                                                            d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                                                            fill="none" stroke="currentColor"
-                                                                            stroke-miterlimit="10" stroke-width="32"></path>
-                                                                        <path fill="none" stroke="currentColor"
-                                                                            stroke-linecap="round" stroke-miterlimit="10"
-                                                                            stroke-width="32" d="M338.29 338.29L448 448">
-                                                                        </path>
-                                                                    </svg>
-                                                                    <span class="visually-hidden">Quick View</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="product__items--action__list">
-                                                                <a class="product__items--action__btn" href="compare.html">
-                                                                    <svg class="product__items--action__btn--svg"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        viewBox="0 0 512 512">
-                                                                        <path fill="none" stroke="currentColor"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            stroke-width="32"
-                                                                            d="M400 304l48 48-48 48M400 112l48 48-48 48M64 352h85.19a80 80 0 0066.56-35.62L256 256">
-                                                                        </path>
-                                                                        <path
-                                                                            d="M64 160h85.19a80 80 0 0166.56 35.62l80.5 120.76A80 80 0 00362.81 352H416M416 160h-53.19a80 80 0 00-66.56 35.62L288 208"
-                                                                            fill="none" stroke="currentColor"
-                                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                                            stroke-width="32"></path>
-                                                                    </svg>
-                                                                    <span class="visually-hidden">Compare</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div
-                                                        class="product__items--content product__items2--content text-center">
-                                                        <a class="add__to--cart__btn" href=  "{{ route('cart.add', $result->id) }}">+ Add to cart</a>
-                                                        <h3 class="product__items--content__title h4"><a
-                                                                href="product-details.html">{{$result->Title_items}}</a></h3>
-                                                        <div class="product__items--price">
-                                                            <span class="current__price">{{$result->Price}}</span>
-                                                            <span class="old__price">$59.00</span>
-                                                        </div>
-                                                        <div
-                                                            class="product__items--rating d-flex justify-content-center align-items-center">
-                                                            <ul class="d-flex">
-                                                                <li class="product__items--rating__list">
-                                                                    <span class="product__items--rating__icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="10.105" height="9.732"
-                                                                            viewBox="0 0 10.105 9.732">
-                                                                            <path data-name="star - Copy"
-                                                                                d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
-                                                                                transform="translate(0 -0.018)"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="product__items--rating__list">
-                                                                    <span class="product__items--rating__icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="10.105" height="9.732"
-                                                                            viewBox="0 0 10.105 9.732">
-                                                                            <path data-name="star - Copy"
-                                                                                d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
-                                                                                transform="translate(0 -0.018)"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="product__items--rating__list">
-                                                                    <span class="product__items--rating__icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="10.105" height="9.732"
-                                                                            viewBox="0 0 10.105 9.732">
-                                                                            <path data-name="star - Copy"
-                                                                                d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
-                                                                                transform="translate(0 -0.018)"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="product__items--rating__list">
-                                                                    <span class="product__items--rating__icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="10.105" height="9.732"
-                                                                            viewBox="0 0 10.105 9.732">
-                                                                            <path data-name="star - Copy"
-                                                                                d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
-                                                                                transform="translate(0 -0.018)"
-                                                                                fill="currentColor"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                                <li class="product__items--rating__list">
-                                                                    <span class="product__items--rating__icon">
-                                                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                                            width="10.105" height="9.732"
-                                                                            viewBox="0 0 10.105 9.732">
-                                                                            <path data-name="star - Copy"
-                                                                                d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z"
-                                                                                transform="translate(0 -0.018)"
-                                                                                fill="#c7c5c2"></path>
-                                                                        </svg>
-                                                                    </span>
-                                                                </li>
-                                                            </ul>
-                                                            <span class="product__items--rating__count--number">(24)</span>
-                                                        </div>
-                                                    </div>
+                                                        @endfor
+                                                    </ul>
                                                 </div>
-                                            </div>
+
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
                                             @endforeach
                                             <!-- dừng -->
 
@@ -467,46 +418,60 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="pagination__area bg__gray--color">
-                                <nav class="pagination justify-content-center">
-                                    <ul class="pagination__wrapper d-flex align-items-center justify-content-center">
-                                        <li class="pagination__list">
-                                            <a href="shop.html" class="pagination__item--arrow  link ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                    viewBox="0 0 512 512">
-                                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="48"
-                                                        d="M244 400L100 256l144-144M120 256h292"></path>
+                        <div class="pagination__area bg__gray--color">
+                            <nav class="pagination justify-content-center">
+                                <ul class="pagination__wrapper d-flex align-items-center justify-content-center">
+                                    <!-- Mũi tên trái -->
+                                    <li class="pagination__list">
+                                        @if ($results->onFirstPage())
+                                            <span class="pagination__item--arrow disabled">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="48" d="M244 400L100 256l144-144M120 256h292"></path>
                                                 </svg>
-                                                <span class="visually-hidden">page left arrow</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                        </li>
-                                        <li class="pagination__list"><span
-                                                class="pagination__item pagination__item--current">1</span></li>
-                                        <li class="pagination__list"><a href="shop.html" class="pagination__item link">2</a>
-                                        </li>
-                                        <li class="pagination__list"><a href="shop.html" class="pagination__item link">3</a>
-                                        </li>
-                                        <li class="pagination__list"><a href="shop.html" class="pagination__item link">4</a>
-                                        </li>
-                                        <li class="pagination__list">
-                                            <a href="shop.html" class="pagination__item--arrow  link ">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
-                                                    viewBox="0 0 512 512">
-                                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                                        stroke-linejoin="round" stroke-width="48"
-                                                        d="M268 112l144 144-144 144M392 256H100"></path>
+                                            </span>
+                                        @else
+                                            <a href="{{ $results->previousPageUrl() }}" class="pagination__item--arrow link">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="48" d="M244 400L100 256l144-144M120 256h292"></path>
                                                 </svg>
-                                                <span class="visually-hidden">page right arrow</span>
                                             </a>
+                                        @endif
+                                    </li>
+
+                                    <!-- Các số trang -->
+                                    @foreach ($results->getUrlRange(1, $results->lastPage()) as $page => $url)
+                                        <li class="pagination__list">
+                                            @if ($page == $results->currentPage())
+                                                <span class="pagination__item pagination__item--current">{{ $page }}</span>
+                                            @else
+                                                <a href="{{ $url }}" class="pagination__item link">{{ $page }}</a>
+                                            @endif
                                         </li>
-                                        <li>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                                    @endforeach
+
+                                    <!-- Mũi tên phải -->
+                                    <li class="pagination__list">
+                                        @if ($results->hasMorePages())
+                                            <a href="{{ $results->nextPageUrl() }}" class="pagination__item--arrow link">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="48" d="M268 112l144 144-144 144M392 256H100"></path>
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <span class="pagination__item--arrow disabled">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 512 512">
+                                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="48" d="M268 112l144 144-144 144M392 256H100"></path>
+                                                </svg>
+                                            </span>
+                                        @endif
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                         </div>
                     </div>
                 </div>

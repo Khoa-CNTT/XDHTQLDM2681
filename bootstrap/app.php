@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         'shipper' => \App\Http\Middleware\CheckShipperPermission::class,
         'admin ' => \App\Http\Middleware\CheckAdminPermission::class,
         'restaurant' => \App\Http\Middleware\TenMiddleware::class,
+        'client' => \App\Http\Middleware\ClientMiddleware::class,
     ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

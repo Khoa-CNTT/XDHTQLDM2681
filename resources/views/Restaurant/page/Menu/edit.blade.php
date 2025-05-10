@@ -72,7 +72,7 @@
                 <input type="file" name="Image" id="Image" class="form-control-file @error('Image') is-invalid @enderror">
                 @if ($menuItem->Image)
                     <p>Hiện tại:
-                        <img src="{{ asset('public/image/foods/' . $menuItem->Image) }}" alt="Image"
+                        <img src="{{ asset('public/public/image/foods/' . $menuItem->Image) }}" alt="Image"
                             style="max-width: 200px; max-height: 200px;">
                     </p>
                 @endif

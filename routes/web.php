@@ -60,7 +60,7 @@ Route::get('/restaurant/chat', [ChatBotController::class, 'chatAsRestaurant'])->
 Route::post('/chat/send', [ChatBotController::class, 'send']);
 
 
-Route::get('/account/login', [AccountController::class, "index"]);
+Route::get('/account/login', [AccountController::class, "index"])->name('login.index');
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
 Route::get('/verify-otp', [AccountController::class, 'showOTPForm'])->name('verify.otp_client');
@@ -118,7 +118,7 @@ Route::group(
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
         Route::post('/account/location/update', [AccountController::class, 'update'])->name('location.update');
         Route::post('/review/submit', [ReviewController::class, 'submitReview']);
-    });
+    })->middleware('client');
 
 //admin
 Route::group(
