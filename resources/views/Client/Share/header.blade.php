@@ -2,28 +2,28 @@
     <div class="header__topbar bg__primary">
         <div class="container">
             <div class="header__topbar--inner d-flex align-items-center justify-content-center">
-            <div class="header__shipping">
-                <p class="header__shipping--text text-white">
-                    <img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">
-
-                    {{-- Nhà hàng --}}
-                    @if (auth()->guard('web')->check())
-                        <a href="/restaurant/menu_items">Nhà hàng</a>
-                    @else
-                        <a href="/restaurant/register">Nhà hàng</a>
-                    @endif
-
-                    {{-- Người giao hàng --}}
-                    <a class="m-1">
+                <div class="header__shipping">
+                    <p class="header__shipping--text text-white">
                         <img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">
-                        @if (auth()->guard('driver_auth')->check())
-                            <a href="/shipper/home">Người giao hàng</a>
+
+                        {{-- Nhà hàng --}}
+                        @if (auth()->guard('web')->check())
+                            <a href="/restaurant/menu_items">Nhà hàng</a>
                         @else
-                            <a href="/shipper/register">Người giao hàng</a>
+                            <a href="/restaurant/register">Nhà hàng</a>
                         @endif
-                    </a>
-                </p>
-            </div>
+
+                        {{-- Người giao hàng --}}
+                        <a class="m-1">
+                            <img class="header__shipping--icon" src="/assets/img/icon/car.png" alt="header-shipping-img">
+                            @if (auth()->guard('driver_auth')->check())
+                                <a href="/shipper/home">Người giao hàng</a>
+                            @else
+                                <a href="/shipper/register">Người giao hàng</a>
+                            @endif
+                        </a>
+                    </p>
+                </div>
 
                 <div class="header__topbar--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
             </div>
@@ -33,72 +33,73 @@
         <div class="container">
             <div class="main__header--inner position__relative d-flex justify-content-between align-items-center">
                 <div class="offcanvas__header--menu__open ">
-                    <a class="offcanvas__header--menu__open--btn" href="javascript:void(0)" data-offcanvas>
+                    <a class="offcanvas__header--menu__open--btn" href="javascript:void(0)" data-offcanvas="">
                         <svg xmlns="http://www.w3.org/2000/svg" class="ionicon offcanvas__header--menu__open--svg"
                             viewBox="0 0 512 512">
                             <path fill="currentColor" stroke="currentColor" stroke-linecap="round"
-                                stroke-miterlimit="10" stroke-width="32" d="M80 160h352M80 256h352M80 352h352" />
+                                stroke-miterlimit="10" stroke-width="32" d="M80 160h352M80 256h352M80 352h352"></path>
                         </svg>
                         <span class="visually-hidden">Offcanvas Menu Open</span>
                     </a>
                 </div>
                 <div class="main__logo">
                     <h1 class="main__logo--title"><a class="main__logo--link" href="/"><img
-                                class="main__logo--img" style="height:60px;" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" alt="logo-img"></a></h1>
+                                class="main__logo--img" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" alt="logo-img" style="height:70px;"></a></h1>
                 </div>
-                <div class="header__search--widget d-none d-lg-block header__sticky--none">
-                    <div class="d-flex header__search--form" action="#">
+            <div class="header__search--widget d-none d-lg-block header__sticky--none">
+                <div class="d-flex header__search--form" action="#">
 
+                    <div class="header__select--categories select">
                         <div class="header__select--categories select">
-                        <div class="header__select--categories select">
-                    <form method="GET" action="{{ route('menu.item.index') }}">
-                        <select name="district" onchange="this.form.submit()" class="header__select--inner" id="quan">
-                            <option selected value="">Chọn Quận/Huyện</option>
-                        </select>
-                    </form>
+                            <form method="GET" action="{{ route('menu.item.index') }}">
+                                <select name="district" onchange="this.form.submit()" class="header__select--inner" id="quan">
+                                    <option selected value="">Chọn Quận/Huyện</option>
+                                </select>
+                            </form>
 
                         </div>
-</div>
-<form class="product__view--search__form header__search--box" action="{{ route('menu-items.search') }}" method="GET">
-
-                            <label>
-                                <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
-                            </label>
-                            <button class="product__view--search__btn" aria-label="search btn" type="submit">
-                                <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
-                                    height="20.443" viewBox="0 0 512 512">
-                                    <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
-                                        stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
-                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32"
-                                        d="M338.29 338.29L448 448"></path>
-                                </svg>
-                            </button>
-                        </form>
                     </div>
+                    <form class="product__view--search__form header__search--box" action="{{ route('menu-items.search') }}"
+                        method="GET">
+
+                        <label>
+                            <input class="product__view--search__input border-0" placeholder="Tìm kiếm" type="text" name="query">
+                        </label>
+                        <button class="product__view--search__btn" aria-label="search btn" type="submit">
+                            <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                height="20.443" viewBox="0 0 512 512">
+                                <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                    stroke="currentColor" stroke-miterlimit="10" stroke-width="32">
+                                </path>
+                                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                    stroke-width="32" d="M338.29 338.29L448 448"></path>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
+            </div>
                 <div class="header__menu d-none d-lg-block header__sticky--block">
                     <nav class="header__menu--navigation">
                         <ul class="d-flex">
                             <li class="header__menu--items">
                                 <a class="header__menu--link" href="/">Trang chủ
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41"
+                                        viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)"
+                                            fill="currentColor" opacity="0.7" />
                                     </svg>
                                 </a>
                                 {{-- <ul class="header__sub--menu">
-                                    <li class="header__sub--menu__items"><a href="/"
-                                            class="header__sub--menu__link">Home </a></li>
+                                    <li class="header__sub--menu__items"><a href="/" class="header__sub--menu__link">Home </a></li>
 
                                 </ul> --}}
                             </li>
                             <li class="header__menu--items mega__menu--items">
                                 <a class="header__menu--link" href="/menu/index">Thực đơn
-                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
-                                        height="7.41" viewBox="0 0 12 7.41">
-                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                            transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                    <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12" height="7.41"
+                                        viewBox="0 0 12 7.41">
+                                        <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z" transform="translate(-6 -8.59)"
+                                            fill="currentColor" opacity="0.7" />
                                     </svg>
                                 </a>
 
@@ -114,33 +115,33 @@
                     <ul class="d-flex">
                         <li class="header__account--items d-none d-lg-block">
                             @if(Auth::check())
-                            <a class="header__account--btn" href="/client/dashboard">
+                                <a class="header__account--btn" href="/client/dashboard">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
-                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
-                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                                    15.65-21.4C431.3 352 343 304 256 304z" fill="none"
+                                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                     </svg>
                                 </a>
                             @else
                                 <a class="header__account--btn" href="/account/login">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
-                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
-                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                                    15.65-21.4C431.3 352 343 304 256 304z" fill="none"
+                                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                     </svg>
                                 </a>
                             @endif
                         </li>
 
                         <li class="header__account--items">
-                            <a class="header__account--btn minicart__open--btn" href="javascript:void(0)"
-                                data-offcanvas>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16.706" height="15.534"
-                                    viewBox="0 0 14.706 13.534">
+                            <a class="header__account--btn minicart__open--btn" href="javascript:void(0)" data-offcanvas>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16.706" height="15.534" viewBox="0 0 14.706 13.534">
                                     <g transform="translate(0 0)">
                                         <g>
                                             <path data-name="Path 16787"
@@ -167,15 +168,13 @@
                 <div class="header__account header__sticky--block">
                     <ul class="d-flex">
                         <li class="header__account--items  header__account--search__items d-sm-2-none">
-                            <a class="header__account--btn search__open--btn" href="javascript:void(0)"
-                                data-offcanvas>
-                                <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg"
-                                    width="22.51" height="20.443" viewBox="0 0 512 512">
-                                    <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z"
-                                        fill="none" stroke="currentColor" stroke-miterlimit="10"
-                                        stroke-width="32" />
-                                    <path fill="none" stroke="currentColor" stroke-linecap="round"
-                                        stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448" />
+                            <a class="header__account--btn search__open--btn" href="javascript:void(0)" data-offcanvas>
+                                <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51"
+                                    height="20.443" viewBox="0 0 512 512">
+                                    <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
+                                        stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+                                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                        stroke-width="32" d="M338.29 338.29L448 448" />
                                 </svg>
                                 <span class="visually-hidden">Search</span>
                             </a>
@@ -183,23 +182,25 @@
 
                         <li class="header__account--items d-none d-lg-block">
                             @if(Auth::check())
-                            <a class="header__account--btn" href="/client/dashboard">
+                                <a class="header__account--btn" href="/client/dashboard">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
-                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
-                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                                    15.65-21.4C431.3 352 343 304 256 304z" fill="none"
+                                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                     </svg>
                                 </a>
                             @else
                                 <a class="header__account--btn" href="/account/login">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
-                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
-                                                15.65-21.4C431.3 352 343 304 256 304z" fill="none" stroke="currentColor" stroke-miterlimit="10"
+                                        <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                            fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                             stroke-width="32" />
+                                        <path d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48
+                                                                    15.65-21.4C431.3 352 343 304 256 304z" fill="none"
+                                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
                                     </svg>
                                 </a>
                             @endif
@@ -219,60 +220,116 @@
                             height="16.831" viewBox="0 0 21.007 16.831">
                             <path id="listine-dots"
                                 d="M20.66,99.786a1.036,1.036,0,0,0-.347-.13H4.227a2.013,2.013,0,0,1,0,3.012q7.988,0,15.976,0h.063a.7.7,0,0,0,.454-.162.9.9,0,0,0,.286-.452v-1.765A.861.861,0,0,0,20.66,99.786ZM3.323,101.162A1.662,1.662,0,1,1,1.662,99.5,1.661,1.661,0,0,1,3.323,101.162Zm16.99,3H4.227a2.013,2.013,0,0,1,0,3.012q7.988,0,15.976,0h.063a.7.7,0,0,0,.454-.164.9.9,0,0,0,.286-.452v-1.765a.861.861,0,0,0-.347-.5A1.082,1.082,0,0,0,20.314,104.161Zm-16.99,1.506a1.662,1.662,0,1,1-1.662-1.662A1.663,1.663,0,0,1,3.323,105.668Zm16.99,3H4.227a2.013,2.013,0,0,1,0,3.012q7.988,0,15.976,0h.063a.7.7,0,0,0,.454-.164.9.9,0,0,0,.286-.45v-1.767a.861.861,0,0,0-.347-.5A1.083,1.083,0,0,0,20.314,108.663Zm-16.99,1.506a1.662,1.662,0,1,1-1.662-1.662A1.663,1.663,0,0,1,3.323,110.169Zm16.99,2.993H4.227a2.013,2.013,0,0,1,0,3.012q7.988,0,15.976,0h.063a.687.687,0,0,0,.454-.162.9.9,0,0,0,.286-.452v-1.765a.861.861,0,0,0-.347-.5A1.035,1.035,0,0,0,20.314,113.163Zm-16.99,1.506a1.662,1.662,0,1,1-1.662-1.662A1.661,1.661,0,0,1,3.323,114.669Z"
-                                transform="translate(0 -99.5)" fill="currentColor" />
+                                transform="translate(0 -99.5)" fill="currentColor"></path>
                         </svg>
-                        <span class="categories__menu--title">Danh Mục</span>
+                        <span class="categories__menu--title">Danh mục</span>
                         <svg class="categories__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12.355"
                             height="8.394" viewBox="0 0 10.355 6.394">
                             <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z"
-                                transform="translate(-6 -8.59)" fill="currentColor" />
+                                transform="translate(-6 -8.59)" fill="currentColor" class="active"></path>
                         </svg>
                     </div>
                     <div class="dropdown__categories--menu">
                         <ul class="d-none d-lg-block">
                             @foreach($categories as $category)
-                                <li class="categories__menu--items">
-                                    <a class="categories__menu--link" href="{{route('menu-items.category', ['id' => $category->id])}}">
-                                        <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path
-                                                d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
-                                                fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" />
-                                        </svg>
-                                        {{ $category->title }}
-                                        <svg class="categories__menu--right__arrow--icon" xmlns="http://www.w3.org/2000/svg" width="17.007"
-                                            height="16.831" viewBox="0 0 512 512">
-                                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                                                d="M184 112l144 144-144 144" />
-                                        </svg>
-                                    </a>
-                                    <ul class="categories__submenu border-radius-10 d-flex justify-content-between">
-                                        <!-- Lặp qua từng nhà hàng -->
-                                        @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
-                                            <li class="categories__submenu--items">
-                                                <a class="categories__submenu--items__text" herf="#">
-                                                    <strong>{{ $menuItemsByRestaurant->first()->restaurant->name }}</strong>
+                            <li class="categories__menu--items">
+                                <a class="categories__menu--link"
+                                    href="{{route('menu-items.category', ['id' => $category->id])}}">
+                                    <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 512 512">
+                                        <path
+                                            d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
+                                            fill="none" stroke="currentColor" stroke-linejoin="round"
+                                            stroke-width="32" />
+                                    </svg>
+                                    {{ $category->title }}
+                                    <svg class="categories__menu--right__arrow--icon" xmlns="http://www.w3.org/2000/svg"
+                                        width="17.007" height="16.831" viewBox="0 0 512 512">
+                                        <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                            stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144" />
+                                    </svg>
+                                </a>
+                                <ul class="categories__submenu border-radius-10 d-flex justify-content-between">
+                                    <!-- Lặp qua từng nhà hàng -->
+                                    @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
+                                    <li class="categories__submenu--items">
+                                        <a class="categories__submenu--items__text" herf="#">
+                                            <strong>{{ $menuItemsByRestaurant->first()->restaurant->name }}</strong>
+                                        </a>
+                                        <ul class="categories__submenu--child">
+                                            <!-- Lặp qua các món ăn của nhà hàng -->
+                                            @foreach($menuItemsByRestaurant as $menuItem)
+                                            <li class="categories__submenu--child__items">
+                                                <a class="categories__submenu--child__items--link"
+                                                    href="{{ route('menu.item.detail', $menuItem->id) }}">
+                                                    {{ $menuItem->Title_items }}
                                                 </a>
-                                                <ul class="categories__submenu--child">
-                                                    <!-- Lặp qua các món ăn của nhà hàng -->
-                                                    @foreach($menuItemsByRestaurant as $menuItem)
-                                                        <li class="categories__submenu--child__items">
-                                                            <a class="categories__submenu--child__items--link" href="{{ route('menu.item.detail', $menuItem->id) }}">
-                                                                {{ $menuItem->Title_items }}
-                                                            </a>
-                                                            <!-- Hiển thị chi tiết món ăn -->
+                                                <!-- Hiển thị chi tiết món ăn -->
 
 
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
                                             </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </li>
                             @endforeach
                         </ul>
+                        <nav class="category__mobile--menu">
+                            <ul class="category__mobile--menu_ul">
+
+                                @foreach($categories as $category)
+                                    <li class="categories__menu--items">
+                                        <a class="categories__menu--link"
+                                            href="{{route('menu-items.category', ['id' => $category->id])}}">
+                                            <svg class="categories__menu--svgicon" xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 512 512">
+                                                <path
+                                                    d="M408 64H104a56.16 56.16 0 00-56 56v192a56.16 56.16 0 0056 56h40v80l93.72-78.14a8 8 0 015.13-1.86H408a56.16 56.16 0 0056-56V120a56.16 56.16 0 00-56-56z"
+                                                    fill="none" stroke="currentColor" stroke-linejoin="round"
+                                                    stroke-width="32" />
+                                            </svg>
+                                            {{ $category->title }}
+                                            <svg class="categories__menu--right__arrow--icon" xmlns="http://www.w3.org/2000/svg"
+                                                width="17.007" height="16.831" viewBox="0 0 512 512">
+                                                <path fill="none" stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144" />
+                                            </svg>
+                                        </a>
+                                        <ul class="categories__submenu border-radius-10 d-flex justify-content-between">
+                                            <!-- Lặp qua từng nhà hàng -->
+                                            @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
+                                                <li class="categories__submenu--items">
+                                                    <a class="categories__submenu--items__text" herf="#">
+                                                        <strong>{{ $menuItemsByRestaurant->first()->restaurant->name }}</strong>
+                                                    </a>
+                                                    <ul class="categories__submenu--child">
+                                                        <!-- Lặp qua các món ăn của nhà hàng -->
+                                                        @foreach($menuItemsByRestaurant as $menuItem)
+                                                            <li class="categories__submenu--child__items">
+                                                                <a class="categories__submenu--child__items--link"
+                                                                    href="{{ route('menu.item.detail', $menuItem->id) }}">
+                                                                    {{ $menuItem->Title_items }}
+                                                                </a>
+                                                                <!-- Hiển thị chi tiết món ăn -->
 
 
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
+
+                                    </ul>
+                                    <button class="category__sub--menu_toggle"></button>
+                                </li>
+
+                            </ul>
+                        </nav>
                     </div>
                 </div>
                 <div class="header__right--area d-flex justify-content-between align-items-center">
@@ -281,48 +338,51 @@
                             <ul class="d-flex">
                                 <li class="header__menu--items">
                                     <a class="header__menu--link text-white" href="/">Trang chủ
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                            width="12" height="7.41" viewBox="0 0 12 7.41">
-                                            <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
-                                        </svg>
+
                                     </a>
 
                                 </li>
                                 <li class="header__menu--items mega__menu--items">
                                     <a class="header__menu--link text-white" href="/menu/index">Thực đơn
-                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                            width="12" height="7.41" viewBox="0 0 12 7.41">
+                                        <svg class="menu__arrowdown--icon" xmlns="http://www.w3.org/2000/svg" width="12"
+                                            height="7.41" viewBox="0 0 12 7.41">
                                             <path d="M16.59,8.59,12,13.17,7.41,8.59,6,10l6,6,6-6Z"
-                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7" />
+                                                transform="translate(-6 -8.59)" fill="currentColor" opacity="0.7">
+                                            </path>
                                         </svg>
                                     </a>
                                     <ul class="header__mega--menu d-flex">
-                                    @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
+                                        @foreach($category->menuItems->groupBy('restaurant_id') as $restaurantId => $menuItemsByRestaurant)
                                         <li class="header__mega--menu__li">
-                                            <span class="header__mega--subtitle">{{ $menuItemsByRestaurant->first()->restaurant->name }}</span>
+                                            <span class="header__mega--subtitle">{{
+        $menuItemsByRestaurant->first()->restaurant->name }}</span>
                                             <ul class="header__mega--sub__menu">
                                                 <!-- Lặp qua các món ăn của nhà hàng -->
                                                 @foreach($menuItemsByRestaurant as $menuItem)
-                                                    <li class="header__mega--sub__menu_li">
-                                                        <a class="header__mega--sub__menu--title" href="{{ route('menu.item.detail', $menuItem->id) }}">
-                                                            {{ $menuItem->Title_items }}
-                                                        </a>
-                                                        <!-- Hiển thị giá món ăn -->
+                                                <li class="header__mega--sub__menu_li">
+                                                    <a class="header__mega--sub__menu--title"
+                                                        href="{{ route('menu.item.detail', $menuItem->id) }}">
+                                                        {{ $menuItem->Title_items }}
+                                                    </a>
+                                                    <!-- Hiển thị giá món ăn -->
 
-                                                    </li>
+                                                </li>
                                                 @endforeach
                                             </ul>
                                         </li>
-                                    @endforeach
+                                        @endforeach
 
 
                                     </ul>
+
+                                </li>
+                                <li class="header__menu--items">
+                                                                        <a class="header__menu--link text-white" href="#">Liên hệ
+
+                                                                        </a>
+
                                 </li>
 
-                                <li class="header__menu--items">
-                                    <a class="header__menu--link text-white" href="#">Liên hệ </a>
-                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -333,11 +393,11 @@
                                 width="36.725" height="36.743" viewBox="0 0 36.725 36.743">
                                 <path id="headphone-alt-2"
                                     d="M28.893,18.469c-.026-2.873.1-5.754-.761-8.565-1.587-5.21-5.306-7.742-10.781-7.272-4.681.4-7.588,2.715-8.785,7.573a24.031,24.031,0,0,0,.2,13.3,11.447,11.447,0,0,0,6.254,7.253c.658.3,1.091.408,1.595-.356a3.732,3.732,0,0,1,4.38-1.334,3.931,3.931,0,1,1-4.582,5.82,2.989,2.989,0,0,0-1.782-1.466c-4.321-1.573-6.842-4.869-8.367-9.032a1.686,1.686,0,0,0-1.238-1.275,7.046,7.046,0,0,1-3.718-2.447A5.739,5.739,0,0,1,3.242,11.83,5.338,5.338,0,0,0,6.318,7.957C7.644,3.033,11.62.193,16.845.02a19.923,19.923,0,0,1,6.324.544c4.479,1.3,6.783,4.52,7.72,8.881a1.966,1.966,0,0,0,1.389,1.723,6.235,6.235,0,0,1,4.439,6.324,5.211,5.211,0,0,1-1.33,3.27,7.98,7.98,0,0,1-5.449,2.774c-.731.077-1.124-.051-1.069-.952.085-1.367.022-2.745.026-4.115Z"
-                                    transform="translate(0.006 0.01)" fill="currentColor" />
+                                    transform="translate(0.006 0.01)" fill="currentColor"></path>
                             </svg>
                             <p class="suport__contact--text text-white">
-                                <span class="suport__text--24">Hổ trợ 24/7</span>
-                                <a class="suport__contact--number" href="tel:09786542214">0905 807 623</a>
+                                <span class="suport__text--24">24/7 Hỗ trợ</span>
+                                <a class="suport__contact--number" href="tel:09786542214">0905.807.623</a>
                             </p>
                         </div>
                     </div>
@@ -346,7 +406,63 @@
         </div>
     </div>
 
+    <!-- Start Offcanvas header menu -->
+    <div class="offcanvas__header">
+        <div class="offcanvas__inner">
+            <div class="offcanvas__logo">
+                <a class="offcanvas__logo_link" href="/">
+                    <img src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" alt="Grocee Logo" width="158" height="36">
+                </a>
+                <button class="offcanvas__close--btn" data-offcanvas="">close</button>
+            </div>
+            <nav class="offcanvas__menu">
+                <ul class="offcanvas__menu_ul">
+                    <li class="offcanvas__menu_li">
+                        <a class="offcanvas__menu_item" href="/">Trang chủ</a>
 
+                    </li>
+                    <li class="offcanvas__menu_li">
+                        <a class="offcanvas__menu_item" href="/menu/index">Thực đơn</a>
+
+                    </li>
+
+                    <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="#">Liên hệ</a></li>
+                </ul>
+                <div class="offcanvas__account--items">
+                    @if(Auth::check())
+                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="/client/dashboard">
+                            <span class="offcanvas__account--items__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
+                                    <path
+                                        d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z"
+                                        fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="32"></path>
+                                    <path
+                                        d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z"
+                                        fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                </svg>
+                            </span>
+
+                        </a>
+                    @else
+                        <a class="offcanvas__account--items__btn d-flex align-items-center" href="/account/login">
+                            <span class="offcanvas__account--items__icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20.51" height="19.443" viewBox="0 0 512 512">
+                                    <path d="M344 144c-3.92 52.87-44 96-88 96s-84.15-43.12-88-96c-4-55 35-96 88-96s92 42 88 96z" fill="none"
+                                        stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
+                                    <path
+                                        d="M256 304c-87 0-175.3 48-191.64 138.6C62.39 453.52 68.57 464 80 464h352c11.44 0 17.62-10.48 15.65-21.4C431.3 352 343 304 256 304z"
+                                        fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
+                                </svg>
+                            </span>
+                            <span class="offcanvas__account--items__label">Đăng nhập / Đăng ký</span>
+                        </a>
+                    @endif
+                </div>
+
+            </nav>
+        </div>
+    </div>
     <!-- End Offcanvas header menu -->
 
     <!-- Start Offcanvas stikcy toolbar -->
@@ -354,90 +470,90 @@
     <!-- End Offcanvas stikcy toolbar -->
 
     <!-- Start offCanvas minicart -->
-<div class="offCanvas__minicart">
-    <div class="minicart__header">
-        <div class="minicart__header--top d-flex justify-content-between align-items-center">
-            <h3 class="minicart__title">Mua sắm</h3>
-            <button class="minicart__close--btn" data-offcanvas>
-                <!-- SVG icon -->
-            </button>
+    <div class="offCanvas__minicart">
+        <div class="minicart__header">
+            <div class="minicart__header--top d-flex justify-content-between align-items-center">
+                <h3 class="minicart__title">Mua sắm</h3>
+                <button class="minicart__close--btn" data-offcanvas>
+                    <!-- SVG icon -->
+                </button>
+            </div>
+
         </div>
 
-    </div>
-
-    <div class="minicart__product">
-        @if ($cartItems->count() > 0)
-            @foreach ($cartItems as $item)
-                <div class="minicart__product--items d-flex">
-                    <div class="minicart__thumb">
-                        <a href="#"><img src="{{ asset('public/public/image/foods/' . $item->menuItem->Image) }}" alt="{{$item->menuItem->Title_items}}"></a>
-                    </div>
-                    <div class="minicart__text">
-                        <h4 class="minicart__subtitle"><a href="#">{{ $item->menuItem->Title_items }}</a></h4>
-                        <div class="minicart__price">
-                            <span class="current__price">{{ number_format($item->cart_price, 0, ',', '.') }}₫</span>
+        <div class="minicart__product">
+            @if ($cartItems->count() > 0)
+                @foreach ($cartItems as $item)
+                    <div class="minicart__product--items d-flex">
+                        <div class="minicart__thumb">
+                            <a href="#"><img src="{{ asset('public/public/image/foods/' . $item->menuItem->Image) }}"
+                                    alt="{{$item->menuItem->Title_items}}"></a>
                         </div>
-                        <div class="minicart__text--footer d-flex align-items-center">
-                            <div class="quantity__box minicart__quantity">
-                                <input type="number" class="quantity__number" value="{{ $item->cart_quantity }}" readonly />
+                        <div class="minicart__text">
+                            <h4 class="minicart__subtitle"><a href="#">{{ $item->menuItem->Title_items }}</a></h4>
+                            <div class="minicart__price">
+                                <span class="current__price">{{ number_format($item->cart_price, 0, ',', '.') }}₫</span>
                             </div>
-                            <form action="{{ route('cart.remove', $item->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button class="minicart__product--remove" type="submit">Xóa</button>
-                            </form>
+                            <div class="minicart__text--footer d-flex align-items-center">
+                                <div class="quantity__box minicart__quantity">
+                                    <input type="number" class="quantity__number" value="{{ $item->cart_quantity }}" readonly />
+                                </div>
+                                <form action="{{ route('cart.remove', $item->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="minicart__product--remove" type="submit">Xóa</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                @endforeach
+            @else
+                <p class="text-center py-4">Không có món ăn nào trong giỏ hàng</p>
+            @endif
+        </div>
+
+        @if ($cartItems->count() > 0)
+            <div class="minicart__amount">
+                <div class="minicart__amount_list d-flex justify-content-between">
+                    <span>Tổng phụ:</span>
+                    <span><b>{{ number_format($cartTotal, 0, ',', '.') }}₫</b></span>
                 </div>
-            @endforeach
-        @else
-            <p class="text-center py-4">Không có món ăn nào trong giỏ hàng</p>
+                <div class="minicart__amount_list d-flex justify-content-between">
+                    <span>Tổng cộng:</span>
+                    <span><b>{{ number_format($cartTotal, 0, ',', '.') }}₫</b></span>
+                </div>
+            </div>
+            <div class="minicart__button d-flex justify-content-center">
+                <a class="btn minicart__button--link" href="{{ route('cart.index') }}">Xem giỏ hàng</a>
+                <a class="btn minicart__button--link" href="{{ route('checkout.index') }}">Đặt đơn</a>
+            </div>
         @endif
     </div>
-
-    @if ($cartItems->count() > 0)
-        <div class="minicart__amount">
-            <div class="minicart__amount_list d-flex justify-content-between">
-                <span>Tổng phụ:</span>
-                <span><b>{{ number_format($cartTotal, 0, ',', '.') }}₫</b></span>
-            </div>
-            <div class="minicart__amount_list d-flex justify-content-between">
-                <span>Tổng cộng:</span>
-                <span><b>{{ number_format($cartTotal, 0, ',', '.') }}₫</b></span>
-            </div>
-        </div>
-        <div class="minicart__button d-flex justify-content-center">
-            <a class="btn minicart__button--link" href="{{ route('cart.index') }}">Xem giỏ hàng</a>
-            <a class="btn minicart__button--link" href="{{ route('checkout.index') }}">Đặt đơn</a>
-        </div>
-    @endif
-</div>
-
     <!-- End offCanvas minicart -->
 
     <!-- Start serch box area -->
     <div class="predictive__search--box ">
         <div class="predictive__search--box__inner">
             <h2 class="predictive__search--title">Search Products</h2>
-            <form class="predictive__search--form" action="{{ route('menu-items.search') }}" method="GET">
+            <form class="predictive__search--form" action="#">
                 <label>
-                    <input class="predictive__search--input" placeholder="Tìm kiếm món" name="query" type="text">
+                    <input class="predictive__search--input" placeholder="Search Here" type="text">
                 </label>
-                <button class="predictive__search--button" type="submit" aria-label="search button"><svg
+                <button class="predictive__search--button" aria-label="search button"><svg
                         class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="30.51"
                         height="25.443" viewBox="0 0 512 512">
                         <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none"
-                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+                            stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
                         <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
-                            stroke-width="32" d="M338.29 338.29L448 448" />
+                            stroke-width="32" d="M338.29 338.29L448 448"></path>
                     </svg> </button>
             </form>
         </div>
-        <button class="predictive__search--close__btn" aria-label="search close" data-offcanvas>
+        <button class="predictive__search--close__btn" aria-label="search close" data-offcanvas="">
             <svg class="predictive__search--close__icon" xmlns="http://www.w3.org/2000/svg" width="40.51"
                 height="30.443" viewBox="0 0 512 512">
                 <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="32" d="M368 368L144 144M368 144L144 368" />
+                    stroke-width="32" d="M368 368L144 144M368 144L144 368"></path>
             </svg>
         </button>
     </div>

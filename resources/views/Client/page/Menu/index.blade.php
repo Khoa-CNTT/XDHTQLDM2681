@@ -10,7 +10,7 @@
                                     <h1 class="breadcrumb__content--title text-white mb-25">Thực đơn</h1>
                                     <ul class="breadcrumb__content--menu d-flex justify-content-center">
                                         <li class="breadcrumb__content--menu__items"><a class="text-white"
-                                                href="index.html">Trang chủ</a></li>
+                                                href="/">Trang chủ</a></li>
                                         <li class="breadcrumb__content--menu__items"><span class="text-white">Thực đơn</span></li>
                                     </ul>
                                 </div>

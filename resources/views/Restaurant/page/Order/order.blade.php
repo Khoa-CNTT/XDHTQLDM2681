@@ -3,50 +3,77 @@
 
 @section('noi_dung')
 
-    <div class="container">
-        <h1>Danh sách Đơn Hàng</h1>
+    <div class="container my-5">
+        <h1 class="text-center text-primary mb-4">📦 Danh sách Đơn Hàng</h1>
 
-        <!-- Bảng Thông Báo -->
-        <div id="notifications" class="alert alert-info">
-            <h3>Thông báo mới:</h3>
-            <ul id="notification-list">
-                <!-- Các thông báo sẽ được thêm vào đây bằng JavaScript -->
-            </ul>
+        <div id="notifications" class="alert alert-info shadow-sm rounded">
+            <h5 class="mb-2">🔔 Thông báo mới:</h5>
+            <ul id="notification-list" class="mb-0 ps-3"></ul>
         </div>
 
-        <!-- Bảng Đơn Hàng -->
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Món ăn</th>
-                    <th>Số lượng</th>
-                    <th>Trạng thái</th>
-                    <th>Chi tiết đơn hàng</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($orders as $order)
+        <!-- Bộ lọc trạng thái đơn hàng -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <div class="btn-group" role="group" aria-label="Filter Orders">
+                <button type="button" class="btn btn-outline-primary active" onclick="filterOrders('all', event)">Tất
+                    cả</button>
+                <button type="button" class="btn btn-outline-success" onclick="filterOrders('Đã giao thành công', event)">Đã
+                    giao</button>
+                <button type="button" class="btn btn-outline-warning" onclick="filterOrders('Đang giao', event)">Đang
+                    giao</button>
+                <button type="button" class="btn btn-outline-secondary" onclick="filterOrders('Chưa xử lý', event)">Chưa xử
+                    lý</button>
+            </div>
+        </div>
+
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table table-bordered table-hover align-middle" id="myTable">
+                <thead class="table-dark text-center">
                     <tr>
-                        <td>{{ $order->id }}</td>
-                        <td>
-                            @foreach ($order->orderDetails as $orderDetail)
-                                <div>{{ $orderDetail->menuItem->Title_items }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($order->orderDetails as $orderDetail)
-                                <div>{{ $orderDetail->quantity_ordered }}</div>
-                            @endforeach
-                        </td>
-                        <td>{{ $order->status }}</td>
-                        <td>
-                            <a href="{{ route('orders.show', $order->id) }}" class="btn btn-info">Xem chi tiết</a>
-                        </td>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Món ăn</th>
+                        <th class="text-center">Số lượng</th>
+                        <th class="text-center">Trạng thái</th>
+                        <th class="text-center">Chi tiết</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($orders as $order)
+                        <tr>
+                            <td class="text-center">{{ $order->id }}</td>
+                            <td>
+                                @foreach ($order->orderDetails as $detail)
+                                    <div>- {{ $detail->menuItem->Title_items }}</div>
+                                @endforeach
+                            </td>
+                            <td class="text-center align-middle">
+                                @foreach ($order->orderDetails as $detail)
+                                    <div>{{ $detail->quantity_ordered }}</div>
+                                @endforeach
+                            </td>
+                            <td class="text-center">
+                                @if ($order->status == 'Đã giao thành công')
+                                    <span class="badge bg-success">Đã giao</span>
+                                @elseif ($order->status == 'Đang giao')
+                                    <span class="badge bg-warning text-dark">Đang giao</span>
+                                @else
+                                    <span class="badge bg-secondary">Chưa xử lý</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye"></i> Xem chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Không có đơn hàng nào.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal Thông báo đơn hàng mới -->
@@ -76,7 +103,27 @@
     <!-- Scripts -->
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+        // Lọc trạng thái đơn hàng
+        function filterOrders(status, event) {
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const badge = row.querySelector('td:nth-child(4) span');
+                const text = badge ? badge.textContent.trim() : '';
+                if (status === 'all' || text === status.replace('Đã giao thành công', 'Đã giao')) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Cập nhật nút active
+            document.querySelectorAll('.btn-group .btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Pusher xử lý đơn hàng mới
         Pusher.logToConsole = true;
 
         const pusher = new Pusher('daffc7e94b204339825f', {
@@ -87,26 +134,18 @@
         const channel = pusher.subscribe('restaurant.{{ $restaurantId }}');
 
         channel.bind('OrderPlaced', function (data) {
-
-            // Thêm vào danh sách thông báo
             const list = document.getElementById("notification-list");
             const item = document.createElement("li");
             item.textContent = `Có đơn hàng mới! Mã đơn hàng: ${data.order.id}`;
             list.appendChild(item);
 
-            // Cập nhật modal
-            document.getElementById("orderNotificationMessage").textContent =
-                `Có đơn hàng mới! Mã đơn hàng: ${data.order.id}`;
+            document.getElementById("orderNotificationMessage").textContent = `Có đơn hàng mới! Mã đơn hàng: ${data.order.id}`;
             document.getElementById("viewOrderBtn").href = `/orders/${data.order.id}`;
-
-            // Phát âm thanh
             document.getElementById('notificationSound').play();
 
-            // Hiển thị modal
             const myModal = new bootstrap.Modal(document.getElementById('orderNotificationModal'));
             myModal.show();
 
-            // Tự động ẩn sau 5 giây
             setTimeout(() => {
                 myModal.hide();
                 window.location.reload();
@@ -115,3 +154,4 @@
     </script>
 
 @endsection
+

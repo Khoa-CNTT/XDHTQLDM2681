@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!--favicon-->
-<link rel="icon" href="/admin/images/favicon-32x32.png" type="image/png" />
+<link rel="icon" href="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" type="image/png" />
 <!--plugins-->
 <link href="/admin/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 <link href="/admin/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="/admin/css/dark-theme.css" />
 <link rel="stylesheet" href="/admin/css/semi-dark.css" />
 <link rel="stylesheet" href="/admin/css/header-colors.css" />
-<title>Restaurant</title>
+<title>CallFood</title>
 {{-- CSS Thêm Mới --}}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"

@@ -123,8 +123,7 @@
                                         </div>
                                     </div> --}}
                                     <div class="cart__note mb-20">
-                                        <h3 class="cart__note--title">Note</h3>
-                                        <p class="cart__note--desc">Add special instructions for your seller...</p>
+                                        <h3 class="cart__note--title">Ghi chú</h3>
                                         <textarea class="cart__note--textarea border-radius-5"></textarea>
                                     </div>
                                     <div class="cart__summary--total mb-20">

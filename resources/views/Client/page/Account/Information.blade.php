@@ -7,7 +7,8 @@
 
                             <h3 class="account__details--title h4">Thông tin chi tiết</h3>
                             <p class="account__details--desc" id="profileInfo">
-                                Họ và tên: {{$user->username}} <br>
+                                Tài khoản: {{$user->username ?? 'Thêm tên tài khoản'}} <br>
+                                Họ và tên: {{$user->fullname ?? 'Thêm họ và tên'}} <br>
                                 Email : {{ $user->email }} <br>
                                 Số điện thoại : {{ $user->PhoneNumber ?? 'Thêm số điện thoại' }} <br>
                                 Địa chỉ : {{ $user->Address ?? 'Thêm địa chỉ' }}</p>
@@ -22,9 +23,17 @@
             @csrf
             <div style="margin-bottom: 1rem;">
                 <label style="display: block;">Họ và tên:</label>
-                <input type="text" name="username" value="{{ $user->username }}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
-                @error('username')
+                <input type="text" name="fullname" value="{{ $user->fullname}}" style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+                @error('fullname')
                 <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <label style="display: block;">Tên tài khoản:</label>
+                <input type="text" name="username" value="{{ $user->username}}"
+                    style="width: 50%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 5px;">
+                @error('username')
+                    <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div style="margin-bottom: 1rem;">

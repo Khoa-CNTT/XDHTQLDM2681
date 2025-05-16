@@ -6,6 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký Người Bán CallFood</title>
+    <link rel="icon" href="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" type="image/jpeg">
+
+    <!-- Ảnh chia sẻ link (Facebook, Zalo, etc.) -->
+    <meta property="og:image" content="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -15,7 +22,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top shadow">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="logo-placeholder.png" height="60">
+                <img src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" height="60">
                 Đăng ký Người Bán CallFood
             </a>
         </div>

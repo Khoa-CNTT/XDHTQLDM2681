@@ -16,9 +16,17 @@ class MenuController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $restaurants = Restaurant::all();
-        return view('Restaurant.page.Menu.create', compact('categories', 'restaurants'));
+
+        $user = Auth::guard('web')->user();
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if (!$restaurant) {
+            return redirect()->route('restaurant.login')->with('error', 'Nhà hàng không tồn tại.');
+        }
+
+        return view('Restaurant.page.Menu.create', compact('categories', 'restaurant'));
     }
+
 
     public function store(CreateMenuRequest $request)
     { //dd($request->all());

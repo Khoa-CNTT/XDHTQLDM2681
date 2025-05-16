@@ -106,6 +106,13 @@ Route::group(
         Route::get('/Order-Tracking', [OrderController::class, "ordertracking"])->name('order.tracking');
         Route::patch('/order/{order}/cancel', [OrderController::class, 'cancel'])
             ->name('order.cancel');
+
+        Route::get('/payment/bitcoin', [PaymentController::class, 'bitcoinDemo'])->name('payment.bitcoin');
+
+
+        //thanh toán PayPal
+        Route::get('/paypal/success', [OrderController::class, 'paypalSuccess'])->name('paypal.success');
+        Route::get('/paypal/cancel', [OrderController::class, 'paypalCancel'])->name('paypal.cancel');
         // Định nghĩa route cho trang thanh toán VNPAY
         Route::get('/payment/vnpay/{amount}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
         Route::get('/vnpay/callback', [PaymentController::class, 'vnpayCallback'])->name('payment.vnpay.callback');
@@ -160,6 +167,7 @@ Route::group(
         Route::group(["prefix" => "/restaurant"], function () {
             Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
+            Route::get("/{id}", [AdminRestaurantController::class, "show"])->name("show");
         });
         Route::get('/thong-ke', [ThongkeController::class, "index"])->name('admin.dashboard');
     }

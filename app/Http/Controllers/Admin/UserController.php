@@ -32,6 +32,7 @@ class UserController extends Controller
         ]);
 
         $user = User::create([
+            'fullname' => $request->fullname,
             'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
@@ -55,11 +56,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $request->validate([
             'username' => 'required',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'email' => 'required|email|',
             'role_ids' => 'array'
         ]);
 
         $user->update([
+            'fullname' => $request->fullname,
             'username' => $request->username,
             'email' => $request->email,
             'PhoneNumber' => $request->PhoneNumber,

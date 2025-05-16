@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Services\PayPalService;
 
 class OrderController extends Controller
 {
@@ -31,7 +32,7 @@ class OrderController extends Controller
         $cart = Cart::with(['cartItems.menuItem'])->where('user_id', $user->id)->first();
 
         $userInfo = [
-            'name' => $user->username ?? '',
+            'name' => $user->fullname ?? '',
             'phone' => $user->PhoneNumber ?? '',
             'address' => '',
         ];
@@ -138,17 +139,16 @@ class OrderController extends Controller
         ));
 
     }
-    public function checkout(CheckoutRequest $request)
+    public function checkout(CheckoutRequest $request, PayPalService $paypalService)
     {
         $user = Auth::user();
         $cart = Cart::with(['cartItems.menuItem'])->where('user_id', $user->id)->first();
         $location = $user->location;
-
-        $paymentMethod = $request->input('payment_method', 'cod'); // Mặc định là COD
+        $paymentMethod = $request->input('payment_method', 'cod');
 
         $userChanged = false;
-        if ($request->username && $request->username !== $user->username) {
-            $user->username = $request->username;
+        if ($request->fullname && $request->fullname !== $user->fullname) {
+            $user->fullname = $request->fullname;
             $userChanged = true;
         }
         if ($request->PhoneNumber && $request->PhoneNumber !== $user->PhoneNumber) {
@@ -156,8 +156,6 @@ class OrderController extends Controller
             $userChanged = true;
         }
         if ($userChanged) $user->save();
-
-
 
         $lat = $location->Latitude ?? null;
         $lon = $location->Longitude ?? null;
@@ -184,7 +182,6 @@ class OrderController extends Controller
                 $baseFee = 12000;
                 $extraFeePerKm = 5000;
                 $maxBaseKm = 3;
-
                 $shippingFee = $distance <= $maxBaseKm
                     ? $baseFee
                     : $baseFee + (ceil($distance - $maxBaseKm) * $extraFeePerKm);
@@ -192,15 +189,8 @@ class OrderController extends Controller
                 $productTotal = collect($items)->sum(fn($item) => $item->cart_quantity * $item->cart_price);
                 $finalTotal = $productTotal + $shippingFee;
 
-
-                $maxPrepTime = $items->max(function ($item) {
-                    return $item->menuItem->preparation_time ?? 0;
-                });
-
-                // Tính thời gian giao hàng theo khoảng cách (với tốc độ 30km/h)
+                $maxPrepTime = $items->max(fn($item) => $item->menuItem->preparation_time ?? 0);
                 $deliveryTime = ceil(($distance / 30) * 60);
-
-                // Tổng thời gian phục vụ = chuẩn bị + giao hàng + 10 phút buffer
                 $totalServiceTime = $maxPrepTime + $deliveryTime + 10;
 
                 $order = Order::create([
@@ -208,15 +198,14 @@ class OrderController extends Controller
                     'restaurant_id' => $restaurantId,
                     'driver_id' => null,
                     'total_amount' => $finalTotal,
-                    'is_payment' => $paymentMethod === 'cod', // true nếu COD, false nếu VNPay
+                    'is_payment' => $paymentMethod === 'cod',
                     'status' => 'xác nhận món',
                     'order_date' => now(),
                     'delivery_fee' => $shippingFee,
                     'note' => null,
                     'requested_delivery_datetime' => now()->addMinutes($totalServiceTime),
-                    'payment_method' => $paymentMethod, // lưu COD hoặc VNPAY
+                    'payment_method' => $paymentMethod,
                 ]);
-
                 $orderIds[] = $order->id;
 
                 foreach ($items as $cartItem) {
@@ -247,10 +236,34 @@ class OrderController extends Controller
 
             if ($paymentMethod === 'vnpay') {
                 session(['vnpay_order_ids' => $orderIds]);
-
                 $totalAmount = Order::whereIn('id', $orderIds)->sum('total_amount');
-
                 return redirect()->route('payment.vnpay', ['amount' => $totalAmount]);
+            }
+            if ($paymentMethod === 'bitcoin') {
+                session(['bitcoin_order_ids' => $orderIds]);
+                return redirect()->route('payment.bitcoin');
+            }
+            //dd($paymentMethod === 'paypal');
+            if ($paymentMethod === 'paypal') {
+                try {
+                    // Tính tổng tiền VND
+                    $totalVND = Order::whereIn('id', $orderIds)->sum('total_amount');
+                    //dd($totalVND);
+                    // Chuyển tỷ giá VND -> USD
+                    $exchangeRate = 25000;
+                    $totalAmountVND = round($totalVND / $exchangeRate, 2);
+                    //dd($totalAmountVND);
+                    // Gọi PayPalService để tạo thanh toán
+                    $paypalUrl = $paypalService->createPayment($totalAmountVND, $orderIds);
+                    //dd($paypalUrl);
+                    // Chuyển hướng tới PayPal
+                    return redirect($paypalUrl);
+                } catch (\Exception $e) {
+                    // Nếu có lỗi xảy ra, quay lại trang giỏ hàng và hiển thị thông báo lỗi
+                    DB::rollBack();
+                    Log::error('Lỗi khi đặt hàng: ' . $e->getMessage());
+                    return redirect()->route('account.login')->with('error', 'Có lỗi xảy ra khi đặt hàng: ' . $e->getMessage());
+                }
             }
 
             return redirect()->route('order.tracking')->with('success', 'Đặt hàng thành công!');
@@ -260,6 +273,7 @@ class OrderController extends Controller
             return redirect()->route('cart.index')->with('error', 'Có lỗi xảy ra khi đặt hàng: ' . $e->getMessage());
         }
     }
+
 
     public function ordertracking()
     {
@@ -277,6 +291,38 @@ class OrderController extends Controller
             ->get();
 
         return view('Client.page.Order.tracking', compact('orders'));
+    }
+
+    //thanh toán PayPal
+
+    protected $paypalService;
+
+    public function __construct(PayPalService $paypalService)
+    {
+        $this->paypalService = $paypalService;
+    }
+
+    public function paypalSuccess(Request $request)
+    {
+        $paymentId = $request->get('paymentId');
+        $payerId = $request->get('PayerID');
+        $orderIds = explode(',', $request->get('orderIds'));
+
+        try {
+            $this->paypalService->executePayment($paymentId, $payerId);
+
+            // Cập nhật đơn hàng: set trạng thái "đã thanh toán"
+            Order::whereIn('id', $orderIds)->update(['status' => 0]); // 0: đã thanh toán
+
+            return redirect()->route('order.tracking')->with('success', 'Thanh toán PayPal thành công!');
+        } catch (\Exception $e) {
+            return redirect()->route('order.tracking')->with('error', 'Thanh toán PayPal thất bại: ' . $e->getMessage());
+        }
+    }
+
+    public function paypalCancel()
+    {
+        return redirect()->route('order.tracking')->with('error', 'Bạn đã hủy thanh toán PayPal.');
     }
 
 
@@ -298,7 +344,6 @@ class OrderController extends Controller
     public function cancel(Order $order)
     {
         $notCancellableStatuses = [
-            'xác nhận món',
             'Chế biến xong ,chờ shipper đến nhận',
             'Đã nhận',
             'Đã đến điểm lấy, đang giao cho khách',

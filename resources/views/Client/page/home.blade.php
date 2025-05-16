@@ -2932,7 +2932,11 @@
                                         </ul>
                                     </div>
                                     <div class="product__items--content text-center">
-                                        <a class="add__to--cart__btn" href="{{ route('cart.add', $food->id) }}">+ Thêm vào giỏ</a>
+                                        @if($food->Quantity > 0)
+                                            <a class="add__to--cart__btn" href="{{ route('cart.add', $food->id) }}">+ Thêm vào giỏ</a>
+                                        @else
+                                        <p class="text-danger">Hết món</p>
+                          @endif
                                         <h3 class="product__items--content__title style2 h4">
                                             <a href="{{ route('menu.item.detail', ['id' => $food->id]) }}">{{ $food->Title_items }}</a>
                                         </h3>

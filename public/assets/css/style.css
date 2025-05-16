@@ -6,38 +6,38 @@
   Version: 1.0.0
 
   ----------------------------
-  [Table of contents CSS] 
+  [Table of contents CSS]
   ----------------------------
 
     1. Base CSS
     2. Header css
     3. Slider css
-    4. Banner css 
-    5. Product card css 
+    4. Banner css
+    5. Product card css
     6. Blog css
     7. Shipping css
     8. Testimonial css
     9. Brand logo css
-    10. Instagram css 
+    10. Instagram css
     11. Accordion css
-    12. Footer css 
+    12. Footer css
     13. Quickview css
     14. Product details css
     15. Preloader css
     16. About page css
     17. Breadcrumb css
-    18. Cart page css 
+    18. Cart page css
     19. Checkout page css
     20. Compare page css
-    21. Contact page css 
-    22. Faq page css 
-    23. My account page css 
+    21. Contact page css
+    22. Faq page css
+    23. My account page css
     24. Portfolio css
-    25. Privacy policy css 
-    26. Shop page css 
-    27. Blog details css 
-    28. Login page css 
-    29. Error 404 page css 
+    25. Privacy policy css
+    26. Shop page css
+    27. Blog details css
+    28. Login page css
+    29. Error 404 page css
     30. Newsletter popup css
 
 */
@@ -3994,8 +3994,8 @@ input[type=number]::-webkit-outer-spin-button {
   color: var(--theme-color);
 }
 
-/* 
-    3. Slider css 
+/*
+    3. Slider css
 */
 .hero__slider--items {
   position: relative;
@@ -4928,8 +4928,8 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-/* 
-    5. Product card css 
+/*
+    5. Product card css
 */
 .section__heading--subtitle {
   font-size: 1.5rem;
@@ -6241,8 +6241,8 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 0 10px 15px;
 }
 
-/* 
-    4. Banner css 
+/*
+    4. Banner css
 */
 .banner__items:hover .banner__items--thumbnail__img {
   -webkit-transform: scale(1.03);
@@ -7215,8 +7215,8 @@ input[type=number]::-webkit-outer-spin-button {
   opacity: 0.8;
 }
 
-/* 
-    6. Blog css 
+/*
+    6. Blog css
 */
 .blog__items:hover .blog__items--img {
   -webkit-transform: scale(1.05);
@@ -7426,8 +7426,8 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-/* 
-    8. Testimonial css 
+/*
+    8. Testimonial css
 */
 .testimonial__bg {
   background: url(../img/banner/bg-full2.png);
@@ -7671,8 +7671,8 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-/* 
-    7. Shipping css 
+/*
+    7. Shipping css
 */
 @media only screen and (max-width: 767px) {
   .shipping__section.section--padding {
@@ -7952,8 +7952,8 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-/* 
-    12. Footer css 
+/*
+    12. Footer css
 */
 .footer__bg {
   background: var(--bg-gray-color);
@@ -8450,8 +8450,8 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 
-/* 
-    13. Quickview css 
+/*
+    13. Quickview css
 */
 .modal {
   position: fixed;
@@ -8793,8 +8793,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    11. Accordion css 
+/*
+    11. Accordion css
 */
 .accordion__bg {
   background: url(../img/banner/bg-full5.png);
@@ -8919,8 +8919,8 @@ input.quickview__value--number {
   pointer-events: none;
 }
 
-/* 
-    24. Portfolio css 
+/*
+    24. Portfolio css
 */
 .portfolio__items--thumbnail::before {
   position: absolute;
@@ -8977,8 +8977,8 @@ input.quickview__value--number {
   color: var(--white-color);
 }
 
-/* 
-    10. Instagram css 
+/*
+    10. Instagram css
 */
 .instagram__thumbnail {
   overflow: hidden;
@@ -9061,8 +9061,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    9. Brand logo css 
+/*
+    9. Brand logo css
 */
 @media only screen and (max-width: 767px) {
   .brand__logo--section.section--padding {
@@ -9111,11 +9111,11 @@ input.quickview__value--number {
           transform: scale(1.05);
 }
 
-/* 
-    17. Breadcrumb css 
+/*
+    17. Breadcrumb css
 */
 .breadcrumb__bg {
-  background: url(../img/banner/breadcrumb-bg.jpg);
+  background: url(/assets/img/banner/banner.png);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -9215,8 +9215,8 @@ input.quickview__value--number {
           transform: rotate(30deg);
 }
 
-/* 
-    16. About page css 
+/*
+    16. About page css
 */
 @media only screen and (max-width: 991px) {
   .team__section.section--padding {
@@ -9446,8 +9446,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    26. Shop page css 
+/*
+    26. Shop page css
 */
 .shop__header {
   padding: 1.5rem 2rem;
@@ -10194,8 +10194,8 @@ input.quickview__value--number {
   color: var(--white-color);
 }
 
-/* 
-    14. Product details css 
+/*
+    14. Product details css
 */
 .product__details--media {
   position: -webkit-sticky;
@@ -10781,8 +10781,8 @@ input.quickview__value--number {
   top: 0;
 }
 
-/* 
-    27. Blog details css 
+/*
+    27. Blog details css
 */
 .blog__sidebar--widget {
   position: -webkit-sticky;
@@ -11097,8 +11097,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    21. Contact page css 
+/*
+    21. Contact page css
 */
 .contact__form {
   background: var(--white-color);
@@ -11353,8 +11353,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    18. Cart page css 
+/*
+    18. Cart page css
 */
 @media only screen and (max-width: 575px) {
   .cart__title {
@@ -11694,8 +11694,8 @@ input.quickview__value--number {
   }
 }
 
-/* 
-    19. Checkout page css 
+/*
+    19. Checkout page css
 */
 @media only screen and (max-width: 767px) {
   .checkout__page--inner {
@@ -12354,8 +12354,8 @@ details > summary::-webkit-details-marker {
   width: 100%;
 }
 
-/* 
-    23. My account page css 
+/*
+    23. My account page css
 */
 .my__account--section__inner {
   background: var(--white-color);
@@ -12651,8 +12651,8 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
-    29. Error 404 page css 
+/*
+    29. Error 404 page css
 */
 .error__content--img {
   margin: 0 auto 4rem;
@@ -12760,8 +12760,8 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
-    28. Login page css 
+/*
+    28. Login page css
 */
 .account__login {
   background: var(--white-color);
@@ -13008,8 +13008,8 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
-    20. Compare page css 
+/*
+    20. Compare page css
 */
 .compare__table {
   border: 1px solid var(--border-color2);
@@ -13102,8 +13102,8 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
-    22. Faq page css 
+/*
+    22. Faq page css
 */
 .face__step {
   margin-bottom: 3.5rem;
@@ -13160,8 +13160,8 @@ details > summary::-webkit-details-marker {
   pointer-events: none;
 }
 
-/* 
-    15. Preloader css 
+/*
+    15. Preloader css
 */
 .ctn-preloader {
   -webkit-box-align: center;
@@ -13363,8 +13363,8 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
-    25. Privacy policy css 
+/*
+    25. Privacy policy css
 */
 .privacy__policy--content {
   margin-bottom: 2rem;
@@ -13424,7 +13424,7 @@ details > summary::-webkit-details-marker {
   }
 }
 
-/* 
+/*
     30. Newsletter popup css
 */
 /* ANIMATIONS

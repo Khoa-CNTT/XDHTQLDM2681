@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class DashboardController extends Controller
 {
@@ -26,8 +27,9 @@ class DashboardController extends Controller
             return redirect()->route('restaurant.login')->with('error', 'Nhà hàng không tồn tại.');
         }
 
-        // Truy xuất thông tin vị trí liên kết
-        $location = $restaurant->location;
+
+        $location = $restaurant->locations->first();
+
 
         return view('Restaurant.page.Account.info', compact('restaurant', 'location'));
     }
@@ -58,26 +60,13 @@ class DashboardController extends Controller
         }
 
         //dd($restaurant);
-        $locations = Location::all();
+        $location = $restaurant->locations->first();
 
-        return view('Restaurant.page.Account.edit', compact('restaurant', 'locations'));
+
+        return view('Restaurant.page.Account.edit', compact('restaurant', 'location'));
     }
     public function updateRestaurantInfo(Request $request)
     {
-        //dd($request->all());
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'PhoneNumber' => 'required|string|max:15',
-        //     'status' => 'required|string|max:50',
-        //     'start_time' => 'required|date_format:H:i',
-        //     'end_time' => 'required|date_format:H:i',
-        //     'business_type' => 'required|string|max:100',
-        //     'description' => 'nullable|string',
-        //     'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'business_license' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        //     'location_id' => 'required|exists:locations,id',
-        // ]);
-
         $user = Auth::guard('web')->user();
         $restaurant = Restaurant::where('email', $user->email)->first();
 
@@ -85,6 +74,7 @@ class DashboardController extends Controller
             return redirect()->route('login.restaurant')->with('error', 'Nhà hàng không tồn tại.');
         }
 
+        // Lấy các thông tin cơ bản để cập nhật nhà hàng
         $dataToUpdate = $request->only([
             'name',
             'PhoneNumber',
@@ -93,34 +83,72 @@ class DashboardController extends Controller
             'end_time',
             'business_type',
             'description',
-            'location_id',
         ]);
 
-        // Xử lý upload logo
+        // Xử lý upload logo nếu có
         if ($request->hasFile('logo')) {
             $logoFile = $request->file('logo');
-            $logoName = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $logoExtension = $logoFile->getClientOriginalExtension();
-            $logoNewName = $logoName . rand(0, 999) . '.' . $logoExtension;
+            $logoNewName = pathinfo($logoFile->getClientOriginalName(), PATHINFO_FILENAME)
+                . rand(0, 999) . '.' . $logoFile->getClientOriginalExtension();
             $logoFile->move(public_path('image/logo'), $logoNewName);
             $dataToUpdate['logo'] = $logoNewName;
         }
 
-
+        // Xử lý upload giấy phép kinh doanh nếu có
         if ($request->hasFile('business_license')) {
             $licenseFile = $request->file('business_license');
-            $licenseName = pathinfo($licenseFile->getClientOriginalName(), PATHINFO_FILENAME);
-            $licenseExtension = $licenseFile->getClientOriginalExtension();
-            $licenseNewName = $licenseName . rand(0, 999) . '.' . $licenseExtension;
+            $licenseNewName = pathinfo($licenseFile->getClientOriginalName(), PATHINFO_FILENAME)
+                . rand(0, 999) . '.' . $licenseFile->getClientOriginalExtension();
             $licenseFile->move(public_path('image/restaurant'), $licenseNewName);
-
             $dataToUpdate['business_license'] = $licenseNewName;
         }
 
+        // Cập nhật thông tin nhà hàng
         $restaurant->update($dataToUpdate);
+
+        // Ghép địa chỉ từ các select và input
+        $city = $request->input('City');        // select
+        $district = $request->input('District'); // select
+        $ward = $request->input('Ward');        // select
+        $address = $request->input('Address');  // input text
+
+        $fullAddress = $address . ', ' . $ward . ', ' . $district . ', ' . $city;
+
+        // Gọi API OpenStreetMap (Nominatim) để lấy toạ độ
+        $response = Http::withHeaders([
+            'User-Agent' => 'CallFood/1.0 (longkolp16@gmail.com)'
+        ])->get('https://nominatim.openstreetmap.org/search', [
+            'q' => $fullAddress,
+            'format' => 'json',
+            'addressdetails' => 1,
+            'limit' => 1,
+        ]);
+
+        $latitude = null;
+        $longitude = null;
+
+        if ($response->successful() && count($response->json()) > 0) {
+            $data = $response->json()[0];
+            $latitude = $data['lat'];
+            $longitude = $data['lon'];
+        }
+
+        // Lưu hoặc cập nhật thông tin địa chỉ (Location)
+        Location::updateOrCreate(
+            ['restaurant_id' => $restaurant->id],
+            [
+                'City' => $city,
+                'District' => $district,
+                'Ward' => $ward,
+                'Address' => $address,
+                'Latitude' => $latitude,
+                'Longitude' => $longitude,
+            ]
+        );
 
         return redirect()->route('restaurant.info')->with('success', 'Thông tin nhà hàng đã được cập nhật.');
     }
+
     public function index(Request $request)
     {
         // Xác thực và lấy thông tin nhà hàng

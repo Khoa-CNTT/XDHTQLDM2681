@@ -1,44 +1,53 @@
 <section class="shipping__section2 shipping__style3">
     <div class="container">
-        <div class="shipping__section2--inner shipping__style3--inner d-flex justify-content-between">
-            <div class="shipping__items2 d-flex align-items-center">
-                <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping1.png" alt="Hình ảnh giao hàng">
-                </div>
-                <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Giao hàng</h2>
-                    <p class="shipping__items2--content__desc">Từ những người bán được chọn lọc</p>
-                </div>
-            </div>
-            <div class="shipping__items2 d-flex align-items-center">
-                <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping2.png" alt="Hình ảnh thanh toán">
-                </div>
-                <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Thanh toán</h2>
-                    <p class="shipping__items2--content__desc">Visa, Paypal, Master</p>
+        <div class="row text-center">
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping1.png" alt="Hình ảnh giao hàng">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Giao hàng</h2>
+                        <p class="shipping__items2--content__desc">Từ những người bán được chọn lọc</p>
+                    </div>
                 </div>
             </div>
-            <div class="shipping__items2 d-flex align-items-center">
-                <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping3.png" alt="Hình ảnh đổi trả">
-                </div>
-                <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Đổi trả</h2>
-                    <p class="shipping__items2--content__desc">Đảm bảo hoàn tiền trong 30 ngày</p>
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping2.png" alt="Hình ảnh thanh toán">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Thanh toán</h2>
+                        <p class="shipping__items2--content__desc">Visa, Paypal, Master</p>
+                    </div>
                 </div>
             </div>
-            <div class="shipping__items2 d-flex align-items-center">
-                <div class="shipping__items2--icon">
-                    <img class="display-block" src="/image/other/shipping4.png" alt="Hình ảnh hỗ trợ">
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping3.png" alt="Hình ảnh đổi trả">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Đổi trả</h2>
+                        <p class="shipping__items2--content__desc">Đảm bảo hoàn tiền trong 30 ngày</p>
+                    </div>
                 </div>
-                <div class="shipping__items2--content">
-                    <h2 class="shipping__items2--content__title h3">Hỗ trợ</h2>
-                    <p class="shipping__items2--content__desc">Hỗ trợ mọi lúc</p>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/assets/image/other/shipping4.png" alt="Hình ảnh hỗ trợ">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Hỗ trợ</h2>
+                        <p class="shipping__items2--content__desc">Hỗ trợ mọi lúc</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </section>
 
 <footer class="footer__section footer__bg">
@@ -63,7 +72,7 @@
                             <ul class="footer__widget--social d-flex">
                                 <li class="footer__widget--social__list">
                                     <a class="footer__widget--social__icon" target="_blank"
-                                        href="https://www.facebook.com">
+                                        href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="7.667" height="16.524"
                                             viewBox="0 0 7.667 16.524">
                                             <path data-name="Path 237"
@@ -125,17 +134,17 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="about.html">Về chúng tôi</a></li>
+                                    href="#">Về chúng tôi</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="contact.html">Liên lạc </a></li>
+                                    href="#">Liên lạc </a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="wishlist.html">Yêu thích</a></li>
+                                    href="#">Yêu thích</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="portfolio.html">Hồ sơ</a></li>
+                                    href="#">Hồ sơ</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="privacy-policy.html">Chính sách bảo mật</a></li>
+                                    href="#">Chính sách bảo mật</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="faq.html">Thường xuyên</a></li>
+                                    href="#">Thường xuyên</a></li>
                         </ul>
                     </div>
                 </div>
@@ -152,8 +161,8 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="shop.html">Tất cả thực đơn</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                    href="/menu/index">Tất cả thực đơn</a></li>
+                            {{-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Grocery & Frozen</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Fresh Fruits</a></li>
@@ -162,7 +171,7 @@
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Organic Foods</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="shop.html">Health & Wellness</a></li>
+                                    href="shop.html">Health & Wellness</a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -179,17 +188,17 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="my-account.html">Tài khoản của tôi</a></li>
+                                    href="/account/login">Tài khoản của tôi</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="cart.html">Giỏ hàng</a></li>
+                                    href="/client/cart">Giỏ hàng</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="checkout.html">Thanh toán</a></li>
+                                    href="/client/checkout">Thanh toán</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="login.html">Đăng nhập</a></li>
+                                    href="/account/login">Đăng nhập</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="login.html">Đăng ký</a></li>
+                                    href="/account/login">Đăng ký</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="compare.html">So sánh</a></li>
+                                    href="#">So sánh</a></li>
                         </ul>
                     </div>
                 </div>
@@ -207,13 +216,13 @@
                         <div class="footer__widget--inner">
                             <p class="footer__widget--desc m-0">Nhận thông tin cập nhật bằng cách đăng ký nhận bản tin hàng tuần của chúng tôi</p>
                             <div class="newsletter__subscribe">
-                                <form class="newsletter__subscribe--form" action="#">
+                                {{-- <form class="newsletter__subscribe--form" action="#">
                                     <label>
                                         <input class="newsletter__subscribe--input" placeholder="Email của bạn ...."
                                             type="text">
                                     </label>
                                     <button class="newsletter__subscribe--button" type="submit">Đặt ngay</button>
-                                </form>
+                                </form> --}}
                             </div>
                         </div>
                     </div>
@@ -224,27 +233,10 @@
             <div class="row justify-content-between align-items-center">
                 <div class="col-12 col-md-auto">
                     <p class="copyright__content">Copyright © 2025 <a class="copyright__content--link text__primary"
-                            href="index.html">Grocee</a> . All Rights Reserved.Design By Team 71</p>
+                            href="/">CallFood</a> .Chúc quý khách một ngày tốt lành</p>
                 </div>
-                <div class="col-12 col-md-auto">
-                    <div class="footer__payment">
-                        <ul class="footer__payment--inner d-flex">
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment1.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment2.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment3.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment4.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment5.png"
-                                    alt="payment-img"></li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-    <img class="footer__position--shape__one" src="/assets/img/other/footer-shape1.png" alt="footer-shape">
-    <img class="footer__position--shape__two" src="/assets/img/other/footer-shape2.png" alt="footer-shape">
 </footer>

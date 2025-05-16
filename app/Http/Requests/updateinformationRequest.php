@@ -22,6 +22,7 @@ class updateinformationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'fullname' => 'required|string|max:255',
             'username' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' ,
             'PhoneNumber' => [
@@ -41,6 +42,7 @@ class updateinformationRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'fullname.required' => 'Họ và tên không được để trống.',
             'username.required' => 'Tên không được để trống.',
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không đúng định dạng.',

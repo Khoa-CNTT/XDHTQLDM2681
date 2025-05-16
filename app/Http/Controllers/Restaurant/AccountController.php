@@ -23,6 +23,7 @@ class AccountController extends Controller
 
         if (Auth::guard('web')->attempt($credentials)) {
             $user = Auth::user();
+            //dd($user);
 
             $hasRestaurantRole = $user->roles()->where('name', 'Nhà hàng')->exists();
 

@@ -194,10 +194,10 @@
                                             <div class="col-lg-6 mb-12">
                                                 <div class="checkout__input--list">
                                                     <label>
-                                                        <input class="checkout__input--field border-radius-5" name="username" placeholder="Tên (không bắt buộc)"
-                                                            type="text" value="{{ old('username', $userInfo['name']) }}">
+                                                        <input class="checkout__input--field border-radius-5" name="fullname" placeholder="Tên (không bắt buộc)"
+                                                            type="text" value="{{ old('fullname', $userInfo['name']) }}">
                                                     </label>
-                                                    @error('username')
+                                                    @error('fullname')
                                                         <div class="text-danger mt-1">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -245,7 +245,7 @@
                                             <td class="cart__table--body__list">
                                                 <div class="product__image two d-flex align-items-center">
                                                     <div class="product__thumbnail border-radius-5">
-                                                        <a href="#"><img class="border-radius-5"
+                                                        <a href="{{ route('menu.item.detail', ['id' => $item->menuItem->id]) }}"><img class="border-radius-5"
                                                                 src="{{ asset('public/public/image/foods/' . $item->menuItem->Image) }}"
                                                                 alt="cart-product"></a>
                                                         <span class="product__thumbnail--quantity">{{ $item->cart_quantity }}</span>
@@ -325,10 +325,29 @@
                             <input type="radio" name="payment_method" value="vnpay">
                             Thanh toán VNPay
                         </label>
+                        <label class="d-block">
+                            <input type="radio" name="payment_method" value="paypal">
+                            Thanh toán PayPal
+                        </label>
+                        <label class="d-block">
+                            <input type="radio" name="payment_method" value="bitcoin">
+                            Thanh toán bằng Bitcoin (demo)
+                        </label>
+
                     </div>
 
                     <!-- Nút thanh toán -->
-                    <button type="submit" class="btn btn-primary">Đặt hàng</button>
+                    @if(isset($cart) || is_array($cart) || count($cart) > 0)
+                        <div class="checkout__btn--area">
+                            <button type="submit" class="checkout__btn primary__btn">Đặt đơn</button>
+                        </div>
+                    @else
+                        <div class="checkout__btn--area text-center">
+                            <p class="text-danger">Không thể đặt hàng.</p>
+                        </div>
+                    @endif
+
+
 
 
                 </aside>

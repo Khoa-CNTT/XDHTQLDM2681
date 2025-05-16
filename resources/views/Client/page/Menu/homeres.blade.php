@@ -326,7 +326,7 @@
                                                                                                                     src="{{asset('public/public/image/foods/' . $result->Image) }}" alt="product-img" style="width: 250px; height: 170px; object-fit: cover;">
                                                                                                             </a>
                                                                                                             <div class="product__badge">
-                                                                                                                <span class="product__badge--items sale">Sale</span>
+                                                                                                                <span class="product__badge--items sale">món ăn ngon</span>
                                                                                                             </div>
                                                                                                             <ul class="product__items--action">
                                                                                                                 <li class="product__items--action__list">
@@ -384,7 +384,10 @@
                                                                                                         </div>
                                                                                                         <div
                                                                                                             class="product__items--content product__items2--content text-center">
-                                                                                                            <a class="add__to--cart__btn" href=  "{{ route('cart.add', $result->id) }}">+ Add to cart</a>
+                                                                                                            @if($result->Quantity > 0)
+                                                                                                                <a class="add__to--cart__btn" href="{{ route('cart.add', $result->id) }}">+ Thêm vào giỏ</a>
+                                                                                                            @else
+                                                                                                            <p class="text-danger">Hết món</p>      @endif
                                                                                                             <h3 class="product__items--content__title h4"><a
                                                                                                                     href="product-details.html">{{$result->Title_items}}</a></h3>
                                                                                                             <div class="product__items--price">

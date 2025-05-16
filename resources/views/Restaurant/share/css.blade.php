@@ -4,7 +4,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!--favicon-->
-<link rel="icon" href="/admin/images/favicon-32x32.png" type="image/png" />
+<link rel="icon" href="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" type="image/png" />
 <!--plugins-->
 <link href="/admin/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
 <link href="/admin/plugins/simplebar/css/simplebar.css" rel="stylesheet" />

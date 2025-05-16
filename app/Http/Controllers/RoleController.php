@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class RoleController extends Controller
         return view('Admin.page.Role.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateRoleRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',

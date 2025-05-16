@@ -49,60 +49,7 @@
                     <div class="menu-title">Nhận Thông báo Tin nhắn từ khách hàng</div>
                 </a>
             </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/customer/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
-                    </div>
-                    <div class="menu-title">Khách hàng</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/order/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-calendar-check"></i>
-                    </div>
-                    <div class="menu-title">Bán Hàng</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/import/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-vault"></i>
-                    </div>
-                    <div class="menu-title">Nhập Hàng</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/admin/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-user"></i></i>
-                    </div>
-                    <div class="menu-title">Tài Khoản</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
-                    <div class="parent-icon"><i class="fa-solid fa-bars"></i>
-                    </div>
-                    <div class="menu-title">Menu</div>
-                </a>
-                <ul class="dropdown-menu">
-                    <li> <a class="dropdown-item" href="/admin/order/get-menu"><i
-                                class="fa-solid fa-fire-burner"></i>Menu Bếp</a>
-                    </li>
-                    <li> <a class="dropdown-item" href="/admin/order/get-real"><i
-                                class="fa-solid fa-cart-flatbed-suitcase"></i></i>Menu Tiếp Thục</a>
-                    </li>
-                </ul>
-            </li>
 
-
-
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/role/index">
-                    <div class="parent-icon">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <div class="menu-title">Phân Quyền</div>
-                </a>
-            </li>
         </ul>
     </nav>
 </div>
