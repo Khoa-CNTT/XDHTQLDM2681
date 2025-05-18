@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Order;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -26,6 +28,7 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'token',
+        'fullname',
 
         'location_id',
     ];
@@ -36,6 +39,17 @@ class User extends Authenticatable
     public function location()
     {
         return $this->belongsTo(Location::class, 'location_id');
+    }
+    public function preferences()
+    {
+        return $this->hasOne(UserPrences::class);
+    }
+    /**
+     * Get all orders for the user
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 
 

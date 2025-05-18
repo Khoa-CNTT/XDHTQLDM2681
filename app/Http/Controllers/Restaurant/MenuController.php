@@ -16,9 +16,17 @@ class MenuController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $restaurants = Restaurant::all();
-        return view('restaurant.page.menu.create', compact('categories', 'restaurants'));
+
+        $user = Auth::guard('web')->user();
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if (!$restaurant) {
+            return redirect()->route('restaurant.login')->with('error', 'Nhà hàng không tồn tại.');
+        }
+
+        return view('Restaurant.page.Menu.create', compact('categories', 'restaurant'));
     }
+
 
     public function store(CreateMenuRequest $request)
     { //dd($request->all());
@@ -35,7 +43,7 @@ class MenuController extends Controller
         $menuItem->Status = $request->Status;
         $menuItem->OldPrice = $request->OldPrice;
         $menuItem->description = $request->description;
-        
+
         $menuItem->approved = false;
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
@@ -80,7 +88,7 @@ class MenuController extends Controller
             ->where('restaurant_id', $restaurant->id)
             ->paginate(10);
 
-        return view('restaurant.page.menu.index', compact('menuItems'));
+        return view('Restaurant.page.Menu.index', compact('menuItems'));
     }
 
 
@@ -93,7 +101,7 @@ class MenuController extends Controller
         $menuItem = MenuItem::findOrFail($id);
         $categories = Category::all();
         $restaurants = Restaurant::all();
-        return view('restaurant.page.menu.edit', compact('menuItem', 'categories', 'restaurants'));
+        return view('Restaurant.page.Menu.edit', compact('menuItem', 'categories', 'restaurants'));
     }
 
     public function update(Request $request, $id)

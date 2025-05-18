@@ -22,7 +22,7 @@ class CheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => ['nullable', 'string', 'max:255'],
+            'fullname' => ['nullable', 'string', 'max:255'],
             'PhoneNumber' => ['required', 'regex:/^0[0-9]{9}$/'],
         ];
     }
@@ -32,7 +32,7 @@ class CheckoutRequest extends FormRequest
         return [
             'PhoneNumber.required' => 'Vui lòng nhập số điện thoại.',
             'PhoneNumber.regex' => 'Số điện thoại không đúng định dạng (phải có 10 chữ số và bắt đầu bằng số 0).',
-            'username.max' => 'Tên không được vượt quá 255 ký tự.',
+            'fullname.max' => 'Tên không được vượt quá 255 ký tự.',
         ];
     }
 }

@@ -18,7 +18,7 @@ class DriverController extends Controller
     {
         $lat = $request->lat;
         $lon = $request->lon;
-        $radius = 100;
+        $radius = 5;
 
         $results = DB::table('locations')
             ->join('restaurants', 'locations.restaurant_id', '=', 'restaurants.id')
@@ -100,7 +100,7 @@ class DriverController extends Controller
         }
 
         // Trả về view với các dữ liệu cần thiết
-        return view('client.page.restaurant.nearby', compact('restaurants_item', 'results', 'categories', 'products', 'relatedItems'));
+        return view('Client.page.Restaurant.nearby', compact('restaurants_item', 'results', 'categories', 'products', 'relatedItems'));
     }
 
     /**

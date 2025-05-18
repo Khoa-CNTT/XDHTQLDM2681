@@ -6,7 +6,7 @@
             <button class="btn btn-light me-2 d-lg-none" id="menuToggle">☰</button>
 
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="assets/img/logo/logo.jpg" class="rounded-circle me-2" width="40" height="40">
+                <img src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" class="rounded-circle me-2" width="40" height="40">
                 CallFood - Shipper
             </a>
 

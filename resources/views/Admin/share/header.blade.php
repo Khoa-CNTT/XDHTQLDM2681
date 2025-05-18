@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand">
             <div class="topbar-logo-header">
                 <div class="">
-                    <img src="/image/restaurant.png" class="logo-icon" alt="logo icon">
+                    <img src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" class="logo-icon" alt="logo icon">
                 </div>
                 <div class="">
                     <h4 class="logo-text">QUẢN LÝ</h4>

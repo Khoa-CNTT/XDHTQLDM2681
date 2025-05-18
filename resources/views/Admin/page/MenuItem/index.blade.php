@@ -79,7 +79,7 @@
                 row.innerHTML = `
                     <td>${mon.id}</td>
                     <td>${mon.Title_items}</td>
-                    <td><img src="/public/image/foods/${mon.Image}" alt="${mon.Title_items}"
+                    <td><img src="public/public/image/foods/${mon.Image}" alt="${mon.Title_items}"
                         style="width:70px; height:50px; object-fit:cover; border-radius:10px;"></td>
                     <td>
                         <span class="badge ${mon.approved == 1 ? 'bg-success' : 'bg-warning text-dark'}">

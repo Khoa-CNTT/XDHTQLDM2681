@@ -41,6 +41,7 @@ use App\Http\Controllers\Restaurant\ResRegisterController;
 use App\Http\Controllers\Restaurant\RestaurantController as RestaurantRestaurantController;
 use App\Models\Order;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientController;
 
 Route::get('/', [HomeController::class, "index"]);
 
@@ -60,7 +61,7 @@ Route::get('/restaurant/chat', [ChatBotController::class, 'chatAsRestaurant'])->
 Route::post('/chat/send', [ChatBotController::class, 'send']);
 
 
-Route::get('/account/login', [AccountController::class, "index"]);
+Route::get('/account/login', [AccountController::class, "index"])->name('login.index');
 Route::post("/account/actionlogin", [AccountController::class, "actionLogin"])->name("login");
 Route::post("/account/register", [AccountController::class, "actionregister"])->name("register");
 Route::get('/verify-otp', [AccountController::class, 'showOTPForm'])->name('verify.otp_client');
@@ -106,6 +107,13 @@ Route::group(
         Route::get('/Order-Tracking', [OrderController::class, "ordertracking"])->name('order.tracking');
         Route::patch('/order/{order}/cancel', [OrderController::class, 'cancel'])
             ->name('order.cancel');
+
+        Route::get('/payment/bitcoin', [PaymentController::class, 'bitcoinDemo'])->name('payment.bitcoin');
+
+
+        //thanh toán PayPal
+        Route::get('/paypal/success', [OrderController::class, 'paypalSuccess'])->name('paypal.success');
+        Route::get('/paypal/cancel', [OrderController::class, 'paypalCancel'])->name('paypal.cancel');
         // Định nghĩa route cho trang thanh toán VNPAY
         Route::get('/payment/vnpay/{amount}', [PaymentController::class, 'vnpay'])->name('payment.vnpay');
         Route::get('/vnpay/callback', [PaymentController::class, 'vnpayCallback'])->name('payment.vnpay.callback');
@@ -118,7 +126,7 @@ Route::group(
         Route::post('/information/update', [AccountController::class, 'updateinformation'])->name('account.information.update');
         Route::post('/account/location/update', [AccountController::class, 'update'])->name('location.update');
         Route::post('/review/submit', [ReviewController::class, 'submitReview']);
-    });
+    })->middleware('client');
 
 //admin
 Route::group(
@@ -160,6 +168,7 @@ Route::group(
         Route::group(["prefix" => "/restaurant"], function () {
             Route::get("/index", [AdminRestaurantController::class, "index"])->name("index");
             Route::patch('/approve/{id}', [AdminRestaurantController::class, 'approve'])->name('restaurant.approve');
+            Route::get("/{id}", [AdminRestaurantController::class, "show"])->name("show");
         });
         Route::get('/thong-ke', [ThongkeController::class, "index"])->name('admin.dashboard');
     }
@@ -239,3 +248,11 @@ Route::middleware(['shipper'])->group(
         Route::post('/shipper/update-password', [OrderShipperController::class, 'updatePassword'])->name('shipper.updatePassword');
     }
 );
+
+// Client routes with middleware
+Route::middleware(['auth', 'client'])->group(function () {
+    Route::get('/client/dashboard', [ClientController::class, 'dashboard'])->name('client.dashboard');
+    Route::get('/client/profile', [ClientController::class, 'profile'])->name('client.profile');
+    Route::get('/client/orders', [ClientController::class, 'orders'])->name('client.orders');
+    // Add more client routes here
+});

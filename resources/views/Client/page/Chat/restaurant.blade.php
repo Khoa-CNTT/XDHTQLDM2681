@@ -1,5 +1,5 @@
 
-    @extends('Restaurant.Share.master')
+    @extends('Restaurant.share.master')
     @section('noi_dung')
         <style>
             body {

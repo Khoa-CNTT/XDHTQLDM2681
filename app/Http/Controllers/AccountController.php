@@ -58,7 +58,7 @@ class AccountController extends Controller
     {
         $user = Auth::user();
 
-        $fields = ['username', 'email', 'PhoneNumber', 'Address'];
+        $fields = ['fullname', 'username', 'email', 'PhoneNumber', 'Address' ];
 
         foreach ($fields as $field) {
             if ($request->filled($field) && $request->input($field) !== $user->$field) {
@@ -80,6 +80,7 @@ class AccountController extends Controller
 
     public function actionLogin(UserLoginRequest $request)
     {
+        //dd($request->all());
         $credentials = [
             'username' => $request->username_client,
             'password' => $request->password_client,
@@ -88,8 +89,7 @@ class AccountController extends Controller
         if (Auth::guard('web')->attempt($credentials)) {
             $user = Auth::user();
 
-
-            $adminRole = Role::where('name', 'Admin')->first();
+            $adminRole = Role::where('name', 'admin')->first();
             $customerRole = Role::where('name', 'Khách hàng')->first();
 
             if ($adminRole && $user->roles->contains($adminRole->id)) {
@@ -97,15 +97,17 @@ class AccountController extends Controller
             } elseif ($customerRole && $user->roles->contains($customerRole->id)) {
                 return redirect('/');
             } else {
-                Auth::logout(); // Nếu không có quyền phù hợp
+                Auth::logout();
                 return redirect('/account/login')->with('error', 'Bạn không có quyền truy cập.');
             }
         } else {
             return redirect('/account/login')->with('error', 'Sai tên đăng nhập hoặc mật khẩu.');
         }
     }
+
     public function actionRegister(ResisterUserRequest $request)
     {
+
 
 
         if (User::where('username', $request->username)->exists()) {

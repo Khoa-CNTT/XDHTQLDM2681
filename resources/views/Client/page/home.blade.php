@@ -19,7 +19,7 @@
                                 <div class="product__items product__bg">
                                     <div class="product__items--thumbnail">
                                         <a class="product__items--link"   href="{{ route('menu.item.detail', ['id' => $restaurant->id]) }}">
-                                            <img class="product__items--img" src="{{ asset('public/image/foods/' . $restaurant->Image) }}"
+                                            <img class="product__items--img" src="{{ asset('public/public/image/foods/' . $restaurant->Image) }}"
                                                 alt="{{$restaurant->Title_items}}">
                                             <div
                                                 class="product__categories--content d-flex justify-content-between align-items-center">
@@ -2905,10 +2905,10 @@
                                     <div class="product__items--thumbnail">
                                         <a class="product__items--link"  href="{{ route('menu.item.detail', ['id' => $result->id]) }}">
                                             <img class="product__items--img product__primary--img"
-                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
+                                                src="{{ asset('public/public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
                                                 style="width: 250px; height: 170px; object-fit: cover;">
                                             <img class="product__items--img product__secondary--img"
-                                                src="{{ asset('public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
+                                                src="{{ asset('public/public/image/foods/' . $food->Image) }}" alt="{{ $food->Title_items }}"
                                                 style="width: 250px; height: 170px; object-fit: cover;">
                                         </a>
                                         <div class="product__badge">
@@ -2932,7 +2932,11 @@
                                         </ul>
                                     </div>
                                     <div class="product__items--content text-center">
-                                        <a class="add__to--cart__btn" href="{{ route('cart.add', $food->id) }}">+ Thêm vào giỏ</a>
+                                        @if($food->Quantity > 0)
+                                            <a class="add__to--cart__btn" href="{{ route('cart.add', $food->id) }}">+ Thêm vào giỏ</a>
+                                        @else
+                                        <p class="text-danger">Hết món</p>
+                          @endif
                                         <h3 class="product__items--content__title style2 h4">
                                             <a href="{{ route('menu.item.detail', ['id' => $food->id]) }}">{{ $food->Title_items }}</a>
                                         </h3>

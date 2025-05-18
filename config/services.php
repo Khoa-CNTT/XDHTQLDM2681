@@ -56,6 +56,14 @@ return [
     'openai' => [
         'key' => env('OPENAI_API_KEY'),
     ],
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID'),
+        'secret' => env('PAYPAL_SECRET'),
+        'currency' => env('PAYPAL_CURRENCY'),
+        'sandbox' => env('PAYPAL_MODE') === 'sandbox',
+        'exchange_rate' => env('EXCHANGE_RATE', 25000),
+    ],
+
 
 
 

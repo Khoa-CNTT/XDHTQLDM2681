@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class PaymentController extends Controller
 {
@@ -79,10 +80,26 @@ class PaymentController extends Controller
                 ->orderBy('order_date', 'desc')
                 ->get();
 
-            return view('client.page.order.tracking', compact('orders'));
+            return view('Client.page.Order.tracking', compact('orders'));
         } else {
 
             return view('payment.failed');
         }
     }
+    // Trong PaymentController.php
+public function bitcoinDemo()
+{
+    $data = Http::get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=vnd')->json();
+    $btcPrice = $data['bitcoin']['vnd'] ?? 0;
+
+    // Tổng tiền VND của đơn hàng
+    $orderIds = session('bitcoin_order_ids', []);
+    $totalVND = \App\Models\Order::whereIn('id', $orderIds)->sum('total_amount');
+
+    // Tính giá trị BTC (demo)
+    $btcAmount = $btcPrice > 0 ? round($totalVND / $btcPrice, 8) : 0;
+
+    return view('Client.page.Order.Payment_bitcoin', compact('btcPrice', 'btcAmount', 'totalVND'));
+}
+
 }

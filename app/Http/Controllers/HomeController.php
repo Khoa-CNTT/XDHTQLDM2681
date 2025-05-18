@@ -20,7 +20,7 @@ class HomeController extends Controller
         $results = MenuItem::where('approved', true)->take(12)->get(); // Hoặc lấy toàn bộ nếu muốn
         $categories = Category::with(['menuItems' => function ($query) {
             $query->where('approved', true);
-        }])->get();
+        }])->take(12)->orderByDesc('created_at')->get();
 
 
         // Món ăn được đánh giá cao nhất

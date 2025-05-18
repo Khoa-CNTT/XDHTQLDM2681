@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class MenuItem extends Model
 {
@@ -44,5 +45,14 @@ class MenuItem extends Model
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+    public function mostCommonRating()
+    {
+        return $this->ratings()
+            ->select('rating', DB::raw('count(*) as count'))
+            ->groupBy('rating')
+            ->orderByDesc('count')
+            ->orderByDesc('rating')
+            ->value('rating') ?? 5;
     }
 }

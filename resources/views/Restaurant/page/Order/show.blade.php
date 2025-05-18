@@ -8,7 +8,7 @@
             <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
             <div class="container">
                 <h1>Chi tiết Đơn Hàng #{{ $order->id }}</h1>
-                <p><strong>Restaurant ID:</strong> {{ $restaurantId }}</p>
+                <p><strong>Nhà hàng:</strong> {{ $restaurantId }}</p>
 
                 <div class="card mb-4">
                     <div class="card-header">
