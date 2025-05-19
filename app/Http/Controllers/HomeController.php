@@ -14,18 +14,38 @@ class HomeController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $restaurants_item = Restaurant::get();
-        $results = MenuItem::all();
-        $products = MenuItem::take(3)->get();
-        $food_like = MenuItem::skip(4)->take(4)->get();
+{
 
-        $decilious_foods = MenuItem::with('restaurant.location')->skip(1)->take(12)->get();
+    $restaurants_item = Restaurant::get();
+        $results = MenuItem::where('approved', true)->take(12)->get(); // Hoặc lấy toàn bộ nếu muốn
+        $categories = Category::with(['menuItems' => function ($query) {
+            $query->where('approved', true);
+        }])->take(12)->orderByDesc('created_at')->get();
 
-        $categories = Category::all();
 
-        return view('Client.page.home', compact('restaurants_item', 'results', 'categories', 'products', 'food_like', 'decilious_foods'));
-    }
+        // Món ăn được đánh giá cao nhất
+        $products = MenuItem::where('approved', true)
+            ->withAvg('ratings', 'rating')
+            ->orderByDesc('ratings_avg_rating')
+            ->take(7)
+            ->get();
+
+        // Món đang giảm giá
+        $food_like = MenuItem::where('approved', true)
+            ->whereColumn('OldPrice', '>', 'Price')
+            ->take(7)
+            ->get();
+
+        // Món ăn đặc sắc ngẫu nhiên (hoặc bạn muốn lấy theo vị trí địa lý,…)
+        $decilious_foods = MenuItem::with('restaurant.locations')
+            ->where('approved', true)
+            ->inRandomOrder()
+            ->take(12)
+            ->get();
+
+    return view('Client.page.home', compact('restaurants_item', 'results', 'categories', 'products', 'food_like', 'decilious_foods'));
+}
+
 
 
 

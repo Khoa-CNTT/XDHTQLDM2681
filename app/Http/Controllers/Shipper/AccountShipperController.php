@@ -8,9 +8,10 @@ use App\Http\Requests\RegisterShipperRequest;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use App\Mail\OTPMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\ShipperRegistrationNotification;
 
 
 class AccountShipperController extends Controller
@@ -20,23 +21,35 @@ class AccountShipperController extends Controller
 
         return view('Shipper.page.Account.login');
     }
-    public function actionloginshipper(LoginDriverSeeder $request){
+    public function actionloginshipper(LoginDriverSeeder $request)
+    {
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
         ];
 
-        // Debug dữ liệu đầu vào
-        //dd($credentials, Auth::guard('driver_auth')->attempt($credentials));
-
+        // Kiểm tra thông tin đăng nhập
         if (Auth::guard('driver_auth')->attempt($credentials)) {
-            toastr()->success("Đã đăng nhập thành công!");
-            return redirect('/');
+            return redirect('/shipper/home');
         } else {
-            toastr()->error("Tài khoản hoặc mật khẩu không đúng!");
-            return redirect('/account/login');
+            // Nếu thông tin đăng nhập sai, gửi thông báo lỗi
+            return redirect('/shipper/login')
+                ->withErrors(['login_error' => 'Email hoặc mật khẩu không chính xác.']);
         }
     }
+
+    public function logoutshipper()
+    {
+        $driver = Auth::guard('driver_auth')->user();
+        if ($driver) {
+            $driver->is_active = false; // tắt trạng thái hoạt động
+            $driver->save();
+        }
+
+        Auth::guard('driver_auth')->logout();
+        return redirect('/shipper/login');
+    }
+
     public function registershipper()
     {
 
@@ -90,11 +103,13 @@ class AccountShipperController extends Controller
                 'license_plate' => $data['license_plate'] ?? null,
                 'id_card'       => $data['id_card'] ?? null,
             ]);
+            Mail::to('longkolp16@gmail.com')->send(new ShipperRegistrationNotification($data));
+
 
             // Xóa OTP và dữ liệu đăng ký trong session sau khi xác thực thành công
             Session::forget(['otp', 'register_data']);
 
-            return redirect()->route('login.shipper')->with('success', 'Xác thực thành công! Tài khoản của bạn đã được tạo. Mật khẩu mặc định là 123456.');
+            return redirect()->route('shipper.registration.status')->with('success', 'Xác thực thành công!Vui lòng chờ phê duyệt!');
         }
 
         return back()->with('error', 'Mã OTP không đúng, vui lòng thử lại.');

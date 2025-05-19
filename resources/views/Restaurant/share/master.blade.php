@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('Admin.share.css')
+    @include('Restaurant.share.css')
 </head>
 
 <body>
@@ -10,9 +10,9 @@
     <div class="wrapper">
         <!--start header wrapper-->
         <div class="header-wrapper">
-            @include('Admin.share.header')
+            @include('Restaurant.share.header')
             <!--navigation-->
-            @include('Admin.share.menu')
+            @include('Restaurant.share.menu')
             <!--end navigation-->
         </div>
         <!--end header wrapper-->
@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-    @include('Admin.share.js')
+    @include('Restaurant.share.js')
     @yield('js')
 </body>
 

@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký Tài Xế</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/jpeg"
+        href="{{ asset('assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg') }}">
 </head>
 
 <body class="bg-warning">
 
     <div class="container d-flex justify-content-center align-items-center vh-100">
         <div class="bg-white p-4 rounded shadow" style="width: 400px;">
+            <h1 class="text-success fw-bold text-center"><img  style="height:70px;" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg"
+                    alt=""></h1>
             <h4 class="text-center">Đăng Ký</h4>
 
             @if(session('success'))
@@ -22,7 +26,7 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label">Thành Phố</label>
-                    <select name="vehicle_type" class="form-select">
+                    <select name="address" class="form-select">
                         <option value="Đà nẵng">Đà nẵng</option>
 
                     </select>
@@ -102,6 +106,7 @@
                     <small>Khi tiếp tục, tôi đồng ý rằng ShopeeFood có thể thu thập và sử dụng thông tin được tôi cung
                         cấp.</small>
                 </div>
+                <p class="text-center"><a class="text-center" href="/shipper/login">Đã có tài khoản</a></p>
 
                 <button type="submit" class="btn btn-danger w-100">Đăng Ký</button>
             </form>

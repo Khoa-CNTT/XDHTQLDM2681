@@ -1,10 +1,62 @@
+<section class="shipping__section2 shipping__style3">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping1.png" alt="Hình ảnh giao hàng">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Giao hàng</h2>
+                        <p class="shipping__items2--content__desc">Từ những người bán được chọn lọc</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping2.png" alt="Hình ảnh thanh toán">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Thanh toán</h2>
+                        <p class="shipping__items2--content__desc">Visa, Paypal, Master</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/image/other/shipping3.png" alt="Hình ảnh đổi trả">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Đổi trả</h2>
+                        <p class="shipping__items2--content__desc">Đảm bảo hoàn tiền trong 30 ngày</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3 mb-4">
+                <div class="shipping__items2 d-flex align-items-center flex-column text-center">
+                    <div class="shipping__items2--icon mb-2">
+                        <img class="display-block" src="/assets/image/other/shipping4.png" alt="Hình ảnh hỗ trợ">
+                    </div>
+                    <div class="shipping__items2--content">
+                        <h2 class="shipping__items2--content__title h5">Hỗ trợ</h2>
+                        <p class="shipping__items2--content__desc">Hỗ trợ mọi lúc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
 <footer class="footer__section footer__bg">
     <div class="container">
         <div class="footer__top">
             <div class="row main__footer--wrapper footer__top--row">
                 <div class="col-lg-3 footer__col--width col-md-7 footer__col--padding footer__col--order">
                     <div class="footer__widget">
-                        <h3 class="footer__widget--title sm__footer--widget__bock">About Us
+                        <h3 class="footer__widget--title sm__footer--widget__bock">Về chúng tôi
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                     width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -14,14 +66,13 @@
                             </button>
                         </h3>
                         <div class="footer__widget--inner">
-                            <a class="footer__widget--logo" href="index.html"><img src="/assets/img/logo/nav-log.png"
+                            <a class="footer__widget--logo"  href="/"><img  style="height:80px;" src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg"
                                     alt="footer-logo"></a>
-                            <p class="footer__widget--desc m-0">The variety of products available at our store at
-                                the moment is vast, but we still continue to widen our assortment.</p>
+                            <p class="footer__widget--desc m-0">Sự đa dạng của các thực đơn có sẵn tại hệ thống của chúng tôi tại thời điểm này là rất lớn, nhưng chúng tôi vẫn tiếp tục mở rộng các loại của chúng tôi.</p>
                             <ul class="footer__widget--social d-flex">
                                 <li class="footer__widget--social__list">
                                     <a class="footer__widget--social__icon" target="_blank"
-                                        href="https://www.facebook.com">
+                                        href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="7.667" height="16.524"
                                             viewBox="0 0 7.667 16.524">
                                             <path data-name="Path 237"
@@ -72,7 +123,7 @@
                 </div>
                 <div class="col-lg-2 footer__col--width col-md-4 footer__col--padding">
                     <div class="footer__widget">
-                        <h3 class="footer__widget--title">Information
+                        <h3 class="footer__widget--title">Thông tin
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                     width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -83,23 +134,23 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="about.html">About Us</a></li>
+                                    href="#">Về chúng tôi</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="contact.html">Contact Us</a></li>
+                                    href="#">Liên lạc </a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="wishlist.html">Wishlist</a></li>
+                                    href="#">Yêu thích</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="portfolio.html">Portfolio</a></li>
+                                    href="#">Hồ sơ</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="privacy-policy.html">Privacy Policy</a></li>
+                                    href="#">Chính sách bảo mật</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="faq.html">Frequently</a></li>
+                                    href="#">Thường xuyên</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 footer__col--width col-md-4 footer__col--padding">
                     <div class="footer__widget">
-                        <h3 class="footer__widget--title">Categories
+                        <h3 class="footer__widget--title">Danh mục
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                     width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -110,8 +161,8 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="shop.html">All Products</a></li>
-                            <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
+                                    href="/menu/index">Tất cả thực đơn</a></li>
+                            {{-- <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Grocery & Frozen</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Fresh Fruits</a></li>
@@ -120,13 +171,13 @@
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
                                     href="shop.html">Organic Foods</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="shop.html">Health & Wellness</a></li>
+                                    href="shop.html">Health & Wellness</a></li> --}}
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-2 footer__col--width col-md-4 footer__col--padding">
                     <div class="footer__widget">
-                        <h3 class="footer__widget--title">My Account
+                        <h3 class="footer__widget--title">Tài khoản của tôi
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                     width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -137,23 +188,23 @@
                         </h3>
                         <ul class="footer__widget--menu footer__widget--inner">
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="my-account.html">My Account</a></li>
+                                    href="/account/login">Tài khoản của tôi</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="cart.html">Shopping Cart</a></li>
+                                    href="/client/cart">Giỏ hàng</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="checkout.html">Checkout</a></li>
+                                    href="/client/checkout">Thanh toán</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="login.html">Login</a></li>
+                                    href="/account/login">Đăng nhập</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="login.html">Register</a></li>
+                                    href="/account/login">Đăng ký</a></li>
                             <li class="footer__widget--menu__list"><a class="footer__widget--menu__text"
-                                    href="compare.html">Compare</a></li>
+                                    href="#">So sánh</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-5 footer__col--padding footer__col--order">
                     <div class="footer__widget">
-                        <h3 class="footer__widget--title">Newsletter
+                        <h3 class="footer__widget--title">Tin tức
                             <button class="footer__widget--button" aria-label="footer widget button">
                                 <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
                                     width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
@@ -163,16 +214,15 @@
                             </button>
                         </h3>
                         <div class="footer__widget--inner">
-                            <p class="footer__widget--desc m-0">Get updates by subscribe
-                                our weekly newsletter</p>
+                            <p class="footer__widget--desc m-0">Nhận thông tin cập nhật bằng cách đăng ký nhận bản tin hàng tuần của chúng tôi</p>
                             <div class="newsletter__subscribe">
-                                <form class="newsletter__subscribe--form" action="#">
+                                {{-- <form class="newsletter__subscribe--form" action="#">
                                     <label>
-                                        <input class="newsletter__subscribe--input" placeholder="Your mail here ...."
+                                        <input class="newsletter__subscribe--input" placeholder="Email của bạn ...."
                                             type="text">
                                     </label>
-                                    <button class="newsletter__subscribe--button" type="submit">subscribe</button>
-                                </form>
+                                    <button class="newsletter__subscribe--button" type="submit">Đặt ngay</button>
+                                </form> --}}
                             </div>
                         </div>
                     </div>
@@ -182,28 +232,11 @@
         <div class="footer__bottom">
             <div class="row justify-content-between align-items-center">
                 <div class="col-12 col-md-auto">
-                    <p class="copyright__content">Copyright © 2022 <a class="copyright__content--link text__primary"
-                            href="index.html">Grocee</a> . All Rights Reserved.Design By Grocee</p>
+                    <p class="copyright__content">Copyright © 2025 <a class="copyright__content--link text__primary"
+                            href="/">CallFood</a> .Chúc quý khách một ngày tốt lành</p>
                 </div>
-                <div class="col-12 col-md-auto">
-                    <div class="footer__payment">
-                        <ul class="footer__payment--inner d-flex">
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment1.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment2.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment3.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment4.png"
-                                    alt="payment-img"></li>
-                            <li class="footer__payment--list"><img src="/assets/img/other/payment5.png"
-                                    alt="payment-img"></li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
-    <img class="footer__position--shape__one" src="/assets/img/other/footer-shape1.png" alt="footer-shape">
-    <img class="footer__position--shape__two" src="/assets/img/other/footer-shape2.png" alt="footer-shape">
 </footer>

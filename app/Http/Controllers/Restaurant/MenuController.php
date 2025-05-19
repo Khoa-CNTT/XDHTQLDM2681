@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\MenuItem;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MenuController extends Controller
 {
@@ -15,9 +16,17 @@ class MenuController extends Controller
     public function create()
     {
         $categories = Category::all();
-        $restaurants = Restaurant::all();
-        return view('restaurant.page.menu.create', compact('categories', 'restaurants'));
+
+        $user = Auth::guard('web')->user();
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if (!$restaurant) {
+            return redirect()->route('restaurant.login')->with('error', 'Nhà hàng không tồn tại.');
+        }
+
+        return view('Restaurant.page.Menu.create', compact('categories', 'restaurant'));
     }
+
 
     public function store(CreateMenuRequest $request)
     { //dd($request->all());
@@ -32,7 +41,10 @@ class MenuController extends Controller
 
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;
+        $menuItem->OldPrice = $request->OldPrice;
         $menuItem->description = $request->description;
+
+        $menuItem->approved = false;
         if ($request->hasFile('Image')) {
             $get_image = $request->file('Image');
             $path = "public/image/foods";
@@ -48,15 +60,40 @@ class MenuController extends Controller
 
         $menuItem->save();
 
-        return redirect('/restaurant/menu_items')->with('success', 'Món ăn đã được thêm thành công!');
+        return redirect('/restaurant/menu_items')->with('success', 'Đã thêm một món mới, vui lòng đợi duyệt!');
     }
 
-    // Hàm xem danh sách món ăn
+
     public function index()
     {
-        $menuItems = MenuItem::with('category', 'restaurant')->get();
-        return view('restaurant.page.menu.index', compact('menuItems'));
+        $user = Auth::guard('web')->user();
+
+        if (!$user) {
+            return redirect()->route('login.restaurant')->with('error', 'Bạn cần phải đăng nhập.');
+        }
+
+        $hasRestaurantRole = $user->roles->contains('name', 'Nhà hàng');
+
+        if (!$hasRestaurantRole) {
+            return redirect()->route('login.restaurant')->with('error', 'Bạn không có quyền truy cập vào trang này.');
+        }
+
+        $restaurant = Restaurant::where('email', $user->email)->first();
+
+        if (!$restaurant) {
+            return redirect()->route('login.restaurant')->with('error', 'Nhà hàng không tồn tại.');
+        }
+
+        $menuItems = MenuItem::with('category', 'restaurant')
+            ->where('restaurant_id', $restaurant->id)
+            ->paginate(10);
+
+        return view('Restaurant.page.Menu.index', compact('menuItems'));
     }
+
+
+
+
 
     // Hàm sửa món ăn
     public function edit($id)
@@ -64,7 +101,7 @@ class MenuController extends Controller
         $menuItem = MenuItem::findOrFail($id);
         $categories = Category::all();
         $restaurants = Restaurant::all();
-        return view('restaurant.page.menu.edit', compact('menuItem', 'categories', 'restaurants'));
+        return view('Restaurant.page.Menu.edit', compact('menuItem', 'categories', 'restaurants'));
     }
 
     public function update(Request $request, $id)
@@ -85,6 +122,7 @@ class MenuController extends Controller
         $menuItem->category_id = $request->category_id;
         $menuItem->Title_items = $request->Title_items;
         $menuItem->Price = $request->Price;
+        $menuItem->OldPrice = $request->OldPrice;
 
         $menuItem->Quantity = $request->Quantity;
         $menuItem->Status = $request->Status;

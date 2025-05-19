@@ -48,7 +48,8 @@
                                                                                                 <form action="{{ route('cart.remove', $item->id) }}" method="POST">
                                                                                                     @csrf
                                                                                                     @method('DELETE')
-                                                                                                    <button class="cart__remove--btn" aria-label="search button" type="submit">
+                                                                                                    <button class="cart__remove--btn" aria-label="Remove from cart" type="submit"
+                                                                                                        style="background-color: transparent; border: none; color: red; font-size: 20px; cursor: pointer;">
                                                                                                         <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16px" height="16px">
                                                                                                             <path
                                                                                                                 d="M 4.7070312 3.2929688 L 3.2929688 4.7070312 L 10.585938 12 L 3.2929688 19.292969 L 4.7070312 20.707031 L 12 13.414062 L 19.292969 20.707031 L 20.707031 19.292969 L 13.414062 12 L 20.707031 4.7070312 L 19.292969 3.2929688 L 12 10.585938 L 4.7070312 3.2929688 z">
@@ -56,6 +57,7 @@
                                                                                                         </svg>
                                                                                                     </button>
                                                                                                 </form>
+
 
 
                                                                                                     <div class="cart__content">
@@ -121,8 +123,7 @@
                                         </div>
                                     </div> --}}
                                     <div class="cart__note mb-20">
-                                        <h3 class="cart__note--title">Note</h3>
-                                        <p class="cart__note--desc">Add special instructions for your seller...</p>
+                                        <h3 class="cart__note--title">Ghi chú</h3>
                                         <textarea class="cart__note--textarea border-radius-5"></textarea>
                                     </div>
                                     <div class="cart__summary--total mb-20">
@@ -130,17 +131,13 @@
                                             <tbody>
                                                 <tr class="cart__summary--total__list">
                                                     <td class="cart__summary--total__title text-left">Tổng tiền</td>
-                                                    <td class="cart__summary--amount text-right">{{number_format($cart->amount)}} đ</td>
+                                                    <td class="cart__summary--amount text-right">{{number_format($cart->amount ?? 0)}} đ</td>
                                                 </tr>
-                                                {{-- <tr class="cart__summary--total__list">
-                                                    <td class="cart__summary--total__title text-left">GRAND TOTAL</td>
-                                                    <td class="cart__summary--amount text-right">$860.00</td>
-                                                </tr> --}}
+
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="cart__summary--footer">
-                                        <p class="cart__summary--footer__desc">Shipping &amp; taxes calculated at checkout
                                         </p>
                                         <ul class="d-flex justify-content-between">
                                             <li><button class="cart__summary--footer__btn btn cart cart-update" type="submit">Cập nhật giỏ hàng</button></li>

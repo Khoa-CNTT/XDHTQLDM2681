@@ -12,31 +12,20 @@ class CartController extends Controller
 {
     public function updateCart(Request $request)
     {
-        //dd($request->all());
-        // Lấy ID người dùng hiện tại
         $userId = Auth::user()->id;
 
-        // Tìm giỏ hàng của người dùng
         $cart = Cart::where('user_id', $userId)->first();
-        //dd($cart);
-        // Kiểm tra xem giỏ hàng có tồn tại không
         if ($cart) {
             foreach ($request->cartItems as $item) {
                 $productId = (int)$item['id']; // Lấy ID của sản phẩm
                 $quantity = (int)$item['quantity']; // Lấy số lượng sản phẩm
-                //dd($productId, $quantity, $cart->id);
-                // dd(CartItem::where('menu_item_id', $productId)->get()->toArray());
 
 
-                //  dd($productId,$quantity);
-                // Tìm mục giỏ hàng tương ứng trong bảng cart_details
                 $cartItem = CartItem::where('cart_id', $cart->id)
                     ->where('menu_item_id', $productId)
                     ->first();
-                // dd($cartItem);
                 $menuItem = MenuItem::find($productId);
 
-                // Kiểm tra nếu sản phẩm không tồn tại trong menu_items
                 if (!$menuItem) {
                     return response()->json(['status' => 'error', 'message' => 'Sản phẩm không tồn tại']);
                 }
@@ -52,24 +41,17 @@ class CartController extends Controller
                 if ($quantity <= 0) {
                     return response()->json(['status' => 'error', 'message' => 'Số lượng không được nhỏ hơn hoặc bằng 0']);
                 }
-                // Nếu có mục giỏ hàng cho sản phẩm này
                 if ($cartItem) {
-                    // Cập nhật số lượng và giá trị sản phẩm
                     $cartItem->cart_quantity = $quantity;
-                    // dd($cartItem->menuItem->Price);
-                    //dd($cartItem->cart_price = $cartItem->menuItem->Price * $quantity);
-                    $cartItem->cart_price = $cartItem->menuItem->Price * $quantity;
-                    // dd($cartItem);
+                    $cartItem->cart_price = $cartItem->menuItem->Price ;
                     $cartItem->save();
                 }
             }
 
-            // Cập nhật tổng giá trị giỏ hàng
             $cartTotal = $cart->cartItems->sum(function ($item) {
-                return $item->cart_price;
+                return $item->cart_price * $item->cart_quantity;
             });
 
-            // Cập nhật tổng giỏ hàng trong bảng carts
             $cart->amount = $cartTotal;
             $cart->save();
 
@@ -84,28 +66,34 @@ class CartController extends Controller
 
     public function removeFromCart($cartItemId)
     {
-        // Kiểm tra người dùng đã đăng nhập chưa
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xóa sản phẩm.');
+            return redirect()->route('login')
+                ->with('error', 'Bạn cần đăng nhập để xóa sản phẩm.');
         }
 
-        // Tìm món trong giỏ hàng của người dùng
         $cartItem = CartItem::find($cartItemId);
 
-        if ($cartItem) {
-            // Xóa món khỏi giỏ hàng
-            $cartItem->delete();
-
-            return redirect()->route('cart.index')->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
+        if (! $cartItem) {
+            return redirect()->route('cart.index')
+                ->with('error', 'Không tìm thấy sản phẩm để xóa!');
         }
 
-        return redirect()->route('cart.index')->with('error', 'Không tìm thấy sản phẩm để xóa!');
+        $cart = $cartItem->cart;
+
+        $cartItem->delete();
+
+        if ($cart && $cart->cartItems()->count() === 0) {
+            $cart->delete();
+        }
+
+        return redirect()->route('cart.index')
+            ->with('success', 'Sản phẩm đã được xóa khỏi giỏ hàng!');
     }
+
 
     public function clearCart(Request $request)
     {
         // dd($request->all());
-        // Kiểm tra người dùng đã đăng nhập chưa
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xóa giỏ hàng.');
         }
@@ -129,15 +117,12 @@ class CartController extends Controller
      */
     public function index()
     {
-        // 1. Kiểm tra đăng nhập
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để xem giỏ hàng.');
         }
 
-        // 2. Lấy user ID hiện tại
         $userId = Auth::id();
 
-        // 3. Lấy giỏ hàng theo user
         $cart = Cart::with('cartItems.menuItem')->where('user_id', $userId)->first();
         return view('Client.page.Cart.index', compact('cart'));
     }
@@ -146,7 +131,7 @@ class CartController extends Controller
     {
         // 1. Kiểm tra đăng nhập
         if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
+            return redirect()->route('login.index')->with('error', 'Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.');
         }
 
         $menuItem = MenuItem::find($menuItemId);

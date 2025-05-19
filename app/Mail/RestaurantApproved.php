@@ -14,12 +14,14 @@ class RestaurantApproved extends Mailable
 {
     use Queueable, SerializesModels;
     public $restaurant;
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(Restaurant $restaurant)
+    public $username;
+    public $password;
+
+    public function __construct($restaurant, $username, $password)
     {
         $this->restaurant = $restaurant;
+        $this->username = $username;
+        $this->password = $password;
     }
     public function build()
     {

@@ -4,10 +4,10 @@
         <nav class="navbar navbar-expand">
             <div class="topbar-logo-header">
                 <div class="">
-                    <img src="/image/restaurant.png" class="logo-icon" alt="logo icon">
+                    <img src="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg" class="logo-icon" alt="logo icon">
                 </div>
                 <div class="">
-                    <h4 class="logo-text">Restaurant</h4>
+                    <h4 class="logo-text">Nhà hàng</h4>
                 </div>
             </div>
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
@@ -384,8 +384,12 @@
                     <li>
                         <div class="dropdown-divider mb-0"></div>
                     </li>
-                    <li><a class="dropdown-item" href="/admin/logout"><i
+                    <li>
+
+
+                        <a class="dropdown-item" href="{{ route('logout') }}"><i
                                 class='bx bx-log-out-circle'></i><span>Logout</span></a>
+
                     </li>
                 </ul>
             </div>

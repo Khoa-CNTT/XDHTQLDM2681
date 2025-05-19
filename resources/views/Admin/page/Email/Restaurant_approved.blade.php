@@ -11,10 +11,20 @@
 </head>
 
 <body>
-    <h1>Xin chúc mừng!</h1>
-    <p>Nhà hàng <strong>{{ $restaurant->name }}</strong> của bạn đã được phê duyệt và đang hoạt động trên hệ thống.</p>
-    <p>Cảm ơn bạn đã đăng ký và sử dụng dịch vụ của chúng tôi.</p>
-    <p>Trân trọng,<br>Đội ngũ hỗ trợ</p>
+   <h2>🎉 Xin chúc mừng {{ $restaurant->name }}!</h2>
+<p>Nhà hàng của bạn đã được phê duyệt thành công.</p>
+
+<p><strong>Thông tin tài khoản đăng nhập:</strong></p>
+<ul>
+    <li>👤 Tên đăng nhập: <strong>{{ $username }}</strong></li>
+    <li>📧 Email: <strong>{{ $restaurant->email }}</strong></li>
+    <li>🔒 Mật khẩu: <strong>{{ $password }}</strong></li>
+</ul>
+
+<p>Vui lòng đăng nhập để quản lý nhà hàng của bạn. Đừng quên đổi mật khẩu sau khi đăng nhập!</p>
+
+<p>Thân ái,<br>Đội ngũ quản trị</p>
+
 </body>
 
 </html>

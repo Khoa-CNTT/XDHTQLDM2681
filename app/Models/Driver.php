@@ -25,6 +25,7 @@ class Driver extends Authenticatable
         'vehicle_type',
         'license_plate',
         'id_card',
+        'is_active',
 
     ];
 

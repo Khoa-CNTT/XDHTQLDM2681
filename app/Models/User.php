@@ -26,9 +26,23 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'token',
+        'fullname',
 
         'location_id',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
+    public function location()
+    {
+        return $this->belongsTo(Location::class, 'location_id');
+    }
+    public function preferences()
+    {
+        return $this->hasOne(UserPrences::class);
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

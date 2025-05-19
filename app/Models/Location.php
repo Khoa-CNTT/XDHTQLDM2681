@@ -9,16 +9,22 @@ class Location extends Model
     protected $table = "locations";
 
     protected $fillable = [
-       'City',
+            'City',
             'District',
             'Ward',
             'Address',
             'Latitude',
             'Longitude',
+        'restaurant_id',
 
     ];
-    public function restaurants()
+
+    public function restaurant()
     {
-        return $this->hasMany(Restaurant::class);
+        return $this->belongsTo(Restaurant::class, 'restaurant_id');
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'location_id');
     }
 }

@@ -3,10 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Grocee - Organic Food HTML Template</title>
+    <title>Call Food</title>
     <meta name="description" content="Morden Bootstrap HTML5 Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/img/icon/z6443881384501_a4968d4d4a8fb548eca0294aef2d6ad8.jpg">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <!-- Thêm CSS cho toastr -->
@@ -24,6 +24,60 @@
 </head>
 
 <body>
+    <div class="hotline-phone-ring-wrap">
+        <div class="hotline-phone-ring youtube1" id="chat-toggle-btn">
+            <div class="hotline-phone-ring-circle"></div>
+            <div class="hotline-phone-ring-circle-fill"></div>
+            <div class="hotline-phone-ring-img-circle">
+                <a href="javascript:void(0);"><i class="fas fa-comment-dots"></i></a>
+            </div>
+        </div>
+    </div>
+    <style>
+        .hotline-phone-ring-wrap {
+            position: fixed;
+            bottom: 120px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .hotline-phone-ring {
+            position: relative;
+            background-color: #d90000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-ring 2s infinite;
+        }
+
+        .hotline-phone-ring i {
+            color: white;
+            font-size: 20px;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        /* Ẩn viền động nếu không thích */
+        .hotline-phone-ring-circle,
+        .hotline-phone-ring-circle-fill {
+            display: none;
+        }
+    </style>
     @include('Client.Share.chatbox')
 
 
@@ -480,7 +534,7 @@
     <!-- Quickview Wrapper End -->
 
     <!-- Start News letter popup -->
-    <div class="newsletter__popup" data-animation="slideInUp">
+    {{-- <div class="newsletter__popup" data-animation="slideInUp">
         <div id="boxes" class="newsletter__popup--inner">
             <button class="newsletter__popup--close__btn" aria-label="search close button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 512 512">
@@ -514,7 +568,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- End News letter popup -->
 
     <!-- Scroll top bar -->

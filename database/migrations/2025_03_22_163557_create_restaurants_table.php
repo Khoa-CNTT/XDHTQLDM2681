@@ -24,7 +24,7 @@ return new class extends Migration
             $table->text('description')->nullable(); // Mô tả shop
             $table->string('logo')->nullable(); // Logo cửa hàng
             $table->string('business_license')->nullable(); // Giấy phép kinh doanh
-            $table->integer('location_id');
+
             $table->timestamps();
         });
     }

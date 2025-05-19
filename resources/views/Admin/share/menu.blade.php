@@ -11,113 +11,78 @@
     </div>
     <nav class="navbar navbar-expand-xl w-100">
         <ul class="navbar-nav justify-content-start flex-grow-1 gap-1">
-            {{-- <li class="nav-item dropdown">
-                <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret"
-                    data-bs-toggle="dropdown">
-                    <div class="parent-icon"><i class='bx bx-home-circle'></i>
-                    </div>
-                    <div class="menu-title">Dashboard</div>
-                </a>
-                <ul class="dropdown-menu">
-                    <li> <a class="dropdown-item" href="index.html"><i class="bx bx-right-arrow-alt"></i>Default</a>
-                    </li>
-                    <li> <a class="dropdown-item" href="index2.html"><i class="bx bx-right-arrow-alt"></i>Alternate</a>
-                    </li>
-                    <li> <a class="dropdown-item" href="index3.html"><i class="bx bx-right-arrow-alt"></i>Graphical</a>
-                    </li>
-                </ul>
-            </li> --}}
+
             <li class="nav-item dropdown">
-                <a href="/admin/region/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/roles" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-location-dot"></i>
                     </div>
-                    <div class="menu-title">Khu Vực</div>
+                    <div class="menu-title"> Phân quyền</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/table/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/users" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-dragon"></i>
                     </div>
-                    <div class="menu-title">Bàn</div>
+                    <div class="menu-title"> Tài khoản</div>
+                </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="/admin/restaurant/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                    <div class="parent-icon"><i class="fa-regular fa-rectangle-list"></i>
+                    </div>
+                    <div class="menu-title"> Nhà hàng</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
                 <a href="/admin/category/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-regular fa-rectangle-list"></i>
+                    <div class="parent-icon"><i class="fa-solid fa-bowl-food"></i>
                     </div>
-                    <div class="menu-title">Danh Mục</div>
+                    <div class="menu-title"> Danh mục</div>
                 </a>
+            </li>
+
+
+            <li class="nav-item dropdown">
+
+                <a href="{{route('admin.pending_drivers')}}" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                    <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
+                    </div>
+                    <div class="menu-title"> Người giao hàng</div>
+                </a>
+
+
             </li>
             <li class="nav-item dropdown">
                 <a href="/admin/food/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-bowl-food"></i>
-                    </div>
-                    <div class="menu-title">Món Ăn</div>
-                </a>
-            </li>
-
-
-            <li class="nav-item dropdown">
-                <a href="/admin/supplier/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
                     </div>
-                    <div class="menu-title">Nhà Cung Cấp</div>
+                    <div class="menu-title"> Quản lý món</div>
+
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/customer/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/offers" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-truck-field-un"></i>
                     </div>
-                    <div class="menu-title">Khách hàng</div>
+                    <div class="menu-title"> khuyến mãi</div>
+
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/order/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/thong-ke" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-calendar-check"></i>
                     </div>
-                    <div class="menu-title">Bán Hàng</div>
+                    <div class="menu-title">Thống kê và báo cáo</div>
                 </a>
             </li>
             <li class="nav-item dropdown">
-                <a href="/admin/import/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
+                <a href="/admin/ratings" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
                     <div class="parent-icon"><i class="fa-solid fa-vault"></i>
                     </div>
-                    <div class="menu-title">Nhập Hàng</div>
+                    <div class="menu-title"> đánh giá</div>
                 </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a href="/admin/admin/index" class="nav-link dropdown-toggle dropdown-toggle-nocaret">
-                    <div class="parent-icon"><i class="fa-solid fa-user"></i></i>
-                    </div>
-                    <div class="menu-title">Tài Khoản</div>
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-bs-toggle="dropdown">
-                    <div class="parent-icon"><i class="fa-solid fa-bars"></i>
-                    </div>
-                    <div class="menu-title">Menu</div>
-                </a>
-                <ul class="dropdown-menu">
-                    <li> <a class="dropdown-item" href="/admin/order/get-menu"><i
-                                class="fa-solid fa-fire-burner"></i>Menu Bếp</a>
-                    </li>
-                    <li> <a class="dropdown-item" href="/admin/order/get-real"><i
-                                class="fa-solid fa-cart-flatbed-suitcase"></i></i>Menu Tiếp Thục</a>
-                    </li>
-                </ul>
             </li>
 
-
-
-            <li class="nav-item">
-                <a class="nav-link" href="/admin/role/index">
-                    <div class="parent-icon">
-                        <i class="fa-solid fa-user-shield"></i>
-                    </div>
-                    <div class="menu-title">Phân Quyền</div>
-                </a>
-            </li>
         </ul>
     </nav>
 </div>
